@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="545.0" prefWidth="813.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.company.dbclientappv2.PrimaryViewController">
+   <children>
+      <SplitPane prefHeight="545.0" prefWidth="181.0">
+         <items>
+            <AnchorPane prefHeight="540.0" prefWidth="179.0">
+               <children>
+                  <VBox layoutX="20.0" layoutY="57.0" prefHeight="162.0" prefWidth="146.0">
+                     <children>
+                        <RadioButton layoutX="10.0" layoutY="20.0" mnemonicParsing="false" selected="true" text="All Appointments">
+                           <VBox.margin>
+                              <Insets bottom="10.0" top="5.0" />
+                           </VBox.margin>
+                        </RadioButton>
+                        <RadioButton mnemonicParsing="false" text="Month View">
+                           <VBox.margin>
+                              <Insets bottom="10.0" top="10.0" />
+                           </VBox.margin>
+                        </RadioButton>
+                        <RadioButton mnemonicParsing="false" text="Week View">
+                           <VBox.margin>
+                              <Insets bottom="10.0" top="10.0" />
+                           </VBox.margin>
+                        </RadioButton>
+                        <RadioButton mnemonicParsing="false" text="Customers">
+                           <VBox.margin>
+                              <Insets bottom="10.0" top="10.0" />
+                           </VBox.margin>
+                        </RadioButton>
+                     </children>
+                  </VBox>
+                  <DatePicker layoutX="12.0" layoutY="503.0" prefHeight="26.0" prefWidth="160.0" promptText="Search appointments" />
+               </children>
+            </AnchorPane>
+         </items>
+      </SplitPane>
+      <ToolBar prefHeight="40.0" prefWidth="814.0">
+        <items>
+            <HBox prefHeight="0.0" prefWidth="799.0">
+               <children>
+                  <Text fx:id="usernameText" strokeType="OUTSIDE" strokeWidth="0.0" text="username" wrappingWidth="100.8212890625">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="10.0" right="10.0" top="5.0" />
+                     </HBox.margin>
+                  </Text>
+                  <Button mnemonicParsing="false" text="log out">
+                     <HBox.margin>
+                        <Insets top="2.0" />
+                     </HBox.margin></Button>
+               </children>
+            </HBox>
+        </items>
+      </ToolBar>
+      <VBox layoutX="234.0" layoutY="94.0" prefHeight="411.0" prefWidth="529.0">
+         <children>
+            <HBox prefHeight="33.0" prefWidth="522.0">
+               <children>
+                  <Text fx:id="appointmentsTitle" strokeType="OUTSIDE" strokeWidth="0.0" text="Week of">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets top="10.0" />
+                     </HBox.margin>
+                  </Text>
+                  <Text fx:id="datesTitle" strokeType="OUTSIDE" strokeWidth="0.0" text="date - date">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="6.0" right="10.0" top="10.0" />
+                     </HBox.margin>
+                  </Text>
+                  <Button mnemonicParsing="false" text="&lt;&lt;">
+                     <HBox.margin>
+                        <Insets top="5.0" />
+                     </HBox.margin>
+                  </Button>
+                  <Button mnemonicParsing="false" text="&gt;&gt;">
+                     <HBox.margin>
+                        <Insets right="130.0" top="5.0" />
+                     </HBox.margin>
+                  </Button>
+                  <Button mnemonicParsing="false" text="Add new">
+                     <HBox.margin>
+                        <Insets right="5.0" top="5.0" />
+                     </HBox.margin>
+                  </Button>
+                  <Button mnemonicParsing="false" text="Remove">
+                     <HBox.margin>
+                        <Insets right="5.0" top="5.0" />
+                     </HBox.margin>
+                  </Button>
+                  <Button mnemonicParsing="false" text="Modify">
+                     <HBox.margin>
+                        <Insets top="5.0" />
+                     </HBox.margin>
+                  </Button>
+               </children>
+               <VBox.margin>
+                  <Insets bottom="5.0" />
+               </VBox.margin>
+            </HBox>
+            <TableView fx:id="appointmentView" prefHeight="205.0" prefWidth="537.0">
+               <VBox.margin>
+                  <Insets bottom="40.0" />
+               </VBox.margin>
+               <columns>
+                  <TableColumn fx:id="title" prefWidth="75.0" text="title" />
+                  <TableColumn fx:id="description" prefWidth="75.0" text="description" />
+                  <TableColumn fx:id="location" prefWidth="75.0" text="location" />
+                  <TableColumn fx:id="type" prefWidth="75.0" text="type" />
+                  <TableColumn fx:id="start" prefWidth="75.0" text="start" />
+                  <TableColumn fx:id="end" prefWidth="152.0" text="end" />
+               </columns>
+            </TableView>
+            <HBox prefHeight="38.0" prefWidth="529.0">
+               <children>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Customer Information">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets right="270.0" top="5.0" />
+                     </HBox.margin>
+                  </Text>
+                  <TextField prefHeight="26.0" prefWidth="108.0" promptText="Search contacts" />
+               </children>
+               <VBox.margin>
+                  <Insets bottom="5.0" />
+               </VBox.margin>
+            </HBox>
+            <TableView prefHeight="134.0" prefWidth="532.0">
+              <columns>
+                <TableColumn prefWidth="75.0" text="Name" />
+                <TableColumn prefWidth="75.0" text="C2" />
+              </columns>
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
+            </TableView>
+         </children>
+      </VBox>
+      <Text layoutX="198.0" layoutY="71.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Appointments">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+      </Text>
+   </children>
+</AnchorPane>
