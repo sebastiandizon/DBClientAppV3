@@ -1,11 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.control.ToolBar?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="545.0" prefWidth="813.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.company.dbclientappv2.PrimaryViewController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="545.0" prefWidth="813.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.company.dbclientappv2.PrimaryViewController">
    <children>
       <SplitPane prefHeight="545.0" prefWidth="181.0">
          <items>
@@ -13,29 +24,27 @@
                <children>
                   <VBox layoutX="20.0" layoutY="57.0" prefHeight="162.0" prefWidth="146.0">
                      <children>
-                        <RadioButton layoutX="10.0" layoutY="20.0" mnemonicParsing="false" selected="true" text="All Appointments">
+                        <RadioButton fx:id="monthViewBtn" mnemonicParsing="false" onAction="#toggleMonthView" selected="true" text="Month View">
                            <VBox.margin>
-                              <Insets bottom="10.0" top="5.0" />
+                              <Insets bottom="10.0" top="10.0" />
                            </VBox.margin>
+                           <toggleGroup>
+                              <ToggleGroup fx:id="appointment" />
+                           </toggleGroup>
                         </RadioButton>
-                        <RadioButton mnemonicParsing="false" text="Month View">
+                        <RadioButton fx:id="weekViewBtn" mnemonicParsing="false" onAction="#handleWeekViewBtn" text="Week View" toggleGroup="$appointment">
                            <VBox.margin>
                               <Insets bottom="10.0" top="10.0" />
                            </VBox.margin>
                         </RadioButton>
-                        <RadioButton mnemonicParsing="false" text="Week View">
-                           <VBox.margin>
-                              <Insets bottom="10.0" top="10.0" />
-                           </VBox.margin>
-                        </RadioButton>
-                        <RadioButton mnemonicParsing="false" text="Customers">
+                        <RadioButton mnemonicParsing="false" text="Customers" toggleGroup="$appointment">
                            <VBox.margin>
                               <Insets bottom="10.0" top="10.0" />
                            </VBox.margin>
                         </RadioButton>
                      </children>
                   </VBox>
-                  <DatePicker layoutX="12.0" layoutY="503.0" prefHeight="26.0" prefWidth="160.0" promptText="Search appointments" />
+                  <DatePicker layoutX="12.0" layoutY="503.0" prefHeight="26.0" prefWidth="160.0" promptText="Search appointment" />
                </children>
             </AnchorPane>
          </items>
@@ -64,47 +73,47 @@
          <children>
             <HBox prefHeight="33.0" prefWidth="522.0">
                <children>
-                  <Text fx:id="appointmentsTitle" strokeType="OUTSIDE" strokeWidth="0.0" text="Week of">
-                     <font>
-                        <Font size="14.0" />
-                     </font>
-                     <HBox.margin>
-                        <Insets top="10.0" />
-                     </HBox.margin>
-                  </Text>
-                  <Text fx:id="datesTitle" strokeType="OUTSIDE" strokeWidth="0.0" text="date - date">
-                     <font>
-                        <Font size="14.0" />
-                     </font>
-                     <HBox.margin>
-                        <Insets left="6.0" right="10.0" top="10.0" />
-                     </HBox.margin>
-                  </Text>
-                  <Button mnemonicParsing="false" text="&lt;&lt;">
-                     <HBox.margin>
-                        <Insets top="5.0" />
-                     </HBox.margin>
-                  </Button>
-                  <Button mnemonicParsing="false" text="&gt;&gt;">
-                     <HBox.margin>
-                        <Insets right="130.0" top="5.0" />
-                     </HBox.margin>
-                  </Button>
-                  <Button mnemonicParsing="false" text="Add new">
-                     <HBox.margin>
-                        <Insets right="5.0" top="5.0" />
-                     </HBox.margin>
-                  </Button>
-                  <Button mnemonicParsing="false" text="Remove">
-                     <HBox.margin>
-                        <Insets right="5.0" top="5.0" />
-                     </HBox.margin>
-                  </Button>
-                  <Button mnemonicParsing="false" text="Modify">
-                     <HBox.margin>
-                        <Insets top="5.0" />
-                     </HBox.margin>
-                  </Button>
+                  <HBox prefHeight="31.0" prefWidth="333.0">
+                     <children>
+                        <Text fx:id="appointmentsTitle" strokeType="OUTSIDE" strokeWidth="0.0" text="default">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                           <HBox.margin>
+                              <Insets right="10.0" top="10.0" />
+                           </HBox.margin>
+                        </Text>
+                        <Button mnemonicParsing="false" text="&lt;&lt;">
+                           <HBox.margin>
+                              <Insets top="5.0" />
+                           </HBox.margin>
+                        </Button>
+                        <Button mnemonicParsing="false" text="&gt;&gt;">
+                           <HBox.margin>
+                              <Insets right="130.0" top="5.0" />
+                           </HBox.margin>
+                        </Button>
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER_RIGHT" prefHeight="31.0" prefWidth="322.0">
+                     <children>
+                        <Button fx:id="newApptBtn" mnemonicParsing="false" onAction="#handleNewAppointmentBtn" text="Add new">
+                           <HBox.margin>
+                              <Insets right="5.0" top="5.0" />
+                           </HBox.margin>
+                        </Button>
+                        <Button mnemonicParsing="false" text="Remove">
+                           <HBox.margin>
+                              <Insets right="5.0" top="5.0" />
+                           </HBox.margin>
+                        </Button>
+                        <Button mnemonicParsing="false" text="Modify">
+                           <HBox.margin>
+                              <Insets top="5.0" />
+                           </HBox.margin>
+                        </Button>
+                     </children>
+                  </HBox>
                </children>
                <VBox.margin>
                   <Insets bottom="5.0" />
@@ -115,12 +124,12 @@
                   <Insets bottom="40.0" />
                </VBox.margin>
                <columns>
-                  <TableColumn fx:id="title" prefWidth="75.0" text="title" />
-                  <TableColumn fx:id="description" prefWidth="75.0" text="description" />
-                  <TableColumn fx:id="location" prefWidth="75.0" text="location" />
-                  <TableColumn fx:id="type" prefWidth="75.0" text="type" />
-                  <TableColumn fx:id="start" prefWidth="75.0" text="start" />
-                  <TableColumn fx:id="end" prefWidth="152.0" text="end" />
+                  <TableColumn fx:id="title" prefWidth="75.0" text="Name" />
+                  <TableColumn fx:id="description" prefWidth="116.0" text="Description" />
+                  <TableColumn fx:id="location" prefWidth="76.0" text="Location" />
+                  <TableColumn fx:id="type" prefWidth="73.0" text="Type" />
+                  <TableColumn fx:id="start" prefWidth="89.0" text="Start time" />
+                  <TableColumn fx:id="end" prefWidth="98.0" text="End time" />
                </columns>
             </TableView>
             <HBox prefHeight="38.0" prefWidth="529.0">

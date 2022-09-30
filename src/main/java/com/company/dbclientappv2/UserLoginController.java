@@ -14,7 +14,6 @@ public class UserLoginController {
     public TextField usernameField;
     public TextField passwordField;
     public Text errorMsg;
-    public static int loggedInUserID;
 
     public void login(ActionEvent actionEvent){
         String usernameInput = usernameField.getText();
@@ -25,7 +24,7 @@ public class UserLoginController {
                     FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("primary-view.fxml"));
                     Scene scene = new Scene(fxmlLoader.load());
                     Stage stage = new Stage();
-                    stage.setTitle("Appointments");
+                    stage.setTitle("Appointment");
                     stage.setScene(scene);
                     stage.show();
                 } catch (IOException e) { e.printStackTrace(); }

@@ -9,6 +9,7 @@ import java.sql.Statement;
 import static helper.JDBC.*;
 
 public abstract class Users {
+    public static int userID;
     public static boolean authorizeLogin(String username, String userPassword) {
         try {
             Statement statement = connection.createStatement();
@@ -17,6 +18,7 @@ public abstract class Users {
             while (rs.next()) {
                 if (hashText(rs.getString("User_Name")).equals(hashText(username)) &&
                 hashText(rs.getString("Password")).equals(hashText(userPassword))) {
+                    userID = rs.getInt("User_ID");
                     return true;
                 }
             }

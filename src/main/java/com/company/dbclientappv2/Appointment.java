@@ -1,9 +1,8 @@
 package com.company.dbclientappv2;
 
-import java.sql.Time;
 import java.sql.Timestamp;
 
-public class Appointments {
+public class Appointment {
     public int appointmentId;
     public String title;
     public String description;
@@ -15,7 +14,7 @@ public class Appointments {
     public int userID;
     public int contactId;
 
-    public Appointments(int appointmentId, String title, String description, String location, String type, Timestamp startTime, Timestamp endTime, int customerId, int userId, int contactId){
+    public Appointment(int appointmentId, String title, String description, String location, String type, Timestamp startTime, Timestamp endTime, int customerId, int contactId){
         this.appointmentId=appointmentId;
         this.title = title;
         this.description = description;
@@ -24,7 +23,7 @@ public class Appointments {
         this.startTime = startTime;
         this.endTime = endTime;
         this.customerId = customerId;
-        this.userID = userId;
+        this.userID = Users.userID;
         this.contactId = contactId;
     }
     public String getTitle(){
@@ -46,6 +45,7 @@ public class Appointments {
     public Timestamp getEndTime(){
         return endTime;
     }
+    public int getUserID() { return userID; }
 
     public void setTitle(String title){
         this.title = title;
