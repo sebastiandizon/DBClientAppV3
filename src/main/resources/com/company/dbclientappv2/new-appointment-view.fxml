@@ -1,22 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.DatePicker?>
-<?import javafx.scene.control.Spinner?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.control.ToolBar?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
-<?import javafx.scene.text.Text?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="493.0" prefWidth="718.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.company.dbclientappv2.NewAppointmentController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="493.0" prefWidth="512.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.NewAppointmentController">
    <children>
-      <ToolBar prefHeight="40.0" prefWidth="718.0">
+      <ToolBar prefHeight="40.0" prefWidth="512.0">
          <items>
-            <HBox prefHeight="0.0" prefWidth="587.0">
+            <HBox prefHeight="29.0" prefWidth="494.0">
                <children>
                   <VBox alignment="CENTER_LEFT" prefHeight="200.0" prefWidth="100.0">
                      <children>
@@ -27,30 +20,52 @@
                         </Text>
                      </children>
                   </VBox>
-                  <VBox alignment="CENTER_RIGHT" prefHeight="29.0" prefWidth="304.0">
+                  <VBox alignment="CENTER_RIGHT" prefHeight="29.0" prefWidth="209.0">
                      <children>
-                        <Button mnemonicParsing="false" text="Cancel" />
+                        <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="59.0" text="Cancel" />
                      </children>
                   </VBox>
                </children>
             </HBox>
          </items></ToolBar>
-      <HBox layoutX="40.0" layoutY="60.0" prefHeight="325.0" prefWidth="485.0">
+      <HBox layoutX="40.0" layoutY="60.0" prefHeight="325.0" prefWidth="433.0">
          <children>
-            <VBox alignment="TOP_CENTER" prefHeight="148.0" prefWidth="103.0">
+            <VBox alignment="TOP_CENTER" prefHeight="325.0" prefWidth="127.0">
                <children>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Appointment ID" />
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Title" />
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Description" />
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Location" />
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Appointment ID">
+                     <VBox.margin>
+                        <Insets top="5.0" />
+                     </VBox.margin></Text>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Title">
+                     <VBox.margin>
+                        <Insets top="10.0" />
+                     </VBox.margin></Text>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Description">
+                     <VBox.margin>
+                        <Insets top="16.0" />
+                     </VBox.margin></Text>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Location">
+                     <VBox.margin>
+                        <Insets bottom="5.0" top="16.0" />
+                     </VBox.margin></Text>
                </children>
             </VBox>
-            <VBox alignment="TOP_CENTER" prefHeight="325.0" prefWidth="274.0">
+            <VBox alignment="CENTER_LEFT" prefHeight="340.0" prefWidth="274.0">
                <children>
                   <TextField editable="false" promptText="auto assigned" />
-                  <TextField fx:id="titleInput" promptText="Enter a title" />
-                  <TextField fx:id="descInput" promptText="Enter a Description" />
-                  <TextField fx:id="locationInput" promptText="Enter a location" />
+                  <TextField fx:id="titleInput" promptText="Enter a title">
+                     <VBox.margin>
+                        <Insets top="5.0" />
+                     </VBox.margin></TextField>
+                  <TextField fx:id="descInput" promptText="Enter a Description">
+                     <VBox.margin>
+                        <Insets top="5.0" />
+                     </VBox.margin></TextField>
+                  <TextField fx:id="locationInput" promptText="Enter a location">
+                     <VBox.margin>
+                        <Insets top="5.0" />
+                     </VBox.margin></TextField>
+                  <TextField fx:id="typeInput" promptText="Enter type" />
                   <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Start">
                      <VBox.margin>
                         <Insets bottom="3.0" top="5.0" />
@@ -88,7 +103,7 @@
                   </Text>
                   <HBox alignment="CENTER" prefHeight="24.0" prefWidth="232.0">
                      <children>
-                        <DatePicker fx:id="startDateInput1" prefHeight="26.0" prefWidth="198.0" promptText="Enter start date">
+                        <DatePicker fx:id="endDateInput" prefHeight="26.0" prefWidth="198.0" promptText="Enter start date">
                            <opaqueInsets>
                               <Insets top="10.0" />
                            </opaqueInsets>
@@ -96,22 +111,43 @@
                               <Insets right="5.0" />
                            </HBox.margin>
                         </DatePicker>
-                        <Spinner fx:id="startHour1" prefHeight="26.0" prefWidth="108.0" />
+                        <Spinner fx:id="endHour" prefHeight="26.0" prefWidth="108.0" />
                         <Text strokeType="OUTSIDE" strokeWidth="0.0" text=":">
                            <HBox.margin>
                               <Insets left="5.0" right="5.0" />
                            </HBox.margin>
                         </Text>
-                        <Spinner fx:id="startMin1" prefHeight="26.0" prefWidth="108.0" />
+                        <Spinner fx:id="endMin" prefHeight="26.0" prefWidth="108.0" />
                      </children>
                      <opaqueInsets>
                         <Insets bottom="5.0" />
                      </opaqueInsets>
+                     <VBox.margin>
+                        <Insets bottom="5.0" top="5.0" />
+                     </VBox.margin>
                   </HBox>
+                  <MenuButton fx:id="customerIdDropdown" mnemonicParsing="false" prefHeight="26.0" prefWidth="105.0" text="Customers">
+                    <items>
+                      <MenuItem mnemonicParsing="false" text="Action 1" />
+                      <MenuItem mnemonicParsing="false" text="Action 2" />
+                    </items>
+                     <VBox.margin>
+                        <Insets bottom="5.0" top="5.0" />
+                     </VBox.margin>
+                  </MenuButton>
+                  <MenuButton fx:id="contactId" mnemonicParsing="false" prefHeight="26.0" prefWidth="105.0" text="Contacts">
+                     <items>
+                        <MenuItem mnemonicParsing="false" text="Action 1" />
+                        <MenuItem mnemonicParsing="false" text="Action 2" />
+                     </items>
+                     <VBox.margin>
+                        <Insets bottom="5.0" top="5.0" />
+                     </VBox.margin>
+                  </MenuButton>
                </children>
             </VBox>
          </children>
       </HBox>
-      <Button layoutX="520.0" layoutY="327.0" mnemonicParsing="false" text="Save" />
+      <Button fx:id="saveBtn" layoutX="417.0" layoutY="413.0" mnemonicParsing="false" onAction="#generateAppointment" text="Save" />
    </children>
 </AnchorPane>

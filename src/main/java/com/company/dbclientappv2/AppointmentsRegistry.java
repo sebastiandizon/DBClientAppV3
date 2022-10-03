@@ -18,22 +18,7 @@ public class AppointmentsRegistry implements Initializable {
     String endDate;
     public static ObservableList<Appointment> allAppointments = FXCollections.observableArrayList();
 
-    public ObservableList<Appointment> getAllAppointments(){
-        return allAppointments;
-    }
-
-    public static ObservableList<Appointment> getSelectedAppointments(Timestamp start, Timestamp end){
-        ObservableList<Appointment> selectedAppointments = FXCollections.observableArrayList();
-        for(Appointment appointment : allAppointments){
-            if(appointment.startTime.after(start) || appointment.startTime.equals(start) && appointment.endTime.equals(end) || appointment.endTime.before(end)) {
-                selectedAppointments.add(appointment);
-            }
-        }
-        return selectedAppointments;
-    }
-
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
+    public static ObservableList<Appointment> getAllAppointments(){
         try {
             Statement statement = connection.createStatement();
             String query = "SELECT * FROM client_schedule.appointments;";
@@ -50,7 +35,27 @@ public class AppointmentsRegistry implements Initializable {
                 int userId = rs.getInt("User_ID");
                 int contactId = rs.getInt("Contact_ID");
                 allAppointments.add(new Appointment(apptId, title, description, location, type, start, end, customerId, contactId));
+                System.out.println("Added Appointment");
             }
         } catch (SQLException e) {e.printStackTrace();}
+        return allAppointments;
+    }
+
+    public static ObservableList<Appointment> getSelectedAppointments(Timestamp start, Timestamp end) {
+        ObservableList<Appointment> selectedAppointments = FXCollections.observableArrayList();
+        for(Appointment appointment : allAppointments){
+            if(!(appointment.getStartTime().before(start) || appointment.getEndTime().after(end))) {
+                selectedAppointments.add(appointment);
+                System.out.println("Added");
+            } else {
+                System.out.println("Not added");
+            }
+        }
+        return selectedAppointments;
+    }
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        getAllAppointments();
     }
 }

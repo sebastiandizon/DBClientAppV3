@@ -1,4 +1,6 @@
-package com.company.dbclientappv2;
+package controllers;
+import com.company.dbclientappv2.Main;
+import com.company.dbclientappv2.Users;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;

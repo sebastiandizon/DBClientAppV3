@@ -6,4 +6,6 @@ module com.company.dbclientappv2 {
 
     opens com.company.dbclientappv2 to javafx.fxml;
     exports com.company.dbclientappv2;
+    exports controllers;
+    opens controllers to javafx.fxml;
 }

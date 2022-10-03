@@ -1,7 +1,7 @@
-package com.company.dbclientappv2;
+package controllers;
 
 public interface AppointmentProcessing {
     void generateAppointment();
-    void validateAppointment();
+    boolean validateAppointment();
 
 }
