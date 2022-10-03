@@ -2,6 +2,7 @@ package controllers;
 
 import com.company.dbclientappv2.Appointment;
 import com.company.dbclientappv2.AppointmentsRegistry;
+import com.company.dbclientappv2.Users;
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
@@ -34,12 +35,10 @@ public class NewAppointmentController implements AppointmentProcessing, Initiali
         String type = typeInput.getText();
         Timestamp startRange = Timestamp.valueOf(startDateInput.getValue().atStartOfDay());
         Timestamp endRange = Timestamp.valueOf(endDateInput.getValue().atStartOfDay());
-        Appointment newAppointment = new Appointment(42343, title, desc, location, type, startRange, endRange, 1, 1);
-        AppointmentsRegistry.allAppointments.add(newAppointment);
-        System.out.println("New appointment with Title:" + newAppointment.getTitle() + " and type: " + newAppointment.getType());
-
+        Appointment newAppointment = new Appointment(AppointmentsRegistry.allAppointments.size()+1, title, desc, location, type, startRange, endRange, 1, Users.userID, 1);
+        AppointmentsRegistry.addNewAppointment(newAppointment);
+        System.out.println("New appointment with id:" + newAppointment.getAppointmentId() + " and type: " + newAppointment.getType());
         closeStage();
-        //pass appointment to database here
     }
     public void closeStage() {
         Stage stage = (Stage) saveBtn.getScene().getWindow();

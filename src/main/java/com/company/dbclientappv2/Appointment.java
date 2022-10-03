@@ -14,7 +14,7 @@ public class Appointment {
     public int userID;
     public int contactId;
 
-    public Appointment(int appointmentId, String title, String description, String location, String type, Timestamp startTime, Timestamp endTime, int customerId, int contactId){
+    public Appointment(int appointmentId, String title, String description, String location, String type, Timestamp startTime, Timestamp endTime, int customerId, int userId, int contactId){
         this.appointmentId=appointmentId;
         this.title = title;
         this.description = description;
@@ -26,12 +26,11 @@ public class Appointment {
         this.userID = Users.userID;
         this.contactId = contactId;
     }
+    public int getAppointmentId() { return appointmentId; }
     public String getTitle(){
         return title;
     }
-    public String getDescription(){
-        return description;
-    }
+    public String getDescription(){ return description; }
     public String getLocation(){
         return location;
     }
@@ -47,6 +46,7 @@ public class Appointment {
     }
     public int getUserID() { return userID; }
 
+    public int getContactId() { return contactId; }
     public void setTitle(String title){
         this.title = title;
     }

@@ -126,7 +126,7 @@
                         <Insets bottom="5.0" top="5.0" />
                      </VBox.margin>
                   </HBox>
-                  <MenuButton fx:id="customerIdDropdown" mnemonicParsing="false" prefHeight="26.0" prefWidth="105.0" text="Customers">
+                  <MenuButton fx:id="customerIdDrop" mnemonicParsing="false" prefHeight="26.0" prefWidth="105.0" text="Customers">
                     <items>
                       <MenuItem mnemonicParsing="false" text="Action 1" />
                       <MenuItem mnemonicParsing="false" text="Action 2" />
@@ -135,7 +135,7 @@
                         <Insets bottom="5.0" top="5.0" />
                      </VBox.margin>
                   </MenuButton>
-                  <MenuButton fx:id="contactId" mnemonicParsing="false" prefHeight="26.0" prefWidth="105.0" text="Contacts">
+                  <MenuButton fx:id="contactIdDrop" mnemonicParsing="false" prefHeight="26.0" prefWidth="105.0" text="Contacts">
                      <items>
                         <MenuItem mnemonicParsing="false" text="Action 1" />
                         <MenuItem mnemonicParsing="false" text="Action 2" />

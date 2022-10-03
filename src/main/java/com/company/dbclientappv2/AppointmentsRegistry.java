@@ -34,7 +34,7 @@ public class AppointmentsRegistry implements Initializable {
                 int customerId = rs.getInt("Customer_ID");
                 int userId = rs.getInt("User_ID");
                 int contactId = rs.getInt("Contact_ID");
-                allAppointments.add(new Appointment(apptId, title, description, location, type, start, end, customerId, contactId));
+                allAppointments.add(new Appointment(apptId, title, description, location, type, start, end, customerId, userId, contactId));
                 System.out.println("Added Appointment");
             }
         } catch (SQLException e) {e.printStackTrace();}
@@ -52,6 +52,18 @@ public class AppointmentsRegistry implements Initializable {
             }
         }
         return selectedAppointments;
+    }
+    // TODO: 10/2/22 on appointment add: Add to SQL database
+    public static void addNewAppointment(Appointment appointment){
+        allAppointments.add(appointment);
+        try {
+            Statement statement = connection.createStatement();
+            String query = "INSERT INTO appointments (Title, Description, Location, Type, Start, End, Customer_ID, User_ID, Contact_ID)" +
+                    " VALUES (" + appointment.getTitle() + ", " + appointment.getDescription() + ", " + appointment.getLocation() + ", " + appointment.getType()
+                    + ", " + appointment.getStartTime() + ", " + appointment.getEndTime() + ", " + appointment.getUserID() + ", " + appointment.getContactId() + ")";
+            System.out.println(query);
+
+        } catch (SQLException e) {e.printStackTrace();}
     }
 
     @Override
