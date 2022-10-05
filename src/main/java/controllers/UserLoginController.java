@@ -29,6 +29,8 @@ public class UserLoginController {
                     stage.setTitle("Appointment");
                     stage.setScene(scene);
                     stage.show();
+                    Stage stage2 = (Stage) usernameField.getScene().getWindow();
+                    stage2.close();
                 } catch (IOException e) { e.printStackTrace(); }
             } else {
                 System.out.println("Login Unsuccessful");

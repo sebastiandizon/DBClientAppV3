@@ -30,6 +30,7 @@ public class PrimaryViewController implements Initializable {
     public Text appointmentsTitle;
     LocalDate nowDateTime = LocalDate.now();
     static int currentMonthInt;
+    ObservableList<Appointment> selectedAppointments = FXCollections.observableArrayList();
 
 
     // TODO: 9/26/22 add new fxml to create new appointment
@@ -40,32 +41,45 @@ public class PrimaryViewController implements Initializable {
             stage.setTitle("New Appointment");
             stage.setScene(scene);
             stage.show();
+        stage.setOnHiding(new EventHandler<WindowEvent>() {
+            @Override
+            public void handle(WindowEvent windowEvent) {
+                setMonthView();
+                appointmentView.refresh();
+                System.out.println("Table successfully updated");
+            }
+        });
     }
 
 
     // TODO: 9/28/22 Check if filtering methods work after newappt is done
     public void nextMonth(ActionEvent actionEvent){
-        currentMonthInt++;
-        setMonthView();
+        if(currentMonthInt < 12) {
+            currentMonthInt++;
+            setMonthView();
+        }
     }
     public void previousMonth(ActionEvent actionEvent){
-        currentMonthInt--;
-        setMonthView();
+        if(currentMonthInt > 1) {
+            currentMonthInt--;
+            setMonthView();
+        }
     }
 
     public void setMonthView(){
-        //ObservableList<Appointment> selectedAppointments = FXCollections.observableArrayList();
+        selectedAppointments.clear();
         appointmentsTitle.setText(String.valueOf(Month.of(currentMonthInt)));
-        Timestamp startTime  = Timestamp.valueOf(nowDateTime.withMonth(currentMonthInt).atStartOfDay());
-        Timestamp endTime  = Timestamp.valueOf(nowDateTime.withMonth(currentMonthInt).withDayOfMonth(Month.of(currentMonthInt).length(nowDateTime.isLeapYear())).atTime(11,59,59));
-        appointmentView.setItems(AppointmentsRegistry.getSelectedAppointments(startTime, endTime));
+        Instant startTime  = (nowDateTime.withMonth(currentMonthInt).withDayOfMonth(1).atStartOfDay()).toInstant(ZoneOffset.UTC);
+        Instant endTime  = (nowDateTime.withMonth(currentMonthInt).withDayOfMonth(Month.of(currentMonthInt).length(nowDateTime.isLeapYear())).atTime(LocalTime.MAX)).toInstant(ZoneOffset.UTC);
+        selectedAppointments.addAll(AppointmentsRegistry.getSelectedAppointments(startTime, endTime));
+        appointmentView.setItems(selectedAppointments);
         appointmentView.refresh();
     }
     public void handleWeekViewBtn(ActionEvent actionEvent){
-        Timestamp startTime  = Timestamp.valueOf(nowDateTime.withDayOfMonth(nowDateTime.getDayOfMonth()).atStartOfDay());
-        Timestamp endTime  = Timestamp.valueOf(nowDateTime.withDayOfMonth(nowDateTime.getDayOfMonth()+6).atTime(11,59,59));
-        appointmentView.setItems(AppointmentsRegistry.getSelectedAppointments(startTime, endTime));
-        appointmentView.refresh();
+//        Timestamp startTime  = Timestamp.valueOf(nowDateTime.withDayOfMonth(nowDateTime.getDayOfMonth()).atStartOfDay());
+//        Timestamp endTime  = Timestamp.valueOf(nowDateTime.withDayOfMonth(nowDateTime.getDayOfMonth()+6).atTime(11,59,59));
+//        appointmentView.setItems(AppointmentsRegistry.getSelectedAppointments(startTime, endTime));
+//        appointmentView.refresh();
    }
 
     public void generateTable(){

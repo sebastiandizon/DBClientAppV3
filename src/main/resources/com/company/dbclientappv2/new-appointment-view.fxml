@@ -53,19 +53,19 @@
             <VBox alignment="CENTER_LEFT" prefHeight="340.0" prefWidth="274.0">
                <children>
                   <TextField editable="false" promptText="auto assigned" />
-                  <TextField fx:id="titleInput" promptText="Enter a title">
+                  <TextField fx:id="Title" promptText="Enter a title">
                      <VBox.margin>
                         <Insets top="5.0" />
                      </VBox.margin></TextField>
-                  <TextField fx:id="descInput" promptText="Enter a Description">
+                  <TextField fx:id="Description" promptText="Enter a Description">
                      <VBox.margin>
                         <Insets top="5.0" />
                      </VBox.margin></TextField>
-                  <TextField fx:id="locationInput" promptText="Enter a location">
+                  <TextField fx:id="Location" promptText="Enter a location">
                      <VBox.margin>
                         <Insets top="5.0" />
                      </VBox.margin></TextField>
-                  <TextField fx:id="typeInput" promptText="Enter type" />
+                  <TextField fx:id="Type" promptText="Enter type" />
                   <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Start">
                      <VBox.margin>
                         <Insets bottom="3.0" top="5.0" />
@@ -73,7 +73,7 @@
                   </Text>
                   <HBox alignment="CENTER" prefHeight="24.0" prefWidth="232.0">
                      <children>
-                        <DatePicker fx:id="startDateInput" prefHeight="26.0" prefWidth="198.0" promptText="Enter start date">
+                        <DatePicker fx:id="StartDate" prefHeight="26.0" prefWidth="198.0" promptText="Enter start date">
                            <opaqueInsets>
                               <Insets top="10.0" />
                            </opaqueInsets>
@@ -81,13 +81,13 @@
                               <Insets right="5.0" />
                            </HBox.margin>
                         </DatePicker>
-                        <Spinner fx:id="startHour" prefHeight="26.0" prefWidth="108.0" />
+                        <Spinner fx:id="StartHour" prefHeight="26.0" prefWidth="108.0" />
                         <Text strokeType="OUTSIDE" strokeWidth="0.0" text=":">
                            <HBox.margin>
                               <Insets left="5.0" right="5.0" />
                            </HBox.margin>
                         </Text>
-                        <Spinner fx:id="startMin" prefHeight="26.0" prefWidth="108.0" />
+                        <Spinner fx:id="StartMinute" prefHeight="26.0" prefWidth="108.0" />
                      </children>
                      <opaqueInsets>
                         <Insets bottom="5.0" />
@@ -103,7 +103,7 @@
                   </Text>
                   <HBox alignment="CENTER" prefHeight="24.0" prefWidth="232.0">
                      <children>
-                        <DatePicker fx:id="endDateInput" prefHeight="26.0" prefWidth="198.0" promptText="Enter start date">
+                        <DatePicker fx:id="EndDate" prefHeight="26.0" prefWidth="198.0" promptText="Enter start date">
                            <opaqueInsets>
                               <Insets top="10.0" />
                            </opaqueInsets>
@@ -111,13 +111,13 @@
                               <Insets right="5.0" />
                            </HBox.margin>
                         </DatePicker>
-                        <Spinner fx:id="endHour" prefHeight="26.0" prefWidth="108.0" />
+                        <Spinner fx:id="EndHour" prefHeight="26.0" prefWidth="108.0" />
                         <Text strokeType="OUTSIDE" strokeWidth="0.0" text=":">
                            <HBox.margin>
                               <Insets left="5.0" right="5.0" />
                            </HBox.margin>
                         </Text>
-                        <Spinner fx:id="endMin" prefHeight="26.0" prefWidth="108.0" />
+                        <Spinner fx:id="EndMinute" prefHeight="26.0" prefWidth="108.0" />
                      </children>
                      <opaqueInsets>
                         <Insets bottom="5.0" />
@@ -126,24 +126,8 @@
                         <Insets bottom="5.0" top="5.0" />
                      </VBox.margin>
                   </HBox>
-                  <MenuButton fx:id="customerIdDrop" mnemonicParsing="false" prefHeight="26.0" prefWidth="105.0" text="Customers">
-                    <items>
-                      <MenuItem mnemonicParsing="false" text="Action 1" />
-                      <MenuItem mnemonicParsing="false" text="Action 2" />
-                    </items>
-                     <VBox.margin>
-                        <Insets bottom="5.0" top="5.0" />
-                     </VBox.margin>
-                  </MenuButton>
-                  <MenuButton fx:id="contactIdDrop" mnemonicParsing="false" prefHeight="26.0" prefWidth="105.0" text="Contacts">
-                     <items>
-                        <MenuItem mnemonicParsing="false" text="Action 1" />
-                        <MenuItem mnemonicParsing="false" text="Action 2" />
-                     </items>
-                     <VBox.margin>
-                        <Insets bottom="5.0" top="5.0" />
-                     </VBox.margin>
-                  </MenuButton>
+                  <ComboBox fx:id="CustomerID" prefWidth="150.0" promptText="Customer ID" />
+                  <ComboBox fx:id="ContactID" prefWidth="150.0" promptText="Contact ID" />
                </children>
             </VBox>
          </children>

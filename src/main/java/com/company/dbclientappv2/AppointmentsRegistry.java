@@ -9,6 +9,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Timestamp;
+import java.time.Instant;
 import java.util.ResourceBundle;
 
 import static helper.JDBC.connection;
@@ -29,24 +30,29 @@ public class AppointmentsRegistry implements Initializable {
                 String description = rs.getString("Description");
                 String location = rs.getString("Location");
                 String type = rs.getString("Type");
-                Timestamp start = rs.getTimestamp("Start");
-                Timestamp end = rs.getTimestamp("End");
+                Instant start = rs.getTimestamp("Start").toInstant();
+                Instant end = rs.getTimestamp("End").toInstant();
                 int customerId = rs.getInt("Customer_ID");
                 int userId = rs.getInt("User_ID");
                 int contactId = rs.getInt("Contact_ID");
                 allAppointments.add(new Appointment(apptId, title, description, location, type, start, end, customerId, userId, contactId));
                 System.out.println("Added Appointment");
+                System.out.println(start + " " + end);
             }
         } catch (SQLException e) {e.printStackTrace();}
         return allAppointments;
     }
 
-    public static ObservableList<Appointment> getSelectedAppointments(Timestamp start, Timestamp end) {
+    public static ObservableList<Appointment> getSelectedAppointments(Instant start, Instant end) {
         ObservableList<Appointment> selectedAppointments = FXCollections.observableArrayList();
+        System.out.println(start);
+        System.out.println(end);
         for(Appointment appointment : allAppointments){
-            if(!(appointment.getStartTime().before(start) || appointment.getEndTime().after(end))) {
+            System.out.println("Appointment start time: " +appointment.getStartTime());
+            System.out.println("Appointment end time: " +appointment.getEndTime());
+            if(!(appointment.getStartTime().isBefore(start) || appointment.getStartTime().isAfter(end) && appointment.getEndTime().isBefore(start) || appointment.getEndTime().isAfter(end))) {
                 selectedAppointments.add(appointment);
-                System.out.println("Added");
+                System.out.println("Added appointment "+ appointment.getTitle());
             } else {
                 System.out.println("Not added");
             }

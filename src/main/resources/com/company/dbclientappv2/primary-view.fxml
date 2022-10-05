@@ -64,7 +64,7 @@
                <children>
                   <HBox prefHeight="31.0" prefWidth="265.0">
                      <children>
-                        <Text fx:id="appointmentsTitle" strokeType="OUTSIDE" strokeWidth="0.0" text="default">
+                        <Text fx:id="appointmentsTitle" strokeType="OUTSIDE" strokeWidth="0.0" text="default" wrappingWidth="82.6533203125">
                            <font>
                               <Font size="14.0" />
                            </font>
