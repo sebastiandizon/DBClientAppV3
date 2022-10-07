@@ -17,21 +17,19 @@ public class UserLoginController {
     public TextField passwordField;
     public Text errorMsg;
 
-    public void login(ActionEvent actionEvent){
+    public void login(ActionEvent actionEvent) throws IOException{
         String usernameInput = usernameField.getText();
         String passwordInput = passwordField.getText();
             if(Users.authorizeLogin(usernameInput, passwordInput)){
                 System.out.println("Login Successful");
-                try {
-                    FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("primary-view.fxml"));
-                    Scene scene = new Scene(fxmlLoader.load());
-                    Stage stage = new Stage();
-                    stage.setTitle("Appointment");
-                    stage.setScene(scene);
-                    stage.show();
-                    Stage stage2 = (Stage) usernameField.getScene().getWindow();
-                    stage2.close();
-                } catch (IOException e) { e.printStackTrace(); }
+                FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("primary-view.fxml"));
+                Scene scene = new Scene(fxmlLoader.load());
+                Stage stage = new Stage();
+                stage.setTitle("Appointment");
+                stage.setScene(scene);
+                stage.show();
+                Stage stage2 = (Stage) usernameField.getScene().getWindow();
+                stage2.close();
             } else {
                 System.out.println("Login Unsuccessful");
                 errorMsg.setVisible(true);

@@ -8,13 +8,12 @@ import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.sql.Timestamp;
 import java.time.Instant;
 import java.util.ResourceBundle;
 
 import static helper.JDBC.connection;
 
-public class AppointmentsRegistry implements Initializable {
+public class AppointmentList implements Initializable {
     String startDate;
     String endDate;
     public static ObservableList<Appointment> allAppointments = FXCollections.observableArrayList();
@@ -35,7 +34,7 @@ public class AppointmentsRegistry implements Initializable {
                 int customerId = rs.getInt("Customer_ID");
                 int userId = rs.getInt("User_ID");
                 int contactId = rs.getInt("Contact_ID");
-                allAppointments.add(new Appointment(apptId, title, description, location, type, start, end, customerId, userId, contactId));
+                allAppointments.add(new Appointment(apptId, title, description, location, type, start, end, customerId, contactId));
                 System.out.println("Added Appointment");
                 System.out.println(start + " " + end);
             }
@@ -66,7 +65,7 @@ public class AppointmentsRegistry implements Initializable {
             Statement statement = connection.createStatement();
             String query = "INSERT INTO appointments (Title, Description, Location, Type, Start, End, Customer_ID, User_ID, Contact_ID)" +
                     " VALUES (" + appointment.getTitle() + ", " + appointment.getDescription() + ", " + appointment.getLocation() + ", " + appointment.getType()
-                    + ", " + appointment.getStartTime() + ", " + appointment.getEndTime() + ", " + appointment.getUserID() + ", " + appointment.getContactId() + ")";
+                    + ", " + appointment.getStartTime() + ", " + appointment.getEndTime() + ", " + appointment.getUserId() + ", " + appointment.getContactId() + ")";
             System.out.println(query);
 
         } catch (SQLException e) {e.printStackTrace();}
@@ -74,6 +73,6 @@ public class AppointmentsRegistry implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        getAllAppointments();
+
     }
 }

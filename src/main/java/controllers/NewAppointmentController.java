@@ -1,15 +1,13 @@
 package controllers;
 
 import com.company.dbclientappv2.Appointment;
-import com.company.dbclientappv2.AppointmentsRegistry;
-import com.company.dbclientappv2.Users;
+import com.company.dbclientappv2.AppointmentList;
 import helper.DatabaseQueries;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
-import org.w3c.dom.Text;
 
 import java.net.URL;
 import java.sql.*;
@@ -26,34 +24,36 @@ public class NewAppointmentController implements AppointmentProcessing, Initiali
 
     @Override
     public void generateAppointment() {
-            errorMsg = "";
+        errorMsg = "";
         ObservableList<Control> controlList = FXCollections.observableArrayList();
         controlList.addAll(Title, Description, Location, Type, StartDate, StartHour, StartMinute, EndDate, EndHour, EndMinute, CustomerID, ContactID);
-            try{
-                while(true) {
-                    for (Control control : controlList) {
-                        checkControl(control);
-                    }
-                    String title = Title.getText();
-                    String desc = Description.getText();
-                    String location = Location.getText();
-                    String type = Type.getText();
-                    Instant startRange = (StartDate.getValue().atTime(StartHour.getValue(), StartMinute.getValue()).toInstant(ZoneOffset.UTC));
-                    Instant endRange = (StartDate.getValue().atTime(StartHour.getValue(), StartMinute.getValue())).toInstant(ZoneOffset.UTC);
-
-                    int selectedCustomerId = Integer.valueOf(CustomerID.getSelectionModel().getSelectedItem().toString());
-                    int selectedContactId = Integer.valueOf(ContactID.getSelectionModel().getSelectedItem().toString());
-                    Appointment newAppointment = new Appointment(AppointmentsRegistry.allAppointments.size() + 1, title, desc, location, type, startRange, endRange, selectedCustomerId, Users.userID, selectedContactId);
-                    AppointmentsRegistry.addNewAppointment(newAppointment);
-                    closeStage();
-                    break;
+        try{
+            while(true) {
+                for (Control control : controlList) {
+                    checkControl(control);
                 }
-             } catch (NullPointerException n){
-                Alert alert = new Alert(Alert.AlertType.WARNING);
-                alert.setHeaderText("Appointment");
-                alert.setTitle("Appointment creation error");
-                alert.setContentText(errorMsg);
-                alert.showAndWait();}
+                String title = Title.getText();
+                String desc = Description.getText();
+                String location = Location.getText();
+                String type = Type.getText();
+
+                Instant startRange = (StartDate.getValue().atTime(StartHour.getValue(), StartMinute.getValue()).toInstant(ZoneOffset.UTC));
+                Instant endRange = (StartDate.getValue().atTime(StartHour.getValue(), StartMinute.getValue())).toInstant(ZoneOffset.UTC);
+
+                int selectedCustomerId = Integer.valueOf(CustomerID.getSelectionModel().getSelectedItem().toString());
+                int selectedContactId = Integer.valueOf(ContactID.getSelectionModel().getSelectedItem().toString());
+                Appointment newAppointment = new Appointment(AppointmentList.allAppointments.size() + 1, title, desc, location, type, startRange, endRange, selectedCustomerId, selectedContactId);
+                AppointmentList.addNewAppointment(newAppointment);
+                closeStage();
+                break;
+            }
+        } catch (NullPointerException n){
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setHeaderText("Appointment");
+            alert.setTitle("Appointment creation error");
+            alert.setContentText(errorMsg);
+            alert.showAndWait();
+        }
     }
 
     @Override

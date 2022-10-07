@@ -5,11 +5,11 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="545.0" prefWidth="813.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.PrimaryViewController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="702.0" prefWidth="1115.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.PrimaryViewController">
    <children>
-      <SplitPane prefHeight="545.0" prefWidth="181.0">
+      <SplitPane prefHeight="704.0" prefWidth="181.0">
          <items>
-            <AnchorPane prefHeight="540.0" prefWidth="179.0">
+            <AnchorPane prefHeight="696.0" prefWidth="179.0">
                <children>
                   <VBox layoutX="20.0" layoutY="57.0" prefHeight="162.0" prefWidth="146.0">
                      <children>
@@ -21,11 +21,12 @@
                               <ToggleGroup fx:id="appointment" />
                            </toggleGroup>
                         </RadioButton>
-                        <RadioButton fx:id="weekViewBtn" mnemonicParsing="false" onAction="#handleWeekViewBtn" text="Week View" toggleGroup="$appointment">
+                        <RadioButton fx:id="weekViewBtn" mnemonicParsing="false" onAction="#setWeekView" text="Week View" toggleGroup="$appointment">
                            <VBox.margin>
                               <Insets bottom="10.0" top="10.0" />
                            </VBox.margin>
                         </RadioButton>
+                        <RadioButton fx:id="allItemsBtn" mnemonicParsing="false" onAction="#setAllItems" text="All items" toggleGroup="$appointment" />
                         <RadioButton mnemonicParsing="false" text="Customers" toggleGroup="$appointment">
                            <VBox.margin>
                               <Insets bottom="10.0" top="10.0" />
@@ -33,12 +34,12 @@
                         </RadioButton>
                      </children>
                   </VBox>
-                  <DatePicker layoutX="12.0" layoutY="503.0" prefHeight="26.0" prefWidth="160.0" promptText="Search appointment" />
+                  <DatePicker layoutX="13.0" layoutY="662.0" prefHeight="26.0" prefWidth="160.0" promptText="Search appointment" />
                </children>
             </AnchorPane>
          </items>
       </SplitPane>
-      <ToolBar prefHeight="40.0" prefWidth="814.0">
+      <ToolBar prefHeight="40.0" prefWidth="1111.0">
         <items>
             <HBox prefHeight="0.0" prefWidth="799.0">
                <children>
@@ -58,13 +59,13 @@
             </HBox>
         </items>
       </ToolBar>
-      <VBox layoutX="234.0" layoutY="94.0" prefHeight="411.0" prefWidth="529.0">
+      <VBox layoutX="234.0" layoutY="94.0" prefHeight="570.0" prefWidth="858.0">
          <children>
             <HBox prefHeight="33.0" prefWidth="522.0">
                <children>
-                  <HBox prefHeight="31.0" prefWidth="265.0">
+                  <HBox prefHeight="33.0" prefWidth="426.0">
                      <children>
-                        <Text fx:id="appointmentsTitle" strokeType="OUTSIDE" strokeWidth="0.0" text="default" wrappingWidth="82.6533203125">
+                        <Text fx:id="appointmentsTitle" strokeType="OUTSIDE" strokeWidth="0.0" text="default" wrappingWidth="145.6533203125">
                            <font>
                               <Font size="14.0" />
                            </font>
@@ -72,18 +73,18 @@
                               <Insets right="10.0" top="10.0" />
                            </HBox.margin>
                         </Text>
-                        <Button fx:id="previousMonthBtn" mnemonicParsing="false" onAction="#previousMonth" text="&lt;&lt;">
+                        <Button fx:id="previousBtn" mnemonicParsing="false" onAction="#previousMonth" text="&lt;&lt;">
                            <HBox.margin>
                               <Insets top="5.0" />
                            </HBox.margin></Button>
-                        <Button fx:id="nextMonthBtn" mnemonicParsing="false" onAction="#nextMonth" prefHeight="26.0" prefWidth="33.0" text="&gt;&gt;">
+                        <Button fx:id="nextBtn" mnemonicParsing="false" onAction="#nextMonth" prefHeight="26.0" prefWidth="33.0" text="&gt;&gt;">
                            <HBox.margin>
                               <Insets top="5.0" />
                            </HBox.margin>
                         </Button>
                      </children>
                   </HBox>
-                  <HBox alignment="CENTER_RIGHT" prefHeight="31.0" prefWidth="322.0">
+                  <HBox alignment="CENTER_RIGHT" prefHeight="33.0" prefWidth="425.0">
                      <children>
                         <Button fx:id="newApptBtn" mnemonicParsing="false" onAction="#handleNewAppointmentBtn" text="Add new">
                            <HBox.margin>
@@ -107,20 +108,23 @@
                   <Insets bottom="5.0" />
                </VBox.margin>
             </HBox>
-            <TableView fx:id="appointmentView" prefHeight="205.0" prefWidth="537.0">
+            <TableView fx:id="appointmentView" prefHeight="261.0" prefWidth="858.0">
                <VBox.margin>
                   <Insets bottom="40.0" />
                </VBox.margin>
                <columns>
-                  <TableColumn fx:id="title" prefWidth="75.0" text="Name" />
-                  <TableColumn fx:id="description" prefWidth="116.0" text="Description" />
-                  <TableColumn fx:id="location" prefWidth="76.0" text="Location" />
-                  <TableColumn fx:id="type" prefWidth="73.0" text="Type" />
-                  <TableColumn fx:id="start" prefWidth="89.0" text="Start time" />
-                  <TableColumn fx:id="end" prefWidth="98.0" text="End time" />
+                  <TableColumn fx:id="appointment_ID" prefWidth="43.30839538574219" text="ID" />
+                  <TableColumn fx:id="title" prefWidth="89.34381103515625" text="Name" />
+                  <TableColumn fx:id="description" prefWidth="84.31243896484375" text="Description" />
+                  <TableColumn fx:id="contact" prefWidth="68.5" text="Contact ID" />
+                  <TableColumn fx:id="location" prefWidth="79.0" text="Location" />
+                  <TableColumn fx:id="type" prefWidth="79.5" text="Type" />
+                  <TableColumn fx:id="start" prefWidth="141.0" text="Start time" />
+                  <TableColumn fx:id="end" prefWidth="140.5" text="End time" />
+                  <TableColumn fx:id="customerId" prefWidth="75.0" text="Customer ID" />
+                  <TableColumn fx:id="userId" prefWidth="58.5" text="User ID" />
                </columns>
             </TableView>
-            <Button fx:id="refreshBtn" mnemonicParsing="false" onAction="#handleRefreshBtn" text="refresh" />
             <HBox prefHeight="38.0" prefWidth="529.0">
                <children>
                   <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Customer Information">
@@ -131,13 +135,17 @@
                         <Insets right="270.0" top="5.0" />
                      </HBox.margin>
                   </Text>
-                  <TextField prefHeight="26.0" prefWidth="108.0" promptText="Search contacts" />
+                  <HBox alignment="CENTER_RIGHT" prefHeight="38.0" prefWidth="529.0">
+                     <children>
+                        <TextField prefHeight="26.0" prefWidth="193.0" promptText="Search contacts" />
+                     </children>
+                  </HBox>
                </children>
                <VBox.margin>
                   <Insets bottom="5.0" />
                </VBox.margin>
             </HBox>
-            <TableView prefHeight="134.0" prefWidth="532.0">
+            <TableView prefHeight="190.0" prefWidth="858.0">
               <columns>
                 <TableColumn prefWidth="75.0" text="Name" />
                 <TableColumn prefWidth="75.0" text="C2" />
