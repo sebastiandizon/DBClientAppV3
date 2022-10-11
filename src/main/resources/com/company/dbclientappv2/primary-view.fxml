@@ -5,14 +5,15 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="702.0" prefWidth="1115.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.PrimaryViewController">
+<AnchorPane fx:id="primaryView" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="702.0" prefWidth="1115.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.PrimaryViewController">
    <children>
       <SplitPane prefHeight="704.0" prefWidth="181.0">
          <items>
-            <AnchorPane prefHeight="696.0" prefWidth="179.0">
+            <AnchorPane prefHeight="694.0" prefWidth="179.0">
                <children>
                   <VBox layoutX="20.0" layoutY="57.0" prefHeight="162.0" prefWidth="146.0">
                      <children>
+                        <MenuButton fx:id="viewMenu" mnemonicParsing="false" prefHeight="26.0" prefWidth="144.0" text="Appointments View" />
                         <RadioButton fx:id="monthViewBtn" mnemonicParsing="false" onAction="#setMonthView" selected="true" text="Month View">
                            <VBox.margin>
                               <Insets bottom="10.0" top="10.0" />
@@ -27,14 +28,8 @@
                            </VBox.margin>
                         </RadioButton>
                         <RadioButton fx:id="allItemsBtn" mnemonicParsing="false" onAction="#setAllItems" text="All items" toggleGroup="$appointment" />
-                        <RadioButton mnemonicParsing="false" text="Customers" toggleGroup="$appointment">
-                           <VBox.margin>
-                              <Insets bottom="10.0" top="10.0" />
-                           </VBox.margin>
-                        </RadioButton>
                      </children>
                   </VBox>
-                  <DatePicker layoutX="13.0" layoutY="662.0" prefHeight="26.0" prefWidth="160.0" promptText="Search appointment" />
                </children>
             </AnchorPane>
          </items>
@@ -43,7 +38,7 @@
         <items>
             <HBox prefHeight="0.0" prefWidth="799.0">
                <children>
-                  <Text fx:id="usernameText" strokeType="OUTSIDE" strokeWidth="0.0" text="username" wrappingWidth="100.8212890625">
+                  <Text fx:id="usernameText" strokeType="OUTSIDE" strokeWidth="0.0" text="Appointment Scheduling V2" wrappingWidth="219.8212890625">
                      <font>
                         <Font size="18.0" />
                      </font>
@@ -91,7 +86,7 @@
                               <Insets right="5.0" top="5.0" />
                            </HBox.margin>
                         </Button>
-                        <Button mnemonicParsing="false" text="Remove">
+                        <Button fx:id="removeAppt" mnemonicParsing="false" onAction="#handleRemoveBtn" text="Remove">
                            <HBox.margin>
                               <Insets right="5.0" top="5.0" />
                            </HBox.margin>
@@ -108,7 +103,7 @@
                   <Insets bottom="5.0" />
                </VBox.margin>
             </HBox>
-            <TableView fx:id="appointmentView" prefHeight="261.0" prefWidth="858.0">
+            <TableView fx:id="appointmentView" prefHeight="481.0" prefWidth="858.0">
                <VBox.margin>
                   <Insets bottom="40.0" />
                </VBox.margin>
@@ -119,41 +114,20 @@
                   <TableColumn fx:id="contact" prefWidth="68.5" text="Contact ID" />
                   <TableColumn fx:id="location" prefWidth="79.0" text="Location" />
                   <TableColumn fx:id="type" prefWidth="79.5" text="Type" />
-                  <TableColumn fx:id="start" prefWidth="141.0" text="Start time" />
-                  <TableColumn fx:id="end" prefWidth="140.5" text="End time" />
+                  <TableColumn fx:id="start" prefWidth="148.99713134765625" text="Start time" />
+                  <TableColumn fx:id="end" prefWidth="132.50286865234375" text="End time" />
                   <TableColumn fx:id="customerId" prefWidth="75.0" text="Customer ID" />
                   <TableColumn fx:id="userId" prefWidth="58.5" text="User ID" />
                </columns>
             </TableView>
             <HBox prefHeight="38.0" prefWidth="529.0">
                <children>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Customer Information">
-                     <font>
-                        <Font size="16.0" />
-                     </font>
-                     <HBox.margin>
-                        <Insets right="270.0" top="5.0" />
-                     </HBox.margin>
-                  </Text>
-                  <HBox alignment="CENTER_RIGHT" prefHeight="38.0" prefWidth="529.0">
-                     <children>
-                        <TextField prefHeight="26.0" prefWidth="193.0" promptText="Search contacts" />
-                     </children>
-                  </HBox>
+                  <HBox alignment="CENTER_RIGHT" prefHeight="38.0" prefWidth="529.0" />
                </children>
                <VBox.margin>
                   <Insets bottom="5.0" />
                </VBox.margin>
             </HBox>
-            <TableView prefHeight="190.0" prefWidth="858.0">
-              <columns>
-                <TableColumn prefWidth="75.0" text="Name" />
-                <TableColumn prefWidth="75.0" text="C2" />
-              </columns>
-               <VBox.margin>
-                  <Insets />
-               </VBox.margin>
-            </TableView>
          </children>
       </VBox>
       <Text layoutX="198.0" layoutY="71.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Appointments">

@@ -8,4 +8,8 @@ module com.company.dbclientappv2 {
     exports com.company.dbclientappv2;
     exports controllers;
     opens controllers to javafx.fxml;
+    exports helper;
+    opens helper to javafx.fxml;
+    exports lists;
+    opens lists to javafx.fxml;
 }

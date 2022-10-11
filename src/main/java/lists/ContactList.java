@@ -1,5 +1,6 @@
-package com.company.dbclientappv2;
+package lists;
 
+import com.company.dbclientappv2.Contact;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 

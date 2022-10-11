@@ -39,7 +39,9 @@ public abstract class JDBC {
             System.out.println("Error:" + e.getMessage());
         }
     }
-
+    public static TimeZone getUserTimeZone() {
+        return userTimeZone;
+    }
 //    public static void selectTable(String ColumnName){
 //        try {
 //            Statement statement = connection.createStatement();

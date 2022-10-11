@@ -10,6 +10,7 @@ import static helper.JDBC.*;
 
 public abstract class Users {
     public static int userId;
+    public static String userName;
     public static boolean authorizeLogin(String username, String userPassword) {
         try {
             Statement statement = connection.createStatement();
@@ -19,6 +20,7 @@ public abstract class Users {
                 if (hashText(rs.getString("User_Name")).equals(hashText(username)) &&
                 hashText(rs.getString("Password")).equals(hashText(userPassword))) {
                     userId = rs.getInt("User_ID");
+                    userName = rs.getString("User_Name");
                     return true;
                 }
             }

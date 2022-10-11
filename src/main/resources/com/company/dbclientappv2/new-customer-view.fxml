@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="357.0" prefWidth="582.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.NewCustomerController">
+   <children>
+      <Text layoutX="21.0" layoutY="25.0" strokeType="OUTSIDE" strokeWidth="0.0" text="New Customer" />
+      <VBox layoutX="73.0" layoutY="58.0" prefHeight="252.0" prefWidth="430.0">
+         <children>
+            <HBox prefHeight="167.0" prefWidth="493.0">
+               <children>
+                  <VBox prefHeight="140.0" prefWidth="115.0">
+                     <children>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Customer ID">
+                           <VBox.margin>
+                              <Insets top="5.0" />
+                           </VBox.margin></Text>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Name">
+                           <VBox.margin>
+                              <Insets top="10.0" />
+                           </VBox.margin></Text>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Address">
+                           <VBox.margin>
+                              <Insets top="11.0" />
+                           </VBox.margin></Text>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Postal Code">
+                           <VBox.margin>
+                              <Insets top="11.0" />
+                           </VBox.margin></Text>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Phone Number">
+                           <VBox.margin>
+                              <Insets top="11.0" />
+                           </VBox.margin></Text>
+                     </children>
+                  </VBox>
+                  <VBox prefHeight="302.0" prefWidth="274.0">
+                     <children>
+                        <TextField promptText="Auto assigned" />
+                        <TextField fx:id="nameField" promptText="Enter first and last name" />
+                        <TextField fx:id="addressField" promptText="Enter an address" />
+                        <TextField fx:id="postalField" promptText="Enter a postal code" />
+                        <TextField fx:id="phoneField" promptText="Enter a phone number" />
+                     </children>
+                  </VBox>
+               </children>
+               <VBox.margin>
+                  <Insets bottom="10.0" />
+               </VBox.margin>
+            </HBox>
+            <HBox prefHeight="140.0" prefWidth="419.0">
+               <children>
+                  <HBox prefHeight="100.0" prefWidth="200.0">
+                     <children>
+                        <VBox prefHeight="137.0" prefWidth="202.0">
+                           <children>
+                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Country">
+                                 <VBox.margin>
+                                    <Insets bottom="5.0" />
+                                 </VBox.margin></Text>
+                              <ComboBox prefHeight="26.0" prefWidth="194.0" promptText="Select a country" />
+                           </children>
+                        </VBox>
+                     </children>
+                  </HBox>
+                  <VBox prefHeight="137.0" prefWidth="228.0">
+                     <children>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Division">
+                           <VBox.margin>
+                              <Insets bottom="5.0" />
+                           </VBox.margin></Text>
+                        <ComboBox prefHeight="26.0" prefWidth="229.0" promptText="Select a first level divison" />
+                     </children>
+                  </VBox>
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+      <Button fx:id="saveBtn" layoutX="449.0" layoutY="310.0" mnemonicParsing="false" text="Save" />
+      <ToolBar prefHeight="40.0" prefWidth="582.0">
+        <items>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="New Customer" />
+        </items>
+      </ToolBar>
+   </children>
+</AnchorPane>

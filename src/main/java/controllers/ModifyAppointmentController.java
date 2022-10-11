@@ -1,8 +1,6 @@
 package controllers;
 
 import com.company.dbclientappv2.Appointment;
-import helper.JDBC;
-import lists.AppointmentList;
 import helper.InstanceHandling;
 import helper.DatabaseQueries;
 import javafx.collections.FXCollections;
@@ -12,12 +10,12 @@ import javafx.scene.control.*;
 import javafx.stage.Stage;
 
 import java.net.URL;
-import java.sql.*;
+import java.sql.SQLException;
 import java.time.*;
-import java.util.ConcurrentModificationException;
 import java.util.ResourceBundle;
 
-public class NewAppointmentController implements InstanceHandling, Initializable {
+public class ModifyAppointmentController implements InstanceHandling, Initializable {
+    public Appointment selectedAppointment;
     public TextField Title, Description, Location, Type;
     public DatePicker StartDate, EndDate;
     public Button saveBtn;
@@ -30,8 +28,8 @@ public class NewAppointmentController implements InstanceHandling, Initializable
         errorMsg = "";
         ObservableList<Control> controlList = FXCollections.observableArrayList();
         controlList.addAll(Title, Description, Location, Type, StartDate, StartHour, StartMinute, EndDate, EndHour, EndMinute, CustomerID, ContactID);
-        try {
-            while (true) {
+        try{
+            while(true) {
                 for (Control control : controlList) {
                     checkControl(control);
                 }
@@ -40,28 +38,17 @@ public class NewAppointmentController implements InstanceHandling, Initializable
                 String location = Location.getText();
                 String type = Type.getText();
 
-                ZonedDateTime startRange = ((StartDate.getValue().atTime(StartHour.getValue(), StartMinute.getValue())).atZone(JDBC.getUserTimeZone().toZoneId()));
-                ZonedDateTime endRange = (EndDate.getValue().atTime(EndHour.getValue(), EndMinute.getValue()).atZone(JDBC.getUserTimeZone().toZoneId()));
-
-                int selectedCustomerId = Integer.valueOf(CustomerID.getSelectionModel().getSelectedItem().toString());
-                int selectedContactId = Integer.valueOf(ContactID.getSelectionModel().getSelectedItem().toString());
-                Appointment newAppointment = new Appointment(AppointmentList.allAppointments.size() + 1, title, desc, location, type, startRange, endRange, selectedCustomerId, selectedContactId);
-                if (checkOverlap(newAppointment)) {
-                    AppointmentList.addNewAppointment(newAppointment);
-                } else {
-                    errorMsg = errorMsg + "One or more appointments overlap";
-                    throw new ConcurrentModificationException("Appointments are overlapping");
-                }
-                closeStage();
+//                ZonedDateTime startRange = ((StartDate.getValue().atTime(StartHour.getValue(), StartMinute.getValue())).atZone(JDBC.getUserTimeZone().toZoneId()));
+//                ZonedDateTime endRange = (EndDate.getValue().atTime(EndHour.getValue(), EndMinute.getValue()).atZone(JDBC.getUserTimeZone().toZoneId()));
+//
+//                int selectedCustomerId = Integer.valueOf(CustomerID.getSelectionModel().getSelectedItem().toString());
+//                int selectedContactId = Integer.valueOf(ContactID.getSelectionModel().getSelectedItem().toString());
+//                Appointment newAppointment = new Appointment(AppointmentList.allAppointments.size() + 1, title, desc, location, type, startRange, endRange, selectedCustomerId, selectedContactId);
+//                AppointmentList.addNewAppointment(newAppointment);
+//                closeStage();
                 break;
             }
-        } catch (NullPointerException n) {
-            Alert alert = new Alert(Alert.AlertType.WARNING);
-            alert.setHeaderText("Appointment");
-            alert.setTitle("Appointment creation error");
-            alert.setContentText(errorMsg);
-            alert.showAndWait();
-        } catch (ConcurrentModificationException e) {
+        } catch (NullPointerException n){
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setHeaderText("Appointment");
             alert.setTitle("Appointment creation error");
@@ -100,16 +87,9 @@ public class NewAppointmentController implements InstanceHandling, Initializable
         return true;
     }
 
-    public boolean checkOverlap(Appointment appointment) {
-        for(Appointment existingAppointments : AppointmentList.allAppointments){
-            if(existingAppointments.getStartTime().isBefore(appointment.getEndTime()) && existingAppointments.getEndTime().isAfter(appointment.getEndTime()) ||
-                    existingAppointments.getStartTime().isBefore(appointment.getEndTime()) && existingAppointments.getEndTime().isAfter(appointment.startTime) ||
-                    existingAppointments.getStartTime().equals(appointment.getStartTime()) && existingAppointments.getEndTime().equals(appointment.getEndTime())){
-            return false;
-            }
-        }
-    return true;
+    public boolean checkOverlap(Instant start, Instant end) {
 
+    return true;
     }
 
     @Override

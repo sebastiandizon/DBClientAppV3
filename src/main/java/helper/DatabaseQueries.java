@@ -2,6 +2,7 @@ package helper;
 
 import com.company.dbclientappv2.Contact;
 import com.company.dbclientappv2.Country;
+import com.company.dbclientappv2.Customer;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -33,23 +34,10 @@ public class DatabaseQueries {
         }
         return userIdList;
     }
-    public static void update() throws SQLException{
-
-    }
-//    public static ObservableList<> getContacts{
-//
-//    }
-
-    public static ObservableList<Country> retrieveCountries() throws SQLException{
-        ObservableList<Country> countries = FXCollections.observableArrayList();
+    public static ResultSet retrieveTable(String tableName) throws SQLException{
         Statement statement = connection.createStatement();
-        String query = "SELECT * FROM client_schedule.countries";
+        String query = "SELECT * FROM " + tableName;
         ResultSet rs = statement.executeQuery(query);
-        while(rs.next()){
-            int countryId = rs.getInt("Country_ID");
-            String country = rs.getString("Country");
-            //Country newCountry = new Country()
-        }
-        return countries;
+        return rs;
     }
 }
