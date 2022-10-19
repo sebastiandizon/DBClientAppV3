@@ -54,19 +54,24 @@
                <children>
                   <HBox alignment="CENTER_LEFT" prefHeight="33.0" prefWidth="425.0">
                      <children>
-                        <Button fx:id="newCustomer" mnemonicParsing="false" text="Add new">
+                        <Button fx:id="newCustomer" mnemonicParsing="false" onAction="#handleNewCustomer" text="Add new">
                            <HBox.margin>
                               <Insets right="5.0" top="5.0" />
                            </HBox.margin>
                         </Button>
-                        <Button fx:id="removeCustomer" mnemonicParsing="false" text="Remove">
+                        <Button fx:id="removeCustomer" mnemonicParsing="false" onAction="#handleRemoveCustomer" text="Remove">
                            <HBox.margin>
                               <Insets right="5.0" top="5.0" />
                            </HBox.margin>
                         </Button>
-                        <Button fx:id="modifyCustomer" mnemonicParsing="false" text="Modify">
+                        <Button fx:id="modifyCustomer" mnemonicParsing="false" onAction="#handleModifyCustomer" text="Modify">
                            <HBox.margin>
                               <Insets top="5.0" />
+                           </HBox.margin>
+                        </Button>
+                        <Button fx:id="clearAppointmentsBtn" mnemonicParsing="false" onAction="#handleClearAppointments" text="Clear appointments">
+                           <HBox.margin>
+                              <Insets left="5.0" top="5.0" />
                            </HBox.margin>
                         </Button>
                      </children>

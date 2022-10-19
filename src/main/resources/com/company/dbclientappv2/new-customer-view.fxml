@@ -1,11 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToolBar?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="357.0" prefWidth="582.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.NewCustomerController">
+<AnchorPane fx:id="newCustomer" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="357.0" prefWidth="582.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.NewCustomerController">
    <children>
       <Text layoutX="21.0" layoutY="25.0" strokeType="OUTSIDE" strokeWidth="0.0" text="New Customer" />
       <VBox layoutX="73.0" layoutY="58.0" prefHeight="252.0" prefWidth="430.0">
@@ -38,11 +43,11 @@
                   </VBox>
                   <VBox prefHeight="302.0" prefWidth="274.0">
                      <children>
-                        <TextField promptText="Auto assigned" />
-                        <TextField fx:id="nameField" promptText="Enter first and last name" />
-                        <TextField fx:id="addressField" promptText="Enter an address" />
-                        <TextField fx:id="postalField" promptText="Enter a postal code" />
-                        <TextField fx:id="phoneField" promptText="Enter a phone number" />
+                        <TextField fx:id="customerId" disable="true" promptText="Auto assigned" />
+                        <TextField fx:id="NameField" promptText="Enter first and last name" />
+                        <TextField fx:id="AddressField" promptText="Enter an address" />
+                        <TextField fx:id="PostalField" promptText="Enter a postal code" />
+                        <TextField fx:id="PhoneField" promptText="Enter a phone number" />
                      </children>
                   </VBox>
                </children>
@@ -54,13 +59,13 @@
                <children>
                   <HBox prefHeight="100.0" prefWidth="200.0">
                      <children>
-                        <VBox prefHeight="137.0" prefWidth="202.0">
+                        <VBox fx:id="country" prefHeight="137.0" prefWidth="202.0">
                            <children>
                               <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Country">
                                  <VBox.margin>
                                     <Insets bottom="5.0" />
                                  </VBox.margin></Text>
-                              <ComboBox prefHeight="26.0" prefWidth="194.0" promptText="Select a country" />
+                              <ComboBox fx:id="countryBox" onAction="#setDivisionCombo" prefHeight="26.0" prefWidth="194.0" promptText="Select a country" />
                            </children>
                         </VBox>
                      </children>
@@ -71,14 +76,14 @@
                            <VBox.margin>
                               <Insets bottom="5.0" />
                            </VBox.margin></Text>
-                        <ComboBox prefHeight="26.0" prefWidth="229.0" promptText="Select a first level divison" />
+                        <ComboBox fx:id="Division" prefHeight="26.0" prefWidth="229.0" promptText="Select a first level divison" />
                      </children>
                   </VBox>
                </children>
             </HBox>
          </children>
       </VBox>
-      <Button fx:id="saveBtn" layoutX="449.0" layoutY="310.0" mnemonicParsing="false" text="Save" />
+      <Button fx:id="saveBtn" layoutX="449.0" layoutY="310.0" mnemonicParsing="false" onAction="#setInstance" text="Save" />
       <ToolBar prefHeight="40.0" prefWidth="582.0">
         <items>
             <Text strokeType="OUTSIDE" strokeWidth="0.0" text="New Customer" />

@@ -1,9 +1,8 @@
 package helper;
 
-import javafx.scene.control.Control;
-
+@FunctionalInterface
 public interface InstanceHandling {
+
+    /**lambda expression that handles creation or modification of instance classes*/
     void setInstance();
-    boolean checkControl(Control control);
-    void closeStage();
 }

@@ -1,11 +1,11 @@
 package com.company.dbclientappv2;
 
-public class FirstLevelDivisions {
+public class FirstLevelDivision {
     int divisionId;
     String Division;
     int countryId;
-
-    public FirstLevelDivisions(int divisionId, String division, int countryId) {
+    /**default constructor for First Level Division data, specifies id value int and division name as String  */
+    public FirstLevelDivision(int divisionId, String division, int countryId) {
         this.divisionId = divisionId;
         Division = division;
         this.countryId = countryId;
@@ -22,10 +22,6 @@ public class FirstLevelDivisions {
 
     public String getDivision() {
         return Division;
-    }
-
-    public void setDivision(String division) {
-        Division = division;
     }
 
     public int getCountryId() {

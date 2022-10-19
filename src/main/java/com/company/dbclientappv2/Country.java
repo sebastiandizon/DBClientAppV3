@@ -10,20 +10,13 @@ public class Country {
         this.country = country;
         this.countryModifyRecord = new ObjectModify();
     }
-
+    /**@return int countryId*/
     public int getCountryId() {
         return countryId;
     }
-
+    /**@return String name of country*/
     public String getCountry() {
         return country;
     }
 
-    public void setCountry(String country) {
-        this.country = country;
-    }
-
-    public void setCountryId(int countryId) {
-        this.countryId = countryId;
-    }
 }
