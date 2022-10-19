@@ -1,5 +1,5 @@
 # DBClientAppV2 
-Comprehensive scheduling app that meets business expectations relating to specified hours, comprehensive error checking, and secure login features. 
+Comprehensive scheduling app that meets business expectations relating to specified hours, thorough error checking, and secure login features. 
 
 Made by Sebastian Dizon on Oct. 14, 2022. Email at sdizon6@wgu.edu. Version 2 (second submission)
 
