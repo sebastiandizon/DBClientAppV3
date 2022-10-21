@@ -4,7 +4,6 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import lists.*;
 
 import java.io.FileWriter;
 import java.io.IOException;
@@ -43,12 +42,9 @@ public class Main extends Application {
     public static void main(String[] args) {
 
         openConnection();
-        AppointmentList.retrieveAppointments();
 
-        CustomerList.retrieveAllCustomers();
-        ContactList.retrieveContacts();
-        CountryList.retrieveCountries();
-        FirstLevelDivList.retrieveDivisions();
+
+
         try {
             FileWriter writer = new FileWriter("login_activity.txt", true);
 
@@ -56,7 +52,5 @@ public class Main extends Application {
             e.printStackTrace();
         }
         launch();
-
-
     }
 }

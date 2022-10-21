@@ -31,7 +31,7 @@ public class UserLoginController implements Initializable {
         String passwordInput = passwordField.getText();
             if(Users.authorizeLogin(usernameInput, passwordInput)){
                 System.out.println("Login Successful");
-                FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("primary-view.fxml"));
+                FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("main-view.fxml"));
                 Scene scene = new Scene(fxmlLoader.load());
                 Stage stage = new Stage();
                 stage.setTitle("Appointment");

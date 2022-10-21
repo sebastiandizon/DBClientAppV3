@@ -10,6 +10,4 @@ module com.company.dbclientappv2 {
     opens controllers to javafx.fxml;
     exports helper;
     opens helper to javafx.fxml;
-    exports lists;
-    opens lists to javafx.fxml;
 }

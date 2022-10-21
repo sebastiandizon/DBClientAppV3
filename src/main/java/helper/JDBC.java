@@ -1,5 +1,7 @@
 package helper;
 import java.sql.*;
+import java.sql.Connection;
+
 import java.util.TimeZone;
 
 public abstract class JDBC {
@@ -41,18 +43,5 @@ public abstract class JDBC {
     public static TimeZone getUserTimeZone() {
         return userTimeZone;
     }
-//    public static void selectTable(String ColumnName){
-//        try {
-//            Statement statement = connection.createStatement();
-//            String query = "SELECT * FROM " + ColumnName;
-//            ResultSet rs = statement.executeQuery(query);
-//            while(rs.next()){
-//
-//            }
-//
-//        } catch (SQLException e) {
-//            System.out.println("SQL Exception Reached");
-//        }
-//
-//    }
+
 }

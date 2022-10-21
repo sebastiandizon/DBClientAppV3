@@ -4,28 +4,29 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 import java.time.Instant;
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
+import java.time.LocalDateTime;
 
+
+// id, title, deesc, location, type, start, end, createdate, createby, lastupdate, lastupdateby, customerid, userid, contactId
 public class Appointment {
-    public int appointmentId;
-    public String title;
-    public String description;
-    public String location;
-    public String type;
-    public ZonedDateTime startTime;
-    public ZonedDateTime endTime;
-    public int customerId;
-    public int userId;
-    public int contactId;
+    private int Appointment_ID;
+    private String Title;
+    private String Description;
+    private String Location;
+    private String Type;
+    private LocalDateTime startTime;
+    private LocalDateTime endTime;
+    private int customerId;
+    private int userId;
+    private int contactId;
     ObjectModify appointmentModifyRecord;
     /**default constructor value of Appointment. Auto generates author & date created / last updated data*/
-    public Appointment(int appointmentId, String title, String description, String location, String type, ZonedDateTime startTime, ZonedDateTime endTime, int customerId, int contactId, int userId){
-        this.appointmentId=appointmentId;
-        this.title = title;
-        this.description = description;
-        this.location = location;
-        this.type = type;
+    public Appointment(){
+        this.Appointment_ID = Appointment_ID;
+        this.Title = Title;
+        this.Description = Description;
+        this.Location = Location;
+        this.Type = Type;
         this.startTime = startTime;
         this.endTime = endTime;
         this.customerId = customerId;
@@ -34,61 +35,77 @@ public class Appointment {
         this.appointmentModifyRecord = new ObjectModify();
     }
     /**@return int appointmentId*/
-    public int getAppointmentId() {
-        return appointmentId;
+    public int getAppointment_ID() {
+        return Appointment_ID;
     }
-    /**@param appointmentId updates appointmentId with specified int*/
-    public void setAppointmentId(int appointmentId) {
-        this.appointmentId = appointmentId;
+    /**@param appointment_ID updates appointmentId with specified int*/
+    public void setAppointment_ID(int appointment_ID) {
+        this.Appointment_ID = appointment_ID;
     }
     /**@return String title */
     public String getTitle() {
-        return title;
+        return Title;
     }
     /**@param title updates String for title field */
     public void setTitle(String title) {
-        this.title = title;
+        this.Title = title;
     }
     /**@return String description*/
     public String getDescription() {
-        return description;
+        return Description;
     }
     /**@param description updates String for description field*/
     public void setDescription(String description) {
-        this.description = description;
+        this.Description = description;
     }
     /**@return String location*/
     public String getLocation() {
-        return location;
+        return Location;
     }
     /**@param location */
     public void setLocation(String location) {
-        this.location = location;
+        this.Location = location;
     }
     /**@return String type*/
     public String getType() {
-        return type;
+        return Type;
     }
     /**@param type */
     public void setType(String type) {
-        this.type = type;
+        this.Type = type;
     }
     /**@return ZonedDateTime startTime*/
-    public ZonedDateTime getStartTime() {
+    public LocalDateTime getStartTime() {
         return startTime;
     }
     /**@param startTime */
-    public void setStartTime(ZonedDateTime startTime) {
+    public void setStartTime(LocalDateTime startTime) {
         this.startTime = startTime;
     }
     /**@return ZonedDateTime endTime*/
-    public ZonedDateTime getEndTime() {
+    public LocalDateTime getEndTime() {
         return endTime;
     }
     /**@param endTime */
-    public void setEndTime(ZonedDateTime endTime) {
+    public void setEndTime(LocalDateTime endTime) {
         this.endTime = endTime;
     }
+    public Instant getCreateDate(){
+        return appointmentModifyRecord.getCreateDate();
+    }
+    public void setCreateDate(Instant createDate){
+        appointmentModifyRecord.setCreateDate(createDate);
+    }
+    public void setCreatedBy(String createdBy){
+        appointmentModifyRecord.setCreatedBy(createdBy);
+    }
+    public void setLastUpdate(Instant lastUpdate){
+        appointmentModifyRecord.setLastUpdate(lastUpdate);
+    }
+    public void setLastUpdateBy(String LastUpdateBy){
+        appointmentModifyRecord.setLastUpdateBy(LastUpdateBy);
+    }
+
     /**@return int customerId*/
     public int getCustomerId() {
         return customerId;
@@ -122,22 +139,22 @@ public class Appointment {
         this.appointmentModifyRecord = appointmentModifyRecord;
     }
     /**@return returns all corresponding */
-    public ObservableList<String> getAttributes(Appointment appointment){
-        ObservableList<String> attributes = FXCollections.observableArrayList();
-        attributes.add(String.valueOf(Integer.valueOf(appointment.getAppointmentId())));
-        attributes.add(appointment.getTitle());
-        attributes.add(appointment.getDescription());
-        attributes.add(appointment.getLocation());
-        attributes.add(appointment.getType());
-        attributes.add(String.valueOf(appointment.getStartTime().toInstant()));
-        attributes.add(String.valueOf(appointment.getEndTime().toInstant()));
-        attributes.add(String.valueOf(appointment.getModifyRecord().getCreateDate()));
-        attributes.add(String.valueOf(appointment.getModifyRecord().getCreatedBy()));
-        attributes.add(String.valueOf(appointment.getModifyRecord().getLastUpdate()));
-        attributes.add(String.valueOf(appointment.getModifyRecord().getLastUpdateBy()));
-        attributes.add(String.valueOf(appointment.getCustomerId()));
-        attributes.add(String.valueOf(appointment.getUserId()));
-        attributes.add(String.valueOf(appointment.getContactId()));
-        return attributes;
-    }
+//    public ObservableList<String> getAttributes(Appointment appointment){
+//        ObservableList<String> attributes = FXCollections.observableArrayList();
+//        attributes.add(String.valueOf(Integer.valueOf(appointment.getAppointment_ID())));
+//        attributes.add(appointment.getTitle());
+//        attributes.add(appointment.getDescription());
+//        attributes.add(appointment.getLocation());
+//        attributes.add(appointment.getType());
+//        attributes.add(String.valueOf(appointment.getStartTime().toInstant()));
+//        attributes.add(String.valueOf(appointment.getEndTime().toInstant()));
+//        attributes.add(String.valueOf(appointment.getModifyRecord().getCreateDate()));
+//        attributes.add(String.valueOf(appointment.getModifyRecord().getCreatedBy()));
+//        attributes.add(String.valueOf(appointment.getModifyRecord().getLastUpdate()));
+//        attributes.add(String.valueOf(appointment.getModifyRecord().getLastUpdateBy()));
+//        attributes.add(String.valueOf(appointment.getCustomerId()));
+//        attributes.add(String.valueOf(appointment.getUserId()));
+//        attributes.add(String.valueOf(appointment.getContactId()));
+//        return attributes;
+//    }
 }

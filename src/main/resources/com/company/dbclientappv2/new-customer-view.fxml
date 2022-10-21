@@ -65,7 +65,7 @@
                                  <VBox.margin>
                                     <Insets bottom="5.0" />
                                  </VBox.margin></Text>
-                              <ComboBox fx:id="countryBox" onAction="#setDivisionCombo" prefHeight="26.0" prefWidth="194.0" promptText="Select a country" />
+                              <ComboBox fx:id="countryBox"  prefHeight="26.0" prefWidth="194.0" promptText="Select a country" />
                            </children>
                         </VBox>
                      </children>
@@ -83,7 +83,7 @@
             </HBox>
          </children>
       </VBox>
-      <Button fx:id="saveBtn" layoutX="449.0" layoutY="310.0" mnemonicParsing="false" onAction="#setInstance" text="Save" />
+      <Button fx:id="saveBtn" layoutX="449.0" layoutY="310.0" mnemonicParsing="false" text="Save" />
       <ToolBar prefHeight="40.0" prefWidth="582.0">
         <items>
             <Text strokeType="OUTSIDE" strokeWidth="0.0" text="New Customer" />
