@@ -1,6 +1,7 @@
 package controllers;
 
-import com.company.dbclientappv2.Main;
+import model.Main;
+import DAO.AppointmentDAOInterfaceImpl;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -13,6 +14,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 public class MainController implements Initializable {
@@ -22,31 +24,41 @@ public class MainController implements Initializable {
 
 
     @Override
-    public void initialize(URL url, ResourceBundle resourceBundle){
+    public void initialize(URL url, ResourceBundle resourceBundle) {
         MenuItem appointmentsView = new MenuItem("Appointments View");
         MenuItem contactsView = new MenuItem("Customer View");
         appointmentsView.setOnAction(e -> {
             try {
                 FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("primary-view.fxml"));
                 Scene scene = new Scene(fxmlLoader.load());
-                Stage stage = (Stage)primaryView.getScene().getWindow();
+                Stage stage = (Stage) primaryView.getScene().getWindow();
                 stage.setTitle("Appointments");
                 stage.setScene(scene);
                 stage.show();
-            } catch (IOException ioException) {ioException.printStackTrace();}
+            } catch (IOException ioException) {
+                ioException.printStackTrace();
+            }
         });
         contactsView.setOnAction(e -> {
             try {
-
                 FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("customer-view.fxml"));
                 Scene newScene = new Scene(fxmlLoader.load());
-                Stage stage = (Stage)primaryView.getScene().getWindow();
+                Stage stage = (Stage) primaryView.getScene().getWindow();
                 stage.setTitle("Customers");
                 stage.setScene(newScene);
                 stage.show();
-            } catch (IOException ioException) {ioException.printStackTrace();}
+            } catch (IOException ioException) {
+                ioException.printStackTrace();
+            }
         });
         viewMenu.getItems().addAll(appointmentsView, contactsView);
+
+        AppointmentDAOInterfaceImpl appointmentDAO = new AppointmentDAOInterfaceImpl();
+        try {
+            appointmentDAO.getAll();
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
     }
 
     public void setMonthView(ActionEvent actionEvent) {

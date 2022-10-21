@@ -1,6 +1,6 @@
 package controllers;
-import com.company.dbclientappv2.Main;
-import com.company.dbclientappv2.Users;
+import model.Main;
+import model.Users;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -14,7 +14,6 @@ import java.io.IOException;
 import java.net.URL;
 
 import java.util.ResourceBundle;
-import java.util.Scanner;
 
 public class UserLoginController implements Initializable {
 

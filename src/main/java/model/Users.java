@@ -1,4 +1,4 @@
-package com.company.dbclientappv2;
+package model;
 
 import java.io.IOException;
 import java.nio.file.Files;

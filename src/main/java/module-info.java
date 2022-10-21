@@ -4,10 +4,12 @@ module com.company.dbclientappv2 {
     requires java.sql;
 
 
-    opens com.company.dbclientappv2 to javafx.fxml;
-    exports com.company.dbclientappv2;
+    opens model to javafx.fxml;
+    exports model;
     exports controllers;
     opens controllers to javafx.fxml;
     exports helper;
     opens helper to javafx.fxml;
+    exports DAO;
+    opens DAO to javafx.fxml;
 }

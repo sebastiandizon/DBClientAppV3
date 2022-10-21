@@ -1,22 +1,22 @@
-package com.company.dbclientappv2;
+package model;
 
 public class Customer {
-    int customerId;
-    String customerName;
-    String address;
-    String postalCode;
-    String phone;
+    private int customerId;
+    private String customerName;
+    private String address;
+    private String postalCode;
+    private String phone;
     int divisionId;
-    ObjectModify objectModify;
+    ModifyRecord modifyRecord;
 
-    public Customer(int customerId, String customerName, String address, String postalCode, String phone, int divisionId){
+    public Customer(){
         this.customerId = customerId;
         this.customerName = customerName;
         this.address = address;
         this.postalCode = postalCode;
         this.phone = phone;
         this.divisionId = divisionId;
-        this.objectModify = new ObjectModify();
+        this.modifyRecord = new ModifyRecord();
     }
     /**@return int getCustomerId*/
     public int getCustomerId() {
@@ -67,8 +67,8 @@ public class Customer {
         this.divisionId = divisionId;
     }
     /**@return modify record of customer object*/
-    public ObjectModify getObjectModify() {
-        return objectModify;
+    public ModifyRecord getModifyRecord() {
+        return modifyRecord;
     }
 
 }

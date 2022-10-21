@@ -1,4 +1,4 @@
-package com.company.dbclientappv2;
+package model;
 
 public class Contact {
     int contactID;

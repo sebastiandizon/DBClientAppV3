@@ -1,7 +1,4 @@
-package com.company.dbclientappv2;
-
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
+package model;
 
 import java.time.Instant;
 import java.time.LocalDateTime;
@@ -19,7 +16,7 @@ public class Appointment {
     private int customerId;
     private int userId;
     private int contactId;
-    ObjectModify appointmentModifyRecord;
+    ModifyRecord appointmentModifyRecord;
     /**default constructor value of Appointment. Auto generates author & date created / last updated data*/
     public Appointment(){
         this.Appointment_ID = Appointment_ID;
@@ -32,7 +29,7 @@ public class Appointment {
         this.customerId = customerId;
         this.userId = userId;
         this.contactId = contactId;
-        this.appointmentModifyRecord = new ObjectModify();
+        this.appointmentModifyRecord = new ModifyRecord();
     }
     /**@return int appointmentId*/
     public int getAppointment_ID() {
@@ -131,11 +128,11 @@ public class Appointment {
         this.contactId = contactId;
     }
     /**@return ObjectModify modifyRecord with submethods that return values describing creation and modification times*/
-    public ObjectModify getModifyRecord(){
+    public ModifyRecord getModifyRecord(){
         return this.appointmentModifyRecord;
     }
     /**@param appointmentModifyRecord  sets modify record with ObjectModify type */
-    public void setAppointmentModifyRecord(ObjectModify appointmentModifyRecord) {
+    public void setAppointmentModifyRecord(ModifyRecord appointmentModifyRecord) {
         this.appointmentModifyRecord = appointmentModifyRecord;
     }
     /**@return returns all corresponding */

@@ -1,15 +1,16 @@
-package com.company.dbclientappv2;
+package model;
 
 public class FirstLevelDivision {
-    int divisionId;
-    String Division;
-    int countryId;
+    private int divisionId;
+    private String division;
+    private int countryId;
+    private ModifyRecord firstLevelModifyRecord;
     /**default constructor for First Level Division data, specifies id value int and division name as String  */
-    public FirstLevelDivision(int divisionId, String division, int countryId) {
+    public FirstLevelDivision() {
         this.divisionId = divisionId;
-        Division = division;
+        this.division = division;
         this.countryId = countryId;
-        ObjectModify firstLevelModifyRecord = new ObjectModify();
+        this.firstLevelModifyRecord = new ModifyRecord();
     }
 
     public int getDivisionId() {
@@ -21,7 +22,11 @@ public class FirstLevelDivision {
     }
 
     public String getDivision() {
-        return Division;
+        return division;
+    }
+
+    public void setDivision(String division) {
+        this.division = division;
     }
 
     public int getCountryId() {
@@ -30,5 +35,9 @@ public class FirstLevelDivision {
 
     public void setCountryId(int countryId) {
         this.countryId = countryId;
+    }
+
+    public ModifyRecord getModifyRecord(){
+        return firstLevelModifyRecord;
     }
 }
