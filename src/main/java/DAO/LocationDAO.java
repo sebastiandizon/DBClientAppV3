@@ -8,8 +8,6 @@ import model.FirstLevelDivision;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.List;
-import java.util.Optional;
 
 import static helper.JDBC.connection;
 
@@ -41,16 +39,15 @@ public class LocationDAO {
         return names;
     }
     public int getCountryId(String name) throws SQLException{
-        int id = 0;
         for(Country country : getCountry()){
             if(country.getCountry().equals(name)){
-               id = country.getCountryId();
+                return country.getCountryId();
             }
         }
-        return id;
+        return 0;
     }
 
-    public ObservableList<FirstLevelDivision> getDivision() throws SQLException{
+    public ObservableList<FirstLevelDivision> getDivisions() throws SQLException{
         ObservableList<FirstLevelDivision> divisions = FXCollections.observableArrayList();
         String query = "SELECT * FROM client_schedule.first_level_divisions";
         Statement statement = connection.createStatement();
@@ -68,10 +65,19 @@ public class LocationDAO {
         }
         return divisions;
     }
+    public FirstLevelDivision getDivision(int divisionId) throws SQLException{
+        for(FirstLevelDivision division : getDivisions()) {
+            if (division.getDivisionId() == divisionId) {
+                return division;
+            }
+        }
+        return null;
+    }
+
 
     public ObservableList<String> getMatchingDivisions(String countryName) throws SQLException{
         ObservableList<String> matchingDivisions = FXCollections.observableArrayList();
-        for(FirstLevelDivision division : getDivision()){
+        for(FirstLevelDivision division : getDivisions()){
             if(division.getCountryId() == getCountryId(countryName)){
                 matchingDivisions.add(division.getDivision());
             }
@@ -81,12 +87,29 @@ public class LocationDAO {
 
     public int getDivisionId(String divisionName) throws SQLException{
         int i = 0;
-        for(FirstLevelDivision division : getDivision()){
+        for(FirstLevelDivision division : getDivisions()){
             if(division.getDivision().equals(divisionName)){
                 i = division.getDivisionId();
             }
         }
         return i;
     }
+    public String getDivisionName(int divisionId) throws SQLException{
+        for(FirstLevelDivision division : getDivisions()){
+            if(division.getDivisionId() == divisionId){
+                return division.getDivision();
+            }
+        }
+        return null;
+    }
+    public String getCountryName(int divisionId) throws SQLException{
+        for(Country country : getCountry()){
+            if(country.getCountryId() == getDivision(divisionId).getCountryId()){
+                return country.getCountry();
+            }
+        }
+        return null;
+    }
+
 
 }

@@ -1,48 +1,42 @@
 package controllers;
 
-import DAO.AppointmentDAOInterfaceImpl;
-import DAO.CustomerDAOInterfaceImpl;
-import javafx.beans.property.ReadOnlyObjectWrapper;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
+import DAO.AppointmentDAOImpl;
+import DAO.CustomerDAOImpl;
+import javafx.scene.Parent;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.AnchorPane;
 import model.Customer;
 import model.Main;
 
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.value.ObservableValue;
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
 
 import java.io.IOException;
 import java.net.URL;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.Collection;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
-import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.stage.Stage;
-import javafx.util.Callback;
-
-import static helper.JDBC.connection;
 
 public class CustomerViewController implements Initializable {
-    CustomerDAOInterfaceImpl customerDAO = new CustomerDAOInterfaceImpl();
-    private ObservableList<ObservableList> customer;
+    AppointmentDAOImpl appointmentDAO = new AppointmentDAOImpl();
+    CustomerDAOImpl customerDAO = new CustomerDAOImpl();
     public TableView customerView;
+    public TableColumn customerId, name, address, postal, phone, division;
+    public MenuButton viewMenu;
+    public AnchorPane customerViewPane;
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        buildTable();
+        try {
+            buildTable();
+        } catch (SQLException e) {e.printStackTrace();}
     }
-    public void handleNewCustomer(ActionEvent actionEvent) throws IOException {
+    public void handleNewCustomer(ActionEvent actionEvent) throws IOException, SQLException{
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("new-customer-view.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
         Stage stage = new Stage();
@@ -52,50 +46,46 @@ public class CustomerViewController implements Initializable {
         buildTable();
     }
 
-    public void buildTable() {
-            customer = FXCollections.observableArrayList();
+    public void buildTable() throws SQLException {
+        customerId.setCellValueFactory(new PropertyValueFactory<>("customerId"));
+        name.setCellValueFactory(new PropertyValueFactory<>("customerName"));
+        address.setCellValueFactory(new PropertyValueFactory<>("address"));
+        postal.setCellValueFactory(new PropertyValueFactory<>("postalCode"));
+        phone.setCellValueFactory(new PropertyValueFactory<>("phone"));
+        division.setCellValueFactory(new PropertyValueFactory<>("divisionId"));
+        customerView.setItems((ObservableList) customerDAO.getAll());
+
+        MenuItem appointmentsView = new MenuItem("Appointments View");
+        MenuItem contactsView = new MenuItem("Contacts View");
+        appointmentsView.setOnAction(e -> {
             try {
-                Statement statement = connection.createStatement();
-                String query = "SELECT * FROM client_schedule.customers";
-                ResultSet rs = statement.executeQuery(query);
-                //Dynamic column insertion
-                for (int i = 0; i < rs.getMetaData().getColumnCount(); i++) {
-                    final int j = i;
-                    TableColumn col = new TableColumn(rs.getMetaData().getColumnName(i + 1));
-                    col.setCellValueFactory((Callback<CellDataFeatures<ObservableList, String>, ObservableValue<String>>) param ->
-                    new ReadOnlyObjectWrapper<>(param.getValue().get(j)));
-
-                    customerView.getColumns().addAll(col);
-                    System.out.println("Column " + i + " ");
-                }
-            //inserting data to ObservableList
-
-                while (rs.next()) {
-                    int n =0;
-                    //Iterate Row
-                    ObservableList<String> row = FXCollections.observableArrayList();
-                    for (int i = 1; i <= rs.getMetaData().getColumnCount(); i++) {
-                        //Iterate Column
-                        n=i;
-                        row.add(rs.getString(i));
-                    }
-                    System.out.println("Row [" + n + "] added " + "with attributes: "+ row);
-                    customer.add(row);
-                }
-                customerView.setItems(customer);
-            } catch (Exception e) {
-                e.printStackTrace();
-                System.out.println("Error on Building Data");
-            }
+                FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("main-view.fxml"));
+                Scene scene = new Scene(fxmlLoader.load());
+                Stage stage = (Stage)customerViewPane.getScene().getWindow();
+                stage.setTitle("Appointments");
+                stage.setScene(scene);
+                stage.show();
+            } catch (IOException ioException) {ioException.printStackTrace();}
+        });
+        contactsView.setOnAction(e -> {
+            try {
+                FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("customer-view.fxml"));
+                Scene newScene = new Scene(fxmlLoader.load());
+                Stage stage = (Stage)customerViewPane.getScene().getWindow();
+                stage.setTitle("Customers");
+                stage.setScene(newScene);
+                stage.show();
+            } catch (IOException ioException) {ioException.printStackTrace();}
+        });
+        viewMenu.getItems().addAll(appointmentsView, contactsView);
     }
 
     public void handleRemoveCustomer(ActionEvent actionEvent) throws SQLException {
-        Object o = customerView.getSelectionModel().getSelectedItem();
+        Customer customer = (Customer) customerView.getSelectionModel().getSelectedItem();
 
         if(customer == null){
             return;
         }
-        AppointmentDAOInterfaceImpl appointmentDAO = new AppointmentDAOInterfaceImpl();
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setContentText("Are you sure you want to delete the selected customer?");
         Optional<ButtonType> result = alert.showAndWait();
@@ -104,6 +94,7 @@ public class CustomerViewController implements Initializable {
             if(appointmentDAO.getAssociated(customer.getCustomerId()).size() < 1) {
                 customerDAO.delete(customer.getCustomerId());
                 System.out.println("Customer removed");
+                buildTable();
             } else {
                 Alert alert1 = new Alert(Alert.AlertType.WARNING);
                 alert1.setTitle("Removal error");
@@ -118,10 +109,46 @@ public class CustomerViewController implements Initializable {
 
 
 
-    public void handleModifyCustomer(ActionEvent actionEvent) {
+    public void handleModifyCustomer(ActionEvent actionEvent) throws IOException{
+        Customer customer = (Customer) customerView.getSelectionModel().getSelectedItem();
+        if(customer == null){
+            return;
+        }
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("modify-customer-view.fxml"));
+        Parent root = fxmlLoader.load();
+
+        ModifyCustomerController modifyCustomerController = fxmlLoader.getController();
+        modifyCustomerController.getSelectedCustomer(customer);
+        Stage stage = new Stage();
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
     }
 
-    public void handleClearAppointments(ActionEvent actionEvent) {
+    public void handleClearAppointments(ActionEvent actionEvent) throws SQLException {
+        Customer customer = (Customer) customerView.getSelectionModel().getSelectedItem();
+        if (customer == null) {
+            return;
+        }
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setContentText("Are you sure you would like to remove all appointments associated with " + customer.getCustomerName() + "?");
+        Optional<ButtonType> result = alert.showAndWait();
+        ButtonType button = result.orElse(ButtonType.CANCEL);
+        if (button == ButtonType.OK) {
+            if (appointmentDAO.getAssociated(customer.getCustomerId()).size() >= 1) {
+                alert.setContentText(appointmentDAO.getAssociated(customer.getCustomerId()).size() + " removed");
+                alert.show();
+                appointmentDAO.deleteAll(appointmentDAO.getAssociated(customer.getCustomerId()));
+            } else {
+                Alert alert1 = new Alert(Alert.AlertType.WARNING);
+                alert1.setTitle("Removal error");
+                alert1.setHeaderText("Error removing appointments");
+                alert1.setContentText("Customer already has 0 appointments.");
+                alert1.show();
+            }
+        } else {
+            System.out.println("User cancelled remove request");
+        }
     }
 
 }

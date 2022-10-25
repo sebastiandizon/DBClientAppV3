@@ -1,7 +1,10 @@
 package controllers;
 
+import helper.JDBC;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.cell.PropertyValueFactory;
 import model.Main;
-import DAO.AppointmentDAOInterfaceImpl;
+import DAO.AppointmentDAOImpl;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -18,8 +21,10 @@ import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 public class MainController implements Initializable {
+    AppointmentDAOImpl appointmentDAO = new AppointmentDAOImpl();
     public AnchorPane primaryView;
-    public TableView appointmentView = new TableView<>();
+    public TableView appointmentsTable = new TableView<>();
+    public TableColumn appointment_ID, title, description, contact, location, type, start, end, customerId, userId;
     public MenuButton viewMenu;
 
 
@@ -29,7 +34,7 @@ public class MainController implements Initializable {
         MenuItem contactsView = new MenuItem("Customer View");
         appointmentsView.setOnAction(e -> {
             try {
-                FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("primary-view.fxml"));
+                FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("main-view.fxml"));
                 Scene scene = new Scene(fxmlLoader.load());
                 Stage stage = (Stage) primaryView.getScene().getWindow();
                 stage.setTitle("Appointments");
@@ -52,16 +57,51 @@ public class MainController implements Initializable {
             }
         });
         viewMenu.getItems().addAll(appointmentsView, contactsView);
+        appointment_ID.setCellValueFactory(new PropertyValueFactory<>("appointmentId"));
+        title.setCellValueFactory(new PropertyValueFactory<>("title"));
+        description.setCellValueFactory(new PropertyValueFactory<>("description"));
+        contact.setCellValueFactory(new PropertyValueFactory<>("location"));
+        location.setCellValueFactory(new PropertyValueFactory<>("type"));
+        type.setCellValueFactory(new PropertyValueFactory<>("startTime"));
+        start.setCellValueFactory(new PropertyValueFactory<>("endTime"));
+        end.setCellValueFactory(new PropertyValueFactory<>("customerId"));
+        userId.setCellValueFactory(new PropertyValueFactory<>("contactId"));
+        customerId.setCellValueFactory(new PropertyValueFactory<>("userId"));
 
-        AppointmentDAOInterfaceImpl appointmentDAO = new AppointmentDAOInterfaceImpl();
+        try {
+            appointmentsTable.setItems(appointmentDAO.getAll());
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        AppointmentDAOImpl appointmentDAO = new AppointmentDAOImpl();
         try {
             appointmentDAO.getAll();
         } catch (SQLException e){
             e.printStackTrace();
         }
     }
-
+    public void handleNewAppointmentBtn(ActionEvent actionEvent) throws IOException, SQLException{
+            appointmentsTable.refresh();
+            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("new-appointment-view.fxml"));
+            Scene scene = new Scene(fxmlLoader.load());
+            Stage stage = new Stage();
+            stage.setTitle("New Appointment");
+            stage.setScene(scene);
+        stage.showAndWait();
+        appointmentsTable.setItems(appointmentDAO.getAll());
+    }
+    public void handleModifyAppointment(ActionEvent actionEvent) throws IOException {
+        appointmentsTable.refresh();
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("modify-appointment-view.fxml"));
+        Scene scene = new Scene(fxmlLoader.load());
+        Stage stage = (Stage)primaryView.getScene().getWindow();
+        stage.setTitle("New Appointment");
+        stage.setScene(scene);
+        stage.show();
+    }
     public void setMonthView(ActionEvent actionEvent) {
+        //TODO: SELECT **** FROM **** WHERE -CONDITION: TIME BETWEEN CURRENT MONTH -
+        //Probably run instance from DAO
     }
 
     public void setWeekView(ActionEvent actionEvent) {
@@ -74,6 +114,9 @@ public class MainController implements Initializable {
     }
 
     public void logOut(ActionEvent actionEvent) {
+        Stage stage = (Stage)primaryView.getScene().getWindow();
+        JDBC.closeConnection();
+        stage.close();
     }
 
     public void previousMonth(ActionEvent actionEvent) {
@@ -82,13 +125,9 @@ public class MainController implements Initializable {
     public void nextMonth(ActionEvent actionEvent) {
     }
 
-    public void handleNewAppointmentBtn(ActionEvent actionEvent) {
-    }
+
 
     public void handleRemoveBtn(ActionEvent actionEvent) {
-    }
-
-    public void handleModifyAppointment(ActionEvent actionEvent) {
     }
 
     public void setTypeCount(ActionEvent actionEvent) {

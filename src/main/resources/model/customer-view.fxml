@@ -32,10 +32,6 @@
                         <Insets left="10.0" right="10.0" top="5.0" />
                      </HBox.margin>
                   </Text>
-                  <Button mnemonicParsing="false" text="log out">
-                     <HBox.margin>
-                        <Insets top="2.0" />
-                     </HBox.margin></Button>
                </children>
             </HBox>
         </items>
@@ -77,6 +73,14 @@
                <VBox.margin>
                   <Insets bottom="40.0" />
                </VBox.margin>
+               <columns>
+                  <TableColumn fx:id="customerId" prefWidth="75.0" text="ID" />
+                  <TableColumn fx:id="name" prefWidth="173.0" text="Name" />
+                  <TableColumn fx:id="address" minWidth="0.0" prefWidth="200.0" text="Address" />
+                  <TableColumn fx:id="postal" prefWidth="128.0" text="Postal" />
+                  <TableColumn fx:id="phone" prefWidth="200.0" text="Phone" />
+                  <TableColumn fx:id="division" minWidth="0.0" text="Division" />
+               </columns>
             </TableView>
             <HBox prefHeight="38.0" prefWidth="529.0">
                <children>

@@ -4,7 +4,8 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
-<AnchorPane fx:id="primaryView" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="702.0" prefWidth="1115.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.MainController">
+
+<AnchorPane fx:id="primaryView" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="702.0" prefWidth="1115.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.MainController">
    <children>
       <SplitPane prefHeight="704.0" prefWidth="181.0">
          <items>
@@ -44,7 +45,7 @@
         <items>
             <HBox prefHeight="0.0" prefWidth="799.0">
                <children>
-                  <Text fx:id="usernameText" strokeType="OUTSIDE" strokeWidth="0.0" text="Appointment Scheduling V2" wrappingWidth="219.8212890625">
+                  <Text fx:id="usernameText" strokeType="OUTSIDE" strokeWidth="0.0" text="Appointment Scheduling V2" wrappingWidth="250.8212890625">
                      <font>
                         <Font size="18.0" />
                      </font>
@@ -58,6 +59,7 @@
                      </HBox.margin></Button>
                </children>
             </HBox>
+            <HBox prefHeight="0.0" prefWidth="200.0" />
         </items>
       </ToolBar>
       <VBox layoutX="234.0" layoutY="94.0" prefHeight="570.0" prefWidth="858.0">
@@ -109,7 +111,7 @@
                   <Insets bottom="5.0" />
                </VBox.margin>
             </HBox>
-            <TableView fx:id="appointmentView" prefHeight="481.0" prefWidth="858.0">
+            <TableView fx:id="appointmentsTable" prefHeight="481.0" prefWidth="858.0">
                <VBox.margin>
                   <Insets bottom="20.0" />
                </VBox.margin>

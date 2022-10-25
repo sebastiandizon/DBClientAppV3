@@ -1,21 +1,16 @@
 package DAO;
 
-import DAO.DAOInterface;
-import helper.JDBC;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import model.Customer;
 
-import java.lang.reflect.Field;
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
 import static helper.JDBC.connection;
 
-public class CustomerDAOInterfaceImpl implements DAOInterface {
+public class CustomerDAOImpl implements DAOInterface {
     @Override
     public Optional get(long id) {
         return Optional.empty();
@@ -63,8 +58,12 @@ public class CustomerDAOInterfaceImpl implements DAOInterface {
     }
 
     @Override
-    public void update(Object o, String[] params) {
-
+    public void update(Object o, String[] params) throws SQLException{
+        String query = "UPDATE client_schedule.customers" +
+                "SET Customer_Name = ?, Address = ?, Postal_Code = ?, Phone = ?, Create_Date = ?, Created_By = ?, Last_Update = ?, Last_Updated_By = ?, Division_ID = ?" +
+                "WHERE Customer_ID = " + ((Customer)o).getCustomerId();
+        Statement statement = connection.createStatement();
+        statement.executeQuery(query);
     }
 
     @Override
@@ -76,6 +75,6 @@ public class CustomerDAOInterfaceImpl implements DAOInterface {
     public void delete(int customerID) throws SQLException{
         String query = "DELETE FROM Customers WHERE Customer_ID = " + customerID;
         Statement statement = connection.createStatement();
-        statement.executeQuery(query);
+        statement.executeUpdate(query);
     }
 }

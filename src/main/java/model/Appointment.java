@@ -1,29 +1,30 @@
 package model;
 
+import java.text.SimpleDateFormat;
 import java.time.Instant;
-import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 
 
-// id, title, deesc, location, type, start, end, createdate, createby, lastupdate, lastupdateby, customerid, userid, contactId
 public class Appointment {
-    private int Appointment_ID;
-    private String Title;
-    private String Description;
-    private String Location;
-    private String Type;
-    private LocalDateTime startTime;
-    private LocalDateTime endTime;
+    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+    private int appointmentId;
+    private String title;
+    private String description;
+    private String location;
+    private String type;
+    private ZonedDateTime startTime;
+    private ZonedDateTime endTime;
     private int customerId;
     private int userId;
     private int contactId;
     ModifyRecord appointmentModifyRecord;
     /**default constructor value of Appointment. Auto generates author & date created / last updated data*/
     public Appointment(){
-        this.Appointment_ID = Appointment_ID;
-        this.Title = Title;
-        this.Description = Description;
-        this.Location = Location;
-        this.Type = Type;
+        this.appointmentId = appointmentId;
+        this.title = title;
+        this.description = description;
+        this.location = location;
+        this.type = type;
         this.startTime = startTime;
         this.endTime = endTime;
         this.customerId = customerId;
@@ -32,59 +33,67 @@ public class Appointment {
         this.appointmentModifyRecord = new ModifyRecord();
     }
     /**@return int appointmentId*/
-    public int getAppointment_ID() {
-        return Appointment_ID;
+    public int getAppointmentId() {
+        return appointmentId;
     }
-    /**@param appointment_ID updates appointmentId with specified int*/
-    public void setAppointment_ID(int appointment_ID) {
-        this.Appointment_ID = appointment_ID;
+    /**@param appointmentId updates appointmentId with specified int*/
+    public void setAppointmentId(int appointmentId) {
+        this.appointmentId = appointmentId;
     }
     /**@return String title */
     public String getTitle() {
-        return Title;
+        return title;
     }
     /**@param title updates String for title field */
     public void setTitle(String title) {
-        this.Title = title;
+        this.title = title;
     }
     /**@return String description*/
     public String getDescription() {
-        return Description;
+        return description;
     }
     /**@param description updates String for description field*/
     public void setDescription(String description) {
-        this.Description = description;
+        this.description = description;
     }
     /**@return String location*/
     public String getLocation() {
-        return Location;
+        return location;
     }
     /**@param location */
     public void setLocation(String location) {
-        this.Location = location;
+        this.location = location;
     }
     /**@return String type*/
     public String getType() {
-        return Type;
+        return type;
     }
     /**@param type */
     public void setType(String type) {
-        this.Type = type;
+        this.type = type;
     }
     /**@return ZonedDateTime startTime*/
-    public LocalDateTime getStartTime() {
+    public ZonedDateTime getStartTime() {
         return startTime;
     }
+
+    public String getStartQueryFormat() {
+        return simpleDateFormat.format(startTime);
+    }
+
     /**@param startTime */
-    public void setStartTime(LocalDateTime startTime) {
+    public void setStartTime(ZonedDateTime startTime) {
         this.startTime = startTime;
     }
     /**@return ZonedDateTime endTime*/
-    public LocalDateTime getEndTime() {
+    public ZonedDateTime getEndTime() {
         return endTime;
     }
+    public String getEndQueryFormat() {
+        return simpleDateFormat.format(endTime);
+    }
     /**@param endTime */
-    public void setEndTime(LocalDateTime endTime) {
+    public void setEndTime(ZonedDateTime endTime) {
         this.endTime = endTime;
     }
     public Instant getCreateDate(){
@@ -135,23 +144,4 @@ public class Appointment {
     public void setAppointmentModifyRecord(ModifyRecord appointmentModifyRecord) {
         this.appointmentModifyRecord = appointmentModifyRecord;
     }
-    /**@return returns all corresponding */
-//    public ObservableList<String> getAttributes(Appointment appointment){
-//        ObservableList<String> attributes = FXCollections.observableArrayList();
-//        attributes.add(String.valueOf(Integer.valueOf(appointment.getAppointment_ID())));
-//        attributes.add(appointment.getTitle());
-//        attributes.add(appointment.getDescription());
-//        attributes.add(appointment.getLocation());
-//        attributes.add(appointment.getType());
-//        attributes.add(String.valueOf(appointment.getStartTime().toInstant()));
-//        attributes.add(String.valueOf(appointment.getEndTime().toInstant()));
-//        attributes.add(String.valueOf(appointment.getModifyRecord().getCreateDate()));
-//        attributes.add(String.valueOf(appointment.getModifyRecord().getCreatedBy()));
-//        attributes.add(String.valueOf(appointment.getModifyRecord().getLastUpdate()));
-//        attributes.add(String.valueOf(appointment.getModifyRecord().getLastUpdateBy()));
-//        attributes.add(String.valueOf(appointment.getCustomerId()));
-//        attributes.add(String.valueOf(appointment.getUserId()));
-//        attributes.add(String.valueOf(appointment.getContactId()));
-//        return attributes;
-//    }
 }

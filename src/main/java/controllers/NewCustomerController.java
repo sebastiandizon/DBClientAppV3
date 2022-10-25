@@ -1,12 +1,11 @@
 package controllers;
 
-import DAO.CustomerDAOInterfaceImpl;
+import DAO.CustomerDAOImpl;
 import DAO.LocationDAO;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
-import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Control;
@@ -36,7 +35,7 @@ public class NewCustomerController implements Initializable {
     }
     public void getNewCustomer(ActionEvent actionEvent) throws SQLException{
         errorMsg = "";
-        CustomerDAOInterfaceImpl customerDAOInterface = new CustomerDAOInterfaceImpl();
+        CustomerDAOImpl customerDAOInterface = new CustomerDAOImpl();
         int errorValue = 0;
         ObservableList<Control> controls = FXCollections.observableArrayList();
         controls.addAll(NameField, AddressField, PostalField, PhoneField, division);
