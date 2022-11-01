@@ -37,6 +37,7 @@ public class ModifyCustomerController implements Initializable {
         try {
             countryBox.setItems(locationDAO.getCountryNames());
             customerIdInt = customer.getCustomerId();
+            customerId.setText(String.valueOf(customerIdInt));
             NameField.setText(customer.getCustomerName());
             AddressField.setText(customer.getAddress());
             PostalField.setText(customer.getPostalCode());
@@ -47,7 +48,7 @@ public class ModifyCustomerController implements Initializable {
             setDivisionFunction();
         }catch (SQLException e) {e.printStackTrace();}
     }
-    public void getNewCustomer(ActionEvent actionEvent) throws SQLException{
+    public void getUpdatedCustomer(ActionEvent actionEvent) throws SQLException{
         errorMsg = "";
         CustomerDAOImpl customerDAOInterface = new CustomerDAOImpl();
         int errorValue = 0;
@@ -56,12 +57,13 @@ public class ModifyCustomerController implements Initializable {
         errorValue += checkValues(controls);
         if(errorValue <= 0) {
             Customer customer = new Customer();
+            customer.setCustomerId(customerIdInt);
             customer.setCustomerName(NameField.getText());
             customer.setAddress(AddressField.getText());
             customer.setPostalCode(PostalField.getText());
             customer.setPhone(PhoneField.getText());
             customer.setDivisionId(locationDAO.getDivisionId((String)division.getSelectionModel().getSelectedItem()));
-            customerDAOInterface.save(customer);
+            customerDAOInterface.update(customer);
             Stage stage = (Stage)NameField.getScene().getWindow();
             stage.close();
         } else {

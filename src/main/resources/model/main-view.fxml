@@ -45,7 +45,7 @@
         <items>
             <HBox prefHeight="0.0" prefWidth="799.0">
                <children>
-                  <Text fx:id="usernameText" strokeType="OUTSIDE" strokeWidth="0.0" text="Appointment Scheduling V2" wrappingWidth="250.8212890625">
+                  <Text fx:id="usernameText" strokeType="OUTSIDE" strokeWidth="0.0" text="Appointment Scheduling V3" wrappingWidth="250.8212890625">
                      <font>
                         <Font size="18.0" />
                      </font>
@@ -68,7 +68,7 @@
                <children>
                   <HBox prefHeight="33.0" prefWidth="426.0">
                      <children>
-                        <Text fx:id="appointmentsTitle" strokeType="OUTSIDE" strokeWidth="0.0" text="default" wrappingWidth="145.6533203125">
+                        <Text fx:id="viewTitle" strokeType="OUTSIDE" strokeWidth="0.0" text="default" wrappingWidth="145.6533203125">
                            <font>
                               <Font size="14.0" />
                            </font>
@@ -128,12 +128,12 @@
                   <TableColumn fx:id="userId" prefWidth="58.5" text="User ID" />
                </columns>
             </TableView>
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Reports" />
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Count by type" />
             <HBox alignment="CENTER_LEFT" prefHeight="98.0" prefWidth="858.0">
                <children>
-                  <HBox alignment="CENTER_LEFT" prefHeight="54.0" prefWidth="397.0">
+                  <HBox alignment="CENTER_LEFT" prefHeight="56.0" prefWidth="478.0">
                      <children>
-                        <TextField fx:id="typeCountField" minHeight="-Infinity" minWidth="-Infinity" onAction="#setTypeCount" prefHeight="26.0" prefWidth="117.0" promptText="Enter type" />
+                        <TextField fx:id="typeCountField" minHeight="-Infinity" minWidth="-Infinity" onAction="#setTypeCount" prefHeight="26.0" prefWidth="163.0" promptText="Enter type and press Enter" />
                         <Text fx:id="typeCountTxt" disable="true" onDragDetected="#setTypeCount" strokeType="OUTSIDE" strokeWidth="0.0">
                            <HBox.margin>
                               <Insets left="10.0" />
@@ -141,11 +141,7 @@
                         </Text>
                      </children>
                   </HBox>
-                  <HBox alignment="CENTER_RIGHT" prefHeight="54.0" prefWidth="460.0">
-                     <children>
-                        <Text fx:id="reportTxt" strokeType="OUTSIDE" strokeWidth="0.0" text="defaultText" wrappingWidth="167.709716796875" />
-                     </children>
-                  </HBox>
+                  <HBox alignment="CENTER_RIGHT" prefHeight="54.0" prefWidth="460.0" />
                </children>
             </HBox>
             <HBox prefHeight="38.0" prefWidth="529.0">

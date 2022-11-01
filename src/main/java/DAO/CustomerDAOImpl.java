@@ -2,6 +2,7 @@ package DAO;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import model.Contact;
 import model.Customer;
 
 import java.sql.*;
@@ -58,12 +59,20 @@ public class CustomerDAOImpl implements DAOInterface {
     }
 
     @Override
-    public void update(Object o, String[] params) throws SQLException{
-        String query = "UPDATE client_schedule.customers" +
-                "SET Customer_Name = ?, Address = ?, Postal_Code = ?, Phone = ?, Create_Date = ?, Created_By = ?, Last_Update = ?, Last_Updated_By = ?, Division_ID = ?" +
-                "WHERE Customer_ID = " + ((Customer)o).getCustomerId();
-        Statement statement = connection.createStatement();
-        statement.executeQuery(query);
+    public void update(Object o) throws SQLException{
+        PreparedStatement query;
+        query = connection.prepareStatement("UPDATE client_schedule.customers" +
+        " SET Customer_Name = ?, Address = ?, Postal_Code = ?, Phone = ?, Last_Update = ?, Last_Updated_By = ?, Division_ID = ? " +
+        " WHERE Customer_ID = " + ((Customer)o).getCustomerId());
+        query.setString(1,((Customer)o).getCustomerName());
+        query.setString(2,((Customer)o).getAddress());
+        query.setString(3,((Customer)o).getPostalCode());
+        query.setString(4,((Customer)o).getPhone());
+        query.setString(5,((Customer)o).getModifyRecord().getSimpleLastUpdate());
+        query.setString(6,((Customer)o).getModifyRecord().getLastUpdateBy());
+        query.setInt(7,((Customer)o).getDivisionId());
+        System.out.println(query);
+        query.executeUpdate();
     }
 
     @Override
@@ -77,4 +86,37 @@ public class CustomerDAOImpl implements DAOInterface {
         Statement statement = connection.createStatement();
         statement.executeUpdate(query);
     }
+    public ObservableList<Integer> getCustIds() throws SQLException{
+        ObservableList<Integer> custIds = FXCollections.observableArrayList();
+        Statement statement = connection.createStatement();
+        String query = "SELECT Customer_ID FROM customers ORDER BY Customer_ID ASC";
+        ResultSet rs = statement.executeQuery(query);
+        while(rs.next()){
+            custIds.add(rs.getInt("Customer_ID"));
+        }
+        return custIds;
+    }
+
+    public ObservableList<Contact> getContacts() throws SQLException{
+        ObservableList<Contact> contacts = FXCollections.observableArrayList();
+        String query = "SELECT * FROM contacts;";
+        Statement statement = connection.createStatement();
+        ResultSet rs = statement.executeQuery(query);
+        while (rs.next()){
+            Contact contact = new Contact(rs.getInt(1), rs.getString(2), rs.getString(3));
+            contacts.add(contact);
+        }
+        return contacts;
+    }
+    public ObservableList<Integer> getContactIds() throws SQLException{
+        ObservableList<Integer> contactIDs = FXCollections.observableArrayList();
+        String query = "SELECT Contact_ID FROM contacts;";
+        Statement statement = connection.createStatement();
+        ResultSet rs = statement.executeQuery(query);
+        while (rs.next()){
+            contactIDs.add(rs.getInt(1));
+        }
+        return contactIDs;
+    }
+
 }

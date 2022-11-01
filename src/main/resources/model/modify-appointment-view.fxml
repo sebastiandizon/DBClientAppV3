@@ -132,6 +132,6 @@
             </VBox>
          </children>
       </HBox>
-      <Button fx:id="saveBtn" layoutX="417.0" layoutY="413.0" mnemonicParsing="false" onAction="#setInstance" text="Save" />
+      <Button fx:id="saveBtn" layoutX="417.0" layoutY="413.0" mnemonicParsing="false" onAction="#updateAppointment" text="Save" />
    </children>
 </AnchorPane>

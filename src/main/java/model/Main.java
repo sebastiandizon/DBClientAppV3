@@ -16,9 +16,6 @@ import static helper.JDBC.*;
 
 public class Main extends Application {
 
-
-    public static int appointmentId;
-    public static int newCustomerId;
     @Override
     public void start(Stage stage) throws IOException {
         Locale locale = Locale.getDefault();
@@ -40,10 +37,7 @@ public class Main extends Application {
     }
 
     public static void main(String[] args) {
-
         openConnection();
-
-
 
         try {
             FileWriter writer = new FileWriter("login_activity.txt", true);

@@ -24,7 +24,7 @@
         <items>
             <HBox prefHeight="0.0" prefWidth="799.0">
                <children>
-                  <Text fx:id="headerText" strokeType="OUTSIDE" strokeWidth="0.0" text="Appointment Scheduling V2" wrappingWidth="226.8212890625">
+                  <Text fx:id="headerText" strokeType="OUTSIDE" strokeWidth="0.0" text="Appointment Scheduling V3" wrappingWidth="226.8212890625">
                      <font>
                         <Font size="18.0" />
                      </font>

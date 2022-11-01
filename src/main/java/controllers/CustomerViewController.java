@@ -34,6 +34,29 @@ public class CustomerViewController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         try {
             buildTable();
+            MenuItem appointmentsView = new MenuItem("Appointments View");
+            MenuItem contactsView = new MenuItem("Contacts View");
+            appointmentsView.setOnAction(e -> {
+                try {
+                    FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("main-view.fxml"));
+                    Scene scene = new Scene(fxmlLoader.load());
+                    Stage stage = (Stage)customerViewPane.getScene().getWindow();
+                    stage.setTitle("Appointments");
+                    stage.setScene(scene);
+                    stage.show();
+                } catch (IOException ioException) {ioException.printStackTrace();}
+            });
+            contactsView.setOnAction(e -> {
+                try {
+                    FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("customer-view.fxml"));
+                    Scene newScene = new Scene(fxmlLoader.load());
+                    Stage stage = (Stage)customerViewPane.getScene().getWindow();
+                    stage.setTitle("Customers");
+                    stage.setScene(newScene);
+                    stage.show();
+                } catch (IOException ioException) {ioException.printStackTrace();}
+            });
+            viewMenu.getItems().addAll(appointmentsView, contactsView);
         } catch (SQLException e) {e.printStackTrace();}
     }
     public void handleNewCustomer(ActionEvent actionEvent) throws IOException, SQLException{
@@ -54,30 +77,6 @@ public class CustomerViewController implements Initializable {
         phone.setCellValueFactory(new PropertyValueFactory<>("phone"));
         division.setCellValueFactory(new PropertyValueFactory<>("divisionId"));
         customerView.setItems((ObservableList) customerDAO.getAll());
-
-        MenuItem appointmentsView = new MenuItem("Appointments View");
-        MenuItem contactsView = new MenuItem("Contacts View");
-        appointmentsView.setOnAction(e -> {
-            try {
-                FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("main-view.fxml"));
-                Scene scene = new Scene(fxmlLoader.load());
-                Stage stage = (Stage)customerViewPane.getScene().getWindow();
-                stage.setTitle("Appointments");
-                stage.setScene(scene);
-                stage.show();
-            } catch (IOException ioException) {ioException.printStackTrace();}
-        });
-        contactsView.setOnAction(e -> {
-            try {
-                FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("customer-view.fxml"));
-                Scene newScene = new Scene(fxmlLoader.load());
-                Stage stage = (Stage)customerViewPane.getScene().getWindow();
-                stage.setTitle("Customers");
-                stage.setScene(newScene);
-                stage.show();
-            } catch (IOException ioException) {ioException.printStackTrace();}
-        });
-        viewMenu.getItems().addAll(appointmentsView, contactsView);
     }
 
     public void handleRemoveCustomer(ActionEvent actionEvent) throws SQLException {
@@ -109,7 +108,7 @@ public class CustomerViewController implements Initializable {
 
 
 
-    public void handleModifyCustomer(ActionEvent actionEvent) throws IOException{
+    public void handleModifyCustomer(ActionEvent actionEvent) throws IOException, SQLException{
         Customer customer = (Customer) customerView.getSelectionModel().getSelectedItem();
         if(customer == null){
             return;
@@ -122,7 +121,8 @@ public class CustomerViewController implements Initializable {
         Stage stage = new Stage();
         Scene scene = new Scene(root);
         stage.setScene(scene);
-        stage.show();
+        stage.showAndWait();
+        customerView.setItems((ObservableList) customerDAO.getAll());
     }
 
     public void handleClearAppointments(ActionEvent actionEvent) throws SQLException {

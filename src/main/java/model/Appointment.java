@@ -3,6 +3,7 @@ package model;
 import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.time.ZonedDateTime;
+import java.util.Date;
 
 
 public class Appointment {
@@ -78,7 +79,9 @@ public class Appointment {
     }
 
     public String getStartQueryFormat() {
-        return simpleDateFormat.format(startTime);
+        Instant startInstant = startTime.toInstant();
+        Date date = Date.from(startInstant);
+        return simpleDateFormat.format(date);
     }
 
     /**@param startTime */
@@ -90,7 +93,9 @@ public class Appointment {
         return endTime;
     }
     public String getEndQueryFormat() {
-        return simpleDateFormat.format(endTime);
+        Instant endInstant = endTime.toInstant();
+        Date date = Date.from(endInstant);
+        return simpleDateFormat.format(date);
     }
     /**@param endTime */
     public void setEndTime(ZonedDateTime endTime) {

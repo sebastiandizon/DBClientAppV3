@@ -1,25 +1,34 @@
 package controllers;
 
+import DAO.AppointmentDAOImpl;
+import DAO.CustomerDAOImpl;
 import helper.InputFiltering;
+import helper.JDBC;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.stage.Stage;
 import model.Appointment;
+import model.Users;
 
 import java.net.URL;
 import java.sql.SQLException;
 import java.time.*;
 
+import java.time.chrono.ChronoLocalDateTime;
+import java.time.temporal.ValueRange;
 import java.util.ResourceBundle;
 
 public class NewAppointmentController implements InputFiltering, Initializable {
+    AppointmentDAOImpl appointmentDAO = new AppointmentDAOImpl();
+    CustomerDAOImpl customerDAO = new CustomerDAOImpl();
     public TextField Title, Description, Location, Type;
     public DatePicker StartDate, EndDate;
     public Spinner<Integer> StartHour, StartMinute, EndHour, EndMinute;
     public ComboBox CustomerID,  ContactID;
-    String errorMsg;
+    String errorMsg ="";
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         StartDate.setValue(LocalDate.now());
@@ -41,8 +50,13 @@ public class NewAppointmentController implements InputFiltering, Initializable {
         EndHour.setValueFactory(endHourValue);
         StartMinute.setValueFactory(startMinuteValue);
         EndMinute.setValueFactory(endMinuteValue);
+        try{
+            CustomerID.setItems(customerDAO.getCustIds());
+            ContactID.setItems(appointmentDAO.getContIDs());
+        }catch (SQLException e){e.printStackTrace();}
     }
     public void getNewAppointment(ActionEvent actionEvent) throws SQLException {
+        errorMsg = "";
         ObservableList<Control> controls = FXCollections.observableArrayList();
         controls.addAll(Title, Description, Location, Type, StartDate, EndDate, StartHour, StartMinute, EndHour, EndMinute, CustomerID,  ContactID);
         try {
@@ -70,6 +84,15 @@ public class NewAppointmentController implements InputFiltering, Initializable {
 
                 //create new appointment
                 Appointment appointment = new Appointment();
+                appointment.setTitle(title);
+                appointment.setDescription(description);
+                appointment.setLocation(location);
+                appointment.setType(type);
+                appointment.setStartTime(startDateTime);
+                appointment.setEndTime(endDateTime);
+                appointment.setCustomerId(customerId);
+                appointment.setContactId(contactId);
+                appointment.setUserId(Users.userId);
 
                 //check if it is in business hours
                 checkHours(appointment);
@@ -78,10 +101,14 @@ public class NewAppointmentController implements InputFiltering, Initializable {
                 checkCollision(appointment);
 
                 //save appointment to database
-
+                appointmentDAO.save(appointment);
+                System.out.println("Appointment saved");
+                Stage stage = (Stage) Type.getScene().getWindow();
+                stage.close();
                 break;
             }
         } catch (NullPointerException | IllegalArgumentException e) {
+            e.printStackTrace();
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setHeaderText("Appointment");
             alert.setTitle("Appointment creation error");
@@ -124,10 +151,23 @@ public class NewAppointmentController implements InputFiltering, Initializable {
         }
         return false;
     }
-    public boolean checkCollision(Appointment appointment){
-        return true;
+    public void checkCollision(Appointment appointment) throws SQLException{
+        System.out.println("Size " + appointmentDAO.selectBetween(appointment).size());
+        if(appointmentDAO.selectBetween(appointment).size() > 0) {
+            errorMsg = errorMsg + "Appointment overlaps with existing appointments\n";
+            throw new IllegalArgumentException("Appointments overlap");
+        }
     }
+
     public boolean checkHours(Appointment appointment){
+        ValueRange hourRange = ValueRange.of(8, 22);
+        if(!appointment.getStartTime().isBefore(appointment.getEndTime())){
+            errorMsg = errorMsg + "Start must be before end\n";
+        }
+        if(!(hourRange.isValidValue(appointment.getStartTime().getHour()) && hourRange.isValidValue(appointment.getEndTime().getHour()))){
+            errorMsg = errorMsg + "Hours must be between 8AM and 10PM\n";
+            return false;
+        }
         return true;
     }
 }

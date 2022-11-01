@@ -13,7 +13,7 @@ import java.time.Instant;
 
 import static helper.JDBC.*;
 
-public abstract class Users {
+public class Users {
     public static int userId;
     public static String userName;
     /**
@@ -22,7 +22,7 @@ public abstract class Users {
     public static boolean authorizeLogin(String username, String userPassword) throws IOException {
         try {
             Statement statement = connection.createStatement();
-            String query = "SELECT * FROM users";
+            String query = "SELECT * FROM client_schedule.users";
             ResultSet rs = statement.executeQuery(query);
             while (rs.next()) {
                 if (hashText(rs.getString("User_Name")).equals(hashText(username)) &&
