@@ -8,8 +8,8 @@ public abstract class JDBC {
     private static final String location = "//localhost/";
     private static final String databaseName = "client_schedule";
     public static TimeZone userTimeZone = TimeZone.getDefault();
-    private static final String timeZone = "?connectionTimeZone = " + userTimeZone.getID();
-    private static final String jdbcUrl = protocol + vendor + location + databaseName + timeZone + "&useTimeZone=true&serverTimezone=UTC"; // LOCAL
+    private static final String timeZone = "?connectionTimeZone = SERVER";
+    private static final String jdbcUrl = protocol + vendor + location + databaseName + timeZone  ; // LOCAL
     private static final String driver = "com.mysql.cj.jdbc.Driver"; // Driver reference
     private static final String userName = "sqlUser"; // Username
     private static String password = "Passw0rd!"; // Password

@@ -5,13 +5,11 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 import java.sql.*;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.time.ZoneOffset;
+import java.time.*;
 import java.time.format.DateTimeFormatter;
 
 import static helper.JDBC.connection;
+import static helper.JDBC.userTimeZone;
 
 public class AppointmentDAOImpl implements DAOInterface<Appointment> {
 
@@ -36,7 +34,7 @@ public class AppointmentDAOImpl implements DAOInterface<Appointment> {
             ps.setString(2, o.getDescription());
             ps.setString(3, o.getLocation());
             ps.setString(4, o.getType());
-            ps.setTimestamp(5,Timestamp.valueOf(o.getStartTime()));
+            ps.setTimestamp(5, Timestamp.valueOf(o.getStartTime()));
             ps.setTimestamp(6, Timestamp.valueOf(o.getEndTime()));
             ps.setString(7, o.getModifyRecord().getSimpleCreateDate());
             ps.setString(8, o.getModifyRecord().getCreatedBy());
@@ -147,8 +145,10 @@ public class AppointmentDAOImpl implements DAOInterface<Appointment> {
             appointment.setDescription(rs.getString(3));
             appointment.setLocation(rs.getString(4));
             appointment.setType(rs.getString(5));
-            LocalDateTime start = rs.getTimestamp(6).toLocalDateTime();
-            LocalDateTime end = rs.getTimestamp(7).toLocalDateTime();
+
+            appointment.setStartTime(rs.getTimestamp(6).toLocalDateTime());
+            appointment.setEndTime(rs.getTimestamp(7).toLocalDateTime());
+
 
             appointment.setCreateDate(rs.getTimestamp(8).toInstant());
             appointment.setCreatedBy(rs.getString(9));
