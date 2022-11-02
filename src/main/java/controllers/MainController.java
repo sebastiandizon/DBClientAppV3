@@ -19,6 +19,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.Month;
 import java.time.ZonedDateTime;
 import java.time.temporal.ChronoUnit;
@@ -97,7 +98,7 @@ public class MainController implements Initializable {
         int i = 0;
         try {
             for (Appointment appointment : appointmentDAO.getAll()) {
-                if (appointment.getStartTime().isAfter(ZonedDateTime.now().plusMinutes(15)) || appointment.getEndTime().isAfter(ZonedDateTime.now().plusMinutes(15))) {
+                if (appointment.getStartTime().isAfter(LocalDateTime.now().plusMinutes(15)) || appointment.getEndTime().isAfter(LocalDateTime.now().plusMinutes(15))) {
                     alert.setContentText("Upcoming appointment with id: " + appointment.getAppointmentId() + " is scheduled from " + appointment.getStartTime() + " to " + appointment.getEndTime());
                     i++;
                     alert.showAndWait();

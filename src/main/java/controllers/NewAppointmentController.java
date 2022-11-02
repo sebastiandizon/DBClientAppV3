@@ -3,7 +3,6 @@ package controllers;
 import DAO.AppointmentDAOImpl;
 import DAO.CustomerDAOImpl;
 import helper.InputFiltering;
-import helper.JDBC;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -17,7 +16,6 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.time.*;
 
-import java.time.chrono.ChronoLocalDateTime;
 import java.time.temporal.ValueRange;
 import java.util.ResourceBundle;
 
@@ -71,12 +69,12 @@ public class NewAppointmentController implements InputFiltering, Initializable {
                 //construct start time
                 LocalDate startLocalDate = LocalDate.of(StartDate.getValue().getYear(), StartDate.getValue().getMonthValue(), StartDate.getValue().getDayOfMonth());
                 LocalTime startLocalTime = LocalTime.of(StartHour.getValue(), StartMinute.getValue());
-                ZonedDateTime startDateTime = ZonedDateTime.of(startLocalDate, startLocalTime, ZoneId.systemDefault());
+                LocalDateTime startDateTime = LocalDateTime.of(startLocalDate,startLocalTime);
 
                 //construct end time
                 LocalDate endLocalDate = LocalDate.of(EndDate.getValue().getYear(), EndDate.getValue().getMonthValue(), EndDate.getValue().getDayOfMonth());
                 LocalTime endLocalTime = LocalTime.of(EndHour.getValue(), EndMinute.getValue());
-                ZonedDateTime endDateTime = ZonedDateTime.of(endLocalDate, endLocalTime, ZoneId.systemDefault());
+                LocalDateTime endDateTime = LocalDateTime.of(endLocalDate,endLocalTime);
 
                 //get combo box selected
                 int customerId = (int)CustomerID.getSelectionModel().getSelectedItem();
@@ -152,8 +150,8 @@ public class NewAppointmentController implements InputFiltering, Initializable {
         return false;
     }
     public void checkCollision(Appointment appointment) throws SQLException{
-        System.out.println("Size " + appointmentDAO.selectBetween(appointment).size());
-        if(appointmentDAO.selectBetween(appointment).size() > 0) {
+        System.out.println("Size " + appointmentDAO.getOverlaps(appointment).size());
+        if(appointmentDAO.getOverlaps(appointment).size() > 0) {
             errorMsg = errorMsg + "Appointment overlaps with existing appointments\n";
             throw new IllegalArgumentException("Appointments overlap");
         }

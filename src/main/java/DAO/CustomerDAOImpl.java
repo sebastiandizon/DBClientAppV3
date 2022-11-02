@@ -7,15 +7,10 @@ import model.Customer;
 
 import java.sql.*;
 import java.util.List;
-import java.util.Optional;
 
 import static helper.JDBC.connection;
 
 public class CustomerDAOImpl implements DAOInterface {
-    @Override
-    public Optional get(long id) {
-        return Optional.empty();
-    }
 
     @Override
     public List getAll() throws SQLException {

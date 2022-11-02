@@ -1,9 +1,13 @@
 package model;
 
+import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.time.Instant;
-import java.time.ZonedDateTime;
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 import java.util.Date;
+
+import static helper.JDBC.userTimeZone;
 
 
 public class Appointment {
@@ -13,8 +17,8 @@ public class Appointment {
     private String description;
     private String location;
     private String type;
-    private ZonedDateTime startTime;
-    private ZonedDateTime endTime;
+    private LocalDateTime startTime;
+    private LocalDateTime endTime;
     private int customerId;
     private int userId;
     private int contactId;
@@ -74,31 +78,29 @@ public class Appointment {
         this.type = type;
     }
     /**@return ZonedDateTime startTime*/
-    public ZonedDateTime getStartTime() {
+    public LocalDateTime getStartTime() {
         return startTime;
     }
 
-    public String getStartQueryFormat() {
-        Instant startInstant = startTime.toInstant();
-        Date date = Date.from(startInstant);
-        return simpleDateFormat.format(date);
-    }
+//    public Timestamp getUTCStart() {
+//
+//    }
 
     /**@param startTime */
-    public void setStartTime(ZonedDateTime startTime) {
+    public void setStartTime(LocalDateTime startTime) {
         this.startTime = startTime;
     }
     /**@return ZonedDateTime endTime*/
-    public ZonedDateTime getEndTime() {
+    public LocalDateTime getEndTime() {
         return endTime;
     }
-    public String getEndQueryFormat() {
-        Instant endInstant = endTime.toInstant();
-        Date date = Date.from(endInstant);
-        return simpleDateFormat.format(date);
-    }
+//    public String getEndQueryFormat() {
+//        Instant endInstant = endTime.toInstant();
+//        Date date = Date.from(endInstant);
+//        return simpleDateFormat.format(date);
+//    }
     /**@param endTime */
-    public void setEndTime(ZonedDateTime endTime) {
+    public void setEndTime(LocalDateTime endTime) {
         this.endTime = endTime;
     }
     public Instant getCreateDate(){
