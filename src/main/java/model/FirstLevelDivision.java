@@ -5,14 +5,14 @@ public class FirstLevelDivision {
     private String division;
     private int countryId;
     private ModifyRecord firstLevelModifyRecord;
-    /**default constructor for First Level Division data, specifies id value int and division name as String  */
+
     public FirstLevelDivision() {
         this.divisionId = divisionId;
         this.division = division;
         this.countryId = countryId;
         this.firstLevelModifyRecord = new ModifyRecord();
     }
-
+    /**@return integer of Division ID*/
     public int getDivisionId() {
         return divisionId;
     }
@@ -20,11 +20,11 @@ public class FirstLevelDivision {
     public void setDivisionId(int divisionId) {
         this.divisionId = divisionId;
     }
-
+    /**@return String name of division*/
     public String getDivision() {
         return division;
     }
-
+    /**@param division Sets division to given string*/
     public void setDivision(String division) {
         this.division = division;
     }

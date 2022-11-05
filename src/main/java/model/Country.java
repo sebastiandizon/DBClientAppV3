@@ -12,6 +12,7 @@ public class Country {
         this.country = country;
         this.countryModifyRecord = new ModifyRecord();
     }
+
     public int getCountryId() {
         return countryId;
     }

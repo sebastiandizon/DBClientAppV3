@@ -32,6 +32,7 @@ public class ModifyCustomerController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
     }
+    /**Retrieves selected customer from CustomerViewController and initializes it in modify controller*/
     public void getSelectedCustomer(Customer customer){
 
         try {
@@ -48,6 +49,7 @@ public class ModifyCustomerController implements Initializable {
             setDivisionFunction();
         }catch (SQLException e) {e.printStackTrace();}
     }
+    /**Gets user inputs and updates customer with matching ID to desired fields*/
     public void getUpdatedCustomer(ActionEvent actionEvent) throws SQLException{
         errorMsg = "";
         CustomerDAOImpl customerDAOInterface = new CustomerDAOImpl();
@@ -72,9 +74,11 @@ public class ModifyCustomerController implements Initializable {
             alert.showAndWait();
         }
     }
+    /**Sets division combo box to display correct values based on selected country*/
     public void setDivisionFunction() throws SQLException {
         division.setItems(locationDAO.getMatchingDivisions((String)countryBox.getSelectionModel().getSelectedItem()));
     }
+    /**Checks controls for null values*/
     public int checkValues(ObservableList<Control> controls) {
         int i = 0;
         for(Control control : controls) {

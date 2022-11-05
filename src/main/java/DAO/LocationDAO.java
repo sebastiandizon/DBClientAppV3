@@ -12,7 +12,7 @@ import java.sql.Statement;
 import static helper.JDBC.connection;
 
 public class LocationDAO {
-
+    /***/
     public ObservableList<Country> getCountry() throws SQLException{
         ObservableList<Country> countries = FXCollections.observableArrayList();
         String query = "SELECT * FROM client_schedule.countries";
@@ -31,6 +31,7 @@ public class LocationDAO {
         }
         return countries;
     }
+    /***/
     public ObservableList getCountryNames() throws SQLException{
         ObservableList<String> names = FXCollections.observableArrayList();
         for(Country country : getCountry()){
@@ -38,6 +39,7 @@ public class LocationDAO {
         }
         return names;
     }
+    /***/
     public int getCountryId(String name) throws SQLException{
         for(Country country : getCountry()){
             if(country.getCountry().equals(name)){
@@ -46,7 +48,7 @@ public class LocationDAO {
         }
         return 0;
     }
-
+    /***/
     public ObservableList<FirstLevelDivision> getDivisions() throws SQLException{
         ObservableList<FirstLevelDivision> divisions = FXCollections.observableArrayList();
         String query = "SELECT * FROM client_schedule.first_level_divisions";
@@ -65,6 +67,7 @@ public class LocationDAO {
         }
         return divisions;
     }
+    /***/
     public FirstLevelDivision getDivision(int divisionId) throws SQLException{
         for(FirstLevelDivision division : getDivisions()) {
             if (division.getDivisionId() == divisionId) {
@@ -73,8 +76,7 @@ public class LocationDAO {
         }
         return null;
     }
-
-
+    /***/
     public ObservableList<String> getMatchingDivisions(String countryName) throws SQLException{
         ObservableList<String> matchingDivisions = FXCollections.observableArrayList();
         for(FirstLevelDivision division : getDivisions()){
@@ -84,7 +86,7 @@ public class LocationDAO {
         }
         return matchingDivisions;
     }
-
+    /***/
     public int getDivisionId(String divisionName) throws SQLException{
         int i = 0;
         for(FirstLevelDivision division : getDivisions()){
@@ -94,6 +96,7 @@ public class LocationDAO {
         }
         return i;
     }
+    /***/
     public String getDivisionName(int divisionId) throws SQLException{
         for(FirstLevelDivision division : getDivisions()){
             if(division.getDivisionId() == divisionId){
@@ -102,6 +105,7 @@ public class LocationDAO {
         }
         return null;
     }
+    /***/
     public String getCountryName(int divisionId) throws SQLException{
         for(Country country : getCountry()){
             if(country.getCountryId() == getDivision(divisionId).getCountryId()){

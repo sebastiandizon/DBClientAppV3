@@ -40,7 +40,7 @@
          <children>
             <HBox prefHeight="33.0" prefWidth="522.0">
                <children>
-                  <HBox alignment="CENTER_LEFT" prefHeight="33.0" prefWidth="425.0">
+                  <HBox alignment="CENTER_LEFT" prefHeight="31.0" prefWidth="597.0">
                      <children>
                         <Button fx:id="newCustomer" mnemonicParsing="false" onAction="#handleNewCustomer" text="Add new">
                            <HBox.margin>
@@ -52,12 +52,12 @@
                               <Insets right="5.0" top="5.0" />
                            </HBox.margin>
                         </Button>
-                        <Button fx:id="modifyCustomer" mnemonicParsing="false" onAction="#handleModifyCustomer" text="Modify">
+                        <Button fx:id="modifyCustomer" mnemonicParsing="false" onAction="#handleModifyCustomer" prefHeight="26.0" prefWidth="68.0" text="Modify">
                            <HBox.margin>
                               <Insets top="5.0" />
                            </HBox.margin>
                         </Button>
-                        <Button fx:id="clearAppointmentsBtn" mnemonicParsing="false" onAction="#handleClearAppointments" text="Clear appointments">
+                        <Button fx:id="clearAppointmentsBtn" mnemonicParsing="false" onAction="#handleClearAppointments" prefHeight="26.0" prefWidth="343.0" text="Clear all appointments associated with selected customer">
                            <HBox.margin>
                               <Insets left="5.0" top="5.0" />
                            </HBox.margin>

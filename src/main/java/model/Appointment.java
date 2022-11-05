@@ -94,11 +94,6 @@ public class Appointment {
     public LocalDateTime getEndTime() {
         return endTime;
     }
-//    public String getEndQueryFormat() {
-//        Instant endInstant = endTime.toInstant();
-//        Date date = Date.from(endInstant);
-//        return simpleDateFormat.format(date);
-//    }
     /**@param endTime */
     public void setEndTime(LocalDateTime endTime) {
         this.endTime = endTime;

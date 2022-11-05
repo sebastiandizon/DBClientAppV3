@@ -26,25 +26,14 @@ public class ReportViewController implements Initializable{
     public TableView scheduleView = new TableView<>();
     public TableColumn appointment_ID, title, description, location, contact, type, start, end, customerId, userId;
     public Text totalApptsTxt;
+    public Text report, upcoming;
     public ComboBox<Integer> contactCombo;
-
-    public void setContactSchedule() throws SQLException{
-        reportList.clear();
-        for(Appointment appointment : appointmentDAO.getAll()){
-            if(appointment.getContactId() == contactCombo.getSelectionModel().getSelectedItem()){
-                reportList.add(appointment);
-            }
-        }
-        totalApptsTxt.setText("Total appointments: " + reportList.size());
-        scheduleView.setItems(reportList);
-        scheduleView.refresh();
-    }
-
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         appointment_ID.setCellValueFactory(new PropertyValueFactory<>("appointmentId"));
         title.setCellValueFactory(new PropertyValueFactory<>("title"));
+        description.setCellValueFactory(new PropertyValueFactory<>("description"));
         type.setCellValueFactory(new PropertyValueFactory<>("type"));
         start.setCellValueFactory(new PropertyValueFactory<>("startTime"));
         end.setCellValueFactory(new PropertyValueFactory<>("endTime"));
@@ -56,10 +45,33 @@ public class ReportViewController implements Initializable{
         }catch (SQLException e) {e.printStackTrace();}
 
 
+
         scheduleView.setItems(reportList);
+    }
+    /**Builds table and reports, gets next appointment and displays it under table view*/
+    public void setContactSchedule() throws SQLException{
+        reportList.clear();
+        for(Appointment appointment : appointmentDAO.getAll()){
+            if(appointment.getContactId() == contactCombo.getSelectionModel().getSelectedItem()){
+                reportList.add(appointment);
+            }
+        }
+        totalApptsTxt.setText("Total appointments: " + reportList.size());
+        scheduleView.setItems(reportList);
+        scheduleView.refresh();
 
-
-
+        String longString = "";
+        for(String string : appointmentDAO.getMonthReport(contactCombo.getValue())){
+            longString += string + "\n";
+        }
+        report.setText(longString);
+        try{
+            upcoming.setText("Next upcoming appointment: " + appointmentDAO.getNextContact(contactCombo.getValue()));
+        }
+        catch (SQLException e) {
+            System.out.println("Null returned");
+            upcoming.setText("No upcoming appointments");
+        }
 
     }
 }

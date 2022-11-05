@@ -59,6 +59,7 @@ public class CustomerViewController implements Initializable {
             viewMenu.getItems().addAll(appointmentsView, contactsView);
         } catch (SQLException e) {e.printStackTrace();}
     }
+    /**Generates scene for new customer*/
     public void handleNewCustomer(ActionEvent actionEvent) throws IOException, SQLException{
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("new-customer-view.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
@@ -68,7 +69,7 @@ public class CustomerViewController implements Initializable {
         stage.showAndWait();
         buildTable();
     }
-
+    /**Generates table of customers*/
     public void buildTable() throws SQLException {
         customerId.setCellValueFactory(new PropertyValueFactory<>("customerId"));
         name.setCellValueFactory(new PropertyValueFactory<>("customerName"));
@@ -78,7 +79,7 @@ public class CustomerViewController implements Initializable {
         division.setCellValueFactory(new PropertyValueFactory<>("divisionId"));
         customerView.setItems((ObservableList) customerDAO.getAll());
     }
-
+    /**Generates scene for remove customer*/
     public void handleRemoveCustomer(ActionEvent actionEvent) throws SQLException {
         Customer customer = (Customer) customerView.getSelectionModel().getSelectedItem();
 
@@ -105,9 +106,7 @@ public class CustomerViewController implements Initializable {
             System.out.println("User cancelled remove request");
         }
     }
-
-
-
+    /**Gets selected customer from table view and generates new scene for modifying selected customer*/
     public void handleModifyCustomer(ActionEvent actionEvent) throws IOException, SQLException{
         Customer customer = (Customer) customerView.getSelectionModel().getSelectedItem();
         if(customer == null){
@@ -124,7 +123,7 @@ public class CustomerViewController implements Initializable {
         stage.showAndWait();
         customerView.setItems((ObservableList) customerDAO.getAll());
     }
-
+    /**Gets selected customer and prompts user with confirmation to clear appointments associated with customer*/
     public void handleClearAppointments(ActionEvent actionEvent) throws SQLException {
         Customer customer = (Customer) customerView.getSelectionModel().getSelectedItem();
         if (customer == null) {

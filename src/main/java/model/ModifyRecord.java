@@ -1,6 +1,8 @@
 package model;
 /**@author Sebastian Dizon*/
 
+import DAO.UserDAO;
+
 import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.util.Date;
@@ -14,9 +16,9 @@ public class ModifyRecord {
     /**Object used to store creation & last update data**/
     public ModifyRecord() {
         this.createDate = Instant.now();
-        this.createdBy = Users.userName;
+        this.createdBy = UserDAO.userName;
         this.lastUpdate = Instant.now();
-        this.lastUpdateBy = Users.userName;
+        this.lastUpdateBy = UserDAO.userName;
     }
     /**@return  Instant value of date created*/
     public Instant getCreateDate() {

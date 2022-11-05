@@ -33,6 +33,7 @@ public class NewCustomerController implements Initializable {
         }catch (SQLException e){e.printStackTrace();}
 
     }
+    /**Gets user inputs and updates customer with matching ID to desired fields*/
     public void getNewCustomer(ActionEvent actionEvent) throws SQLException{
         errorMsg = "";
         CustomerDAOImpl customerDAOInterface = new CustomerDAOImpl();
@@ -56,9 +57,11 @@ public class NewCustomerController implements Initializable {
             alert.showAndWait();
         }
     }
+    /**Sets division combo box to display correct values based on selected country*/
     public void setDivisionFunction(ActionEvent actionEvent) throws SQLException {
         division.setItems(locationDAO.getMatchingDivisions((String)countryBox.getSelectionModel().getSelectedItem()));
     }
+    /**Checks controls for null values*/
     public int checkValues(ObservableList<Control> controls) {
         int i = 0;
         for(Control control : controls) {
@@ -78,5 +81,4 @@ public class NewCustomerController implements Initializable {
         }
         return i;
     }
-
 }

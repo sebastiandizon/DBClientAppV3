@@ -10,8 +10,8 @@ import java.util.List;
 
 import static helper.JDBC.connection;
 
-public class CustomerDAOImpl implements DAOInterface {
-
+public class CustomerDAOImpl implements DAOInterface<Customer> {
+    /**@return Observable List of all customers*/
     @Override
     public List getAll() throws SQLException {
         ObservableList<Customer> allCustomers = FXCollections.observableArrayList();
@@ -34,53 +34,55 @@ public class CustomerDAOImpl implements DAOInterface {
         }
         return allCustomers;
     }
-
-
+    /**Inserts new customer into customers table
+     * @param o specified customer*/
     @Override
-    public void save(Object o) throws SQLException{
+    public void save(Customer o) throws SQLException{
         String query = "INSERT INTO client_schedule.customers VALUES (NULL, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         PreparedStatement ps = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
-        ps.setString(1, ((Customer)o).getCustomerName());
-        ps.setString(2, ((Customer)o).getAddress());
-        ps.setString(3, ((Customer)o).getPostalCode());
-        ps.setString(4, ((Customer)o).getPhone());
-        ps.setString(5, ((Customer)o).getModifyRecord().getSimpleCreateDate());
-        ps.setString(6, ((Customer)o).getModifyRecord().getCreatedBy());
-        ps.setString(7, ((Customer)o).getModifyRecord().getSimpleLastUpdate());
-        ps.setString(8, ((Customer)o).getModifyRecord().getLastUpdateBy());
-        ps.setString(9, (String.valueOf(((Customer)o).getDivisionId())));
+        ps.setString(1, o.getCustomerName());
+        ps.setString(2, o.getAddress());
+        ps.setString(3, o.getPostalCode());
+        ps.setString(4, o.getPhone());
+        ps.setString(5, o.getModifyRecord().getSimpleCreateDate());
+        ps.setString(6, o.getModifyRecord().getCreatedBy());
+        ps.setString(7, o.getModifyRecord().getSimpleLastUpdate());
+        ps.setString(8, o.getModifyRecord().getLastUpdateBy());
+        ps.setString(9, (String.valueOf(o.getDivisionId())));
         System.out.println(ps);
         ps.execute();
     }
-
+    /**Updates columns for tuple at given Customer_ID*/
     @Override
-    public void update(Object o) throws SQLException{
+    public void update(Customer o) throws SQLException{
         PreparedStatement query;
         query = connection.prepareStatement("UPDATE client_schedule.customers" +
         " SET Customer_Name = ?, Address = ?, Postal_Code = ?, Phone = ?, Last_Update = ?, Last_Updated_By = ?, Division_ID = ? " +
         " WHERE Customer_ID = " + ((Customer)o).getCustomerId());
-        query.setString(1,((Customer)o).getCustomerName());
-        query.setString(2,((Customer)o).getAddress());
-        query.setString(3,((Customer)o).getPostalCode());
-        query.setString(4,((Customer)o).getPhone());
-        query.setString(5,((Customer)o).getModifyRecord().getSimpleLastUpdate());
-        query.setString(6,((Customer)o).getModifyRecord().getLastUpdateBy());
-        query.setInt(7,((Customer)o).getDivisionId());
+        query.setString(1, o.getCustomerName());
+        query.setString(2, o.getAddress());
+        query.setString(3, o.getPostalCode());
+        query.setString(4, o.getPhone());
+        query.setString(5, o.getModifyRecord().getSimpleLastUpdate());
+        query.setString(6, o.getModifyRecord().getLastUpdateBy());
+        query.setInt(7, o.getDivisionId());
         System.out.println(query);
         query.executeUpdate();
     }
-
+    /**Deletes customer with specified customer*/
     @Override
-    public void delete(Object o) throws SQLException{
-        String query = "DELETE FROM Customers WHERE Customer_ID = " + ((Customer)o).getCustomerId();
+    public void delete(Customer o) throws SQLException{
+        String query = "DELETE FROM Customers WHERE Customer_ID = " + o.getCustomerId();
         Statement statement = connection.createStatement();
         statement.executeQuery(query);
     }
+    /**Deletes customer with given ID*/
     public void delete(int customerID) throws SQLException{
         String query = "DELETE FROM Customers WHERE Customer_ID = " + customerID;
         Statement statement = connection.createStatement();
         statement.executeUpdate(query);
     }
+    /**@return List of IDs of all customers*/
     public ObservableList<Integer> getCustIds() throws SQLException{
         ObservableList<Integer> custIds = FXCollections.observableArrayList();
         Statement statement = connection.createStatement();
@@ -91,7 +93,7 @@ public class CustomerDAOImpl implements DAOInterface {
         }
         return custIds;
     }
-
+    /**@return list of all contacts*/
     public ObservableList<Contact> getContacts() throws SQLException{
         ObservableList<Contact> contacts = FXCollections.observableArrayList();
         String query = "SELECT * FROM contacts;";
@@ -103,6 +105,7 @@ public class CustomerDAOImpl implements DAOInterface {
         }
         return contacts;
     }
+    /**@return list of contact IDs*/
     public ObservableList<Integer> getContactIds() throws SQLException{
         ObservableList<Integer> contactIDs = FXCollections.observableArrayList();
         String query = "SELECT Contact_ID FROM contacts;";

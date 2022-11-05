@@ -17,6 +17,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -95,21 +96,19 @@ public class MainController implements Initializable {
         alert.setHeaderText("Appointments");
         //Alerts if appt is within 15 minutes of now
 
-        int i = 0;
         try {
-            for (Appointment appointment : appointmentDAO.getAll()) {
-                if (appointment.getStartTime().isAfter(LocalDateTime.now().plusMinutes(15)) || appointment.getEndTime().isAfter(LocalDateTime.now().plusMinutes(15))) {
+            if (appointmentDAO.getNextAlert().size() > 0) {
+                for(Appointment appointment : appointmentDAO.getNextAlert()) {
                     alert.setContentText("Upcoming appointment with id: " + appointment.getAppointmentId() + " is scheduled from " + appointment.getStartTime() + " to " + appointment.getEndTime());
-                    i++;
                     alert.showAndWait();
                 }
-            }
-            if (i < 1) {
+            } else {
                 alert.setContentText("No upcoming appointments");
                 alert.showAndWait();
             }
         }catch (SQLException e){}
     }
+    /**Generates scene for new appointment*/
     public void handleNewAppointmentBtn(ActionEvent actionEvent) throws IOException, SQLException{
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("new-appointment-view.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
@@ -121,6 +120,7 @@ public class MainController implements Initializable {
         allItemsBtn.setSelected(true);
 
     }
+    /**Gets user selected appointment and generates modify appointment scene with selected appointment*/
     public void handleModifyAppointment(ActionEvent actionEvent) throws IOException, SQLException {
         selectedAppointment = (Appointment) appointmentsTable.getSelectionModel().getSelectedItem();
         if (selectedAppointment == null) {
@@ -135,14 +135,29 @@ public class MainController implements Initializable {
         appointmentsTable.setItems(appointmentDAO.getAll());
         allItemsBtn.setSelected(true);
     }
+    /**Sets tableview to show appointments for given month and changes toggles to toggle between months*/
     public void setMonthView(ActionEvent actionEvent) throws SQLException{
         currentMonth = LocalDate.now();
         appointmentsTable.setItems(appointmentDAO.getAppointmentMonth(currentMonth));
         viewTitle.setText(String.valueOf(currentMonth.getMonth()));
+        nextBtn.setOnAction(actionEvent1 -> {
+            try {
+                nextMonth(actionEvent1);
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        });
+        previousBtn.setOnAction(actionEvent1 -> {
+            try {
+                previousMonth(actionEvent1);
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        });
         previousBtn.setDisable(false);
         nextBtn.setDisable(false);
     }
-
+    /**Sets tableview to show appointments for given week and changes toggles to toggle between weeks*/
     public void setWeekView(ActionEvent actionEvent) throws SQLException{
         currentWeek = LocalDate.now();
         viewTitle.setText(String.valueOf(currentWeek.getMonth()));
@@ -164,14 +179,14 @@ public class MainController implements Initializable {
         previousBtn.setDisable(false);
         nextBtn.setDisable(false);
     }
-
+    /**Sets tableview to show all existing appointments and disables toggles*/
     public void setAllItems(ActionEvent actionEvent) throws SQLException {
         appointmentsTable.setItems(appointmentDAO.getAll());
         viewTitle.setText("All appointments");
         previousBtn.setDisable(true);
         nextBtn.setDisable(true);
     }
-
+    /**Generates scene that shows customer reports*/
     public void handleReportBtn(ActionEvent actionEvent) throws IOException{
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("report-view.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
@@ -180,41 +195,41 @@ public class MainController implements Initializable {
         stage.setScene(scene);
         stage.show();
     }
-
+    /**Closes window and terminates connection safely*/
     public void logOut(ActionEvent actionEvent) {
         Stage stage = (Stage)primaryView.getScene().getWindow();
         JDBC.closeConnection();
         stage.close();
     }
-
+    /**Method for toggling back by month*/
     public void previousMonth(ActionEvent actionEvent) throws SQLException{
         currentMonth = currentMonth.plusMonths(-1);
         System.out.println(currentMonth);
         appointmentsTable.setItems(appointmentDAO.getAppointmentMonth(currentMonth));
         viewTitle.setText(String.valueOf(currentMonth.getMonth()));
     }
-
+    /**Method for toggling forward by month*/
     public void nextMonth(ActionEvent actionEvent) throws SQLException {
         currentMonth = currentMonth.plusMonths(1);
         System.out.println(currentMonth);
         appointmentsTable.setItems(appointmentDAO.getAppointmentMonth(currentMonth));
         viewTitle.setText(String.valueOf(currentMonth.getMonth()));
     }
-
+    /**Method for toggling back by week*/
     public void previousWeek(ActionEvent actionEvent) throws SQLException{
         currentWeek = currentWeek.plusWeeks(-1);
         System.out.println(currentWeek);
         appointmentsTable.setItems(appointmentDAO.getAppointmentWeek(currentWeek));
         viewTitle.setText(String.valueOf(currentWeek.getMonth()));
     }
-
+    /**Method for toggling forward by week*/
     public void nextWeek(ActionEvent actionEvent) throws SQLException{
         currentWeek = currentWeek.plusWeeks(1);
         System.out.println(currentWeek);
         appointmentsTable.setItems(appointmentDAO.getAppointmentWeek(currentWeek));
         viewTitle.setText(String.valueOf(currentWeek.getMonth()));
     }
-
+    /**Gets selected customer and asks user for confirmation before deleting*/
     public void handleRemoveBtn() throws SQLException {
         Appointment appointment = (Appointment) appointmentsTable.getSelectionModel().getSelectedItem();
         if (appointment == null) {
@@ -236,17 +251,6 @@ public class MainController implements Initializable {
         allItemsBtn.setSelected(true);
     }
 
-    public void setTypeCount(ActionEvent actionEvent) throws SQLException{
-        typeCountTxt.setDisable(false);
-        int i=0;
-
-        for(Appointment appointment : appointmentDAO.getAll()){
-            if(appointment.getType().contains(typeCountField.getText())){
-                i++;
-            }
-        }
-        typeCountTxt.setText("Total ammount of " + typeCountField.getText() + " appointments in current view: " + i);
-    }
 }
 
 

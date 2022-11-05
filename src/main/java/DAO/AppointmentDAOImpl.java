@@ -12,19 +12,20 @@ import static helper.JDBC.connection;
 import static helper.JDBC.userTimeZone;
 
 public class AppointmentDAOImpl implements DAOInterface<Appointment> {
-
+    /**Retrieves all appointments in appointments table*/
     @Override
     public ObservableList<Appointment> getAll() throws SQLException {
         PreparedStatement query = connection.prepareStatement("SELECT * FROM client_schedule.appointments;");
         return getAppointments(query);
     }
-
+    /**Deletes appointments in given list
+     * @param appointments List of appointments to delete*/
     public void deleteAll(ObservableList<Appointment> appointments) throws SQLException {
         for(Appointment appointment : appointments){
             delete(appointment);
         }
     }
-
+    /**Inserts new appointment into table*/
     @Override
     public void save(Appointment o) {
         try {
@@ -47,6 +48,9 @@ public class AppointmentDAOImpl implements DAOInterface<Appointment> {
             ps.executeUpdate();
         }catch (SQLException e) {e.printStackTrace();}
     }
+    /**Gets appointments associated with specified customer
+     * @param customerId ID of customer
+     * @return List of appoointments with matching customer id field*/
     public ObservableList<Appointment> getAssociated(int customerId) throws SQLException{
         ObservableList<Appointment> appointments = FXCollections.observableArrayList();
         for(Appointment appointment : getAll()){
@@ -56,7 +60,8 @@ public class AppointmentDAOImpl implements DAOInterface<Appointment> {
         }
         return appointments;
     }
-
+    /**Changes columns to new values where appointment ID matches
+     * @param o with desired values & new*/
     @Override
     public void update(Appointment o) throws SQLException{
         PreparedStatement query;
@@ -77,18 +82,17 @@ public class AppointmentDAOImpl implements DAOInterface<Appointment> {
         System.out.println(query);
         query.executeUpdate();
     }
-
+    /**@param o Appointment to be deleted*/
     @Override
     public void delete(Appointment o) throws SQLException{
-        for(Appointment appointment : getAll()){
-            if(appointment.getAppointmentId() == o.getAppointmentId()){
-                Statement statement = connection.createStatement();
-                String query = "DELETE FROM client_schedule.appointments WHERE Appointment_ID = " + appointment.getAppointmentId();
-                System.out.println("Appointment with ID " + appointment.getAppointmentId() + " deleted successfully");
-                statement.executeUpdate(query);
-            }
-        }
+        Statement statement = connection.createStatement();
+        String query = "DELETE FROM client_schedule.appointments WHERE Appointment_ID = " + o.getAppointmentId();
+        System.out.println("Appointment with ID " + o.getAppointmentId() + " deleted successfully");
+        statement.executeUpdate(query);
     }
+    /**Retrieves appointments that overlap with specified appointment hours
+     * @param appointment Appointment with desired hours
+     * @return list of appointments with hours lying in between appointment Start & End values*/
     public ObservableList<Appointment> getOverlaps(Appointment appointment) throws SQLException {
         PreparedStatement query = connection.prepareStatement( "SELECT * FROM appointments WHERE Start BETWEEN ? AND ? OR End BETWEEN ? AND ?");
         query.setTimestamp(1, Timestamp.valueOf(appointment.getStartTime()));
@@ -98,7 +102,8 @@ public class AppointmentDAOImpl implements DAOInterface<Appointment> {
         query.setTimestamp(4, Timestamp.valueOf(appointment.getEndTime()));
         return getAppointments(query);
     }
-
+    /**@param givenDate LocalDate to retrieve month value from
+     * @return appointments with given month in LocalDate format*/
     public ObservableList<Appointment> getAppointmentMonth(LocalDate givenDate) throws SQLException {
         PreparedStatement query = connection.prepareStatement("SELECT * FROM appointments WHERE Start BETWEEN ? AND ? OR End BETWEEN ? AND ?");
         query.setDate(1, Date.valueOf(givenDate.withDayOfMonth(1)));
@@ -113,6 +118,8 @@ public class AppointmentDAOImpl implements DAOInterface<Appointment> {
 //                "' OR End BETWEEN '"+ formattedStart +"' AND '"+formattedEnd+"';";
         return getAppointments(query);
     }
+    /**@param givenDate LocalDate to retrieve week value from
+     * @return appointments within given week in LocalDate format*/
     public ObservableList<Appointment> getAppointmentWeek(LocalDate givenDate) throws SQLException {
         PreparedStatement query = connection.prepareStatement("SELECT * FROM appointments WHERE Start BETWEEN ? AND ? OR End BETWEEN ? AND ?");
         query.setDate(1, Date.valueOf(givenDate));
@@ -124,6 +131,7 @@ public class AppointmentDAOImpl implements DAOInterface<Appointment> {
 //        String formattedEnd = givenDate.plusWeeks(1).format(formatter);
         return getAppointments(query);
     }
+    /**@return List of contact IDs*/
     public ObservableList<Integer> getContIDs() throws SQLException{
         ObservableList<Integer> contactIds = FXCollections.observableArrayList();
         Statement statement = connection.createStatement();
@@ -134,7 +142,9 @@ public class AppointmentDAOImpl implements DAOInterface<Appointment> {
         }
         return contactIds;
     }
-
+    /**@param query SQL for retrieving specific appointments
+     * @return list of appointments based on query
+     * Reusable method for building specific Select statements*/
     public ObservableList<Appointment> getAppointments(PreparedStatement query) throws SQLException{
         ObservableList<Appointment> appointments = FXCollections.observableArrayList();
         ResultSet rs = query.executeQuery();
@@ -161,5 +171,36 @@ public class AppointmentDAOImpl implements DAOInterface<Appointment> {
             appointments.add(appointment);
         }
         return appointments;
+    }
+    /**@return List of strings for report page*/
+    public ObservableList<String> getMonthReport(int contactId) throws SQLException{
+        ObservableList<String> monthReport = FXCollections.observableArrayList();
+        String query = "SELECT Contact_ID AS contact, Type AS Type, MONTH(Start) AS Month, Count(*) AS Amount FROM appointments GROUP BY MONTH(Start), Type, Contact_ID \n";
+        Statement statement = connection.createStatement();
+        ResultSet rs = statement.executeQuery(query);
+        while(rs.next()){
+            String report = "Contact ID: "+ rs.getString("contact") + "\n Type: " + rs.getString("Type") + "\n MONTH: " + Month.of(rs.getInt("Month")) + "\n Amount: " + rs.getString("Amount") + "\n";
+            monthReport.add(report);
+        }
+        return monthReport;
+    }
+    /**@return String of last appointment */
+    public String getNextContact(int contactId) throws SQLException{
+        PreparedStatement ps = connection.prepareStatement("SELECT Title, Start FROM client_schedule.appointments WHERE Contact_ID = " + contactId + " AND Start > ? ORDER BY Start ASC LIMIT 1");
+        ps.setTimestamp(1, Timestamp.valueOf(LocalDateTime.now()));
+        ResultSet rs = ps.executeQuery();
+        rs.next();
+        if(rs.getString("Title").equals("")){
+            return "None";
+        }
+        return rs.getString("Title");
+    }
+    public ObservableList<Appointment> getNextAlert() throws SQLException{
+        PreparedStatement ps = connection.prepareStatement("SELECT * FROM client_schedule.appointments WHERE Start <= ? AND START >= ? OR End <= ? AND End >= ?");
+        ps.setTimestamp(1, Timestamp.valueOf(LocalDateTime.now().plusMinutes(15)));
+        ps.setTimestamp(2, Timestamp.valueOf(LocalDateTime.now()));
+        ps.setTimestamp(3, Timestamp.valueOf(LocalDateTime.now().plusMinutes(15)));
+        ps.setTimestamp(4, Timestamp.valueOf(LocalDateTime.now()));
+        return getAppointments(ps);
     }
 }
