@@ -2,7 +2,6 @@ package controllers;
 
 import DAO.AppointmentDAOImpl;
 import DAO.CustomerDAOImpl;
-import helper.InputFiltering;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -18,7 +17,7 @@ import java.time.*;
 import java.time.temporal.ValueRange;
 import java.util.ResourceBundle;
 
-public class ModifyAppointmentController implements InputFiltering, Initializable {
+public class ModifyAppointmentController implements Initializable {
     Appointment appointment = MainController.selectedAppointment;
 
     AppointmentDAOImpl appointmentDAO = new AppointmentDAOImpl();
@@ -135,7 +134,7 @@ public class ModifyAppointmentController implements InputFiltering, Initializabl
         }
     }
     /**Chceks inputs for errors*/
-    @Override
+
     public boolean filterInputs(ObservableList<Control> controls) {
         int i = 0;
         for (Control control : controls) {

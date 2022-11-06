@@ -2,7 +2,7 @@ package controllers;
 
 import DAO.AppointmentDAOImpl;
 import DAO.CustomerDAOImpl;
-import helper.InputFiltering;
+import DAO.DAOInterface;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -19,8 +19,8 @@ import java.time.*;
 import java.time.temporal.ValueRange;
 import java.util.ResourceBundle;
 
-public class NewAppointmentController implements InputFiltering, Initializable {
-    AppointmentDAOImpl appointmentDAO = new AppointmentDAOImpl();
+public class NewAppointmentController implements Initializable {
+
     CustomerDAOImpl customerDAO = new CustomerDAOImpl();
     public TextField Title, Description, Location, Type;
     public DatePicker StartDate, EndDate;
@@ -29,6 +29,7 @@ public class NewAppointmentController implements InputFiltering, Initializable {
     String errorMsg ="";
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        AppointmentDAOImpl appointmentDAO = new AppointmentDAOImpl();
         StartDate.setValue(LocalDate.now());
         EndDate.setValue(LocalDate.now());
         SpinnerValueFactory<Integer> startHourValue = new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 23);
@@ -55,6 +56,7 @@ public class NewAppointmentController implements InputFiltering, Initializable {
     }
     /**Generates an appointment based on user inputs that is then passed to the database*/
     public void getNewAppointment(ActionEvent actionEvent) throws SQLException {
+        //AppointmentDAOImpl appointmentDAO = new AppointmentDAOImpl();
         errorMsg = "";
         ObservableList<Control> controls = FXCollections.observableArrayList();
         controls.addAll(Title, Description, Location, Type, StartDate, EndDate, StartHour, StartMinute, EndHour, EndMinute, CustomerID,  ContactID);
@@ -102,7 +104,9 @@ public class NewAppointmentController implements InputFiltering, Initializable {
                 checkCollision(appointment);
 
                 //save appointment to database
-                appointmentDAO.save(appointment);
+                AppointmentDAOImpl appointmentDAO = new AppointmentDAOImpl();
+                saveAppointment(appointmentDAO, appointment);
+
                 System.out.println("Appointment saved");
                 Stage stage = (Stage) Type.getScene().getWindow();
                 stage.close();
@@ -117,7 +121,10 @@ public class NewAppointmentController implements InputFiltering, Initializable {
             alert.showAndWait();
         }
     }
-    @Override
+    static void saveAppointment(DAOInterface daoInterface, Appointment appointment) throws SQLException{
+        daoInterface.save(appointment);
+    }
+
     /**Filters controls for error values*/
     public boolean filterInputs(ObservableList<Control> controls) {
         int i = 0;
@@ -155,6 +162,7 @@ public class NewAppointmentController implements InputFiltering, Initializable {
     }
     /**Checks appointment for collisions with other appointments*/
     public void checkCollision(Appointment appointment) throws SQLException{
+        AppointmentDAOImpl appointmentDAO = new AppointmentDAOImpl();
         System.out.println("Size " + appointmentDAO.getOverlaps(appointment).size());
         if(appointmentDAO.getOverlaps(appointment).size() > 0) {
             errorMsg = errorMsg + "Appointment overlaps with existing appointments\n";

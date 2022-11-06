@@ -1,6 +1,8 @@
 package controllers;
 
 import helper.JDBC;
+import helper.RetrieveMonth;
+import helper.RetrieveWeek;
 import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -17,13 +19,8 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.Month;
-import java.time.ZonedDateTime;
-import java.time.temporal.ChronoUnit;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
@@ -135,49 +132,78 @@ public class MainController implements Initializable {
         appointmentsTable.setItems(appointmentDAO.getAll());
         allItemsBtn.setSelected(true);
     }
-    /**Sets tableview to show appointments for given month and changes toggles to toggle between months*/
+    /**Sets tableview using lambda expression to show appointments for given month and changes toggles to toggle between months*/
     public void setMonthView(ActionEvent actionEvent) throws SQLException{
-        currentMonth = LocalDate.now();
-        appointmentsTable.setItems(appointmentDAO.getAppointmentMonth(currentMonth));
-        viewTitle.setText(String.valueOf(currentMonth.getMonth()));
-        nextBtn.setOnAction(actionEvent1 -> {
-            try {
-                nextMonth(actionEvent1);
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
-        });
-        previousBtn.setOnAction(actionEvent1 -> {
-            try {
-                previousMonth(actionEvent1);
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
-        });
-        previousBtn.setDisable(false);
-        nextBtn.setDisable(false);
+        RetrieveMonth retrieve = (appointmentsTable, currentMonth) -> {
+            currentMonth = LocalDate.now();
+            appointmentsTable.setItems(appointmentDAO.getAppointmentMonth(currentMonth));
+                viewTitle.setText(String.valueOf(currentMonth.getMonth()));
+                nextBtn.setOnAction(actionEvent1 -> {
+                    try {
+                        nextMonth(actionEvent1);
+                    } catch (SQLException e) {
+                        throw new RuntimeException(e);
+                    }
+                });
+                previousBtn.setOnAction(actionEvent1 -> {
+                    try {
+                        previousMonth(actionEvent1);
+                    } catch (SQLException e) {
+                        throw new RuntimeException(e);
+                    }
+                });
+                previousBtn.setDisable(false);
+                nextBtn.setDisable(false);
+            };
+        getByMonth(retrieve);
+
+
+//        RetrieveImpl retrieve = new RetrieveImpl();
+//        currentMonth = LocalDate.now();
+//        appointmentsTable.setItems(appointmentDAO.getAppointmentMonth(currentMonth));
+//        viewTitle.setText(String.valueOf(currentMonth.getMonth()));
+//        nextBtn.setOnAction(actionEvent1 -> {
+//            try {
+//                nextMonth(actionEvent1);
+//            } catch (SQLException e) {
+//                throw new RuntimeException(e);
+//            }
+//        });
+//        previousBtn.setOnAction(actionEvent1 -> {
+//            try {
+//                previousMonth(actionEvent1);
+//            } catch (SQLException e) {
+//                throw new RuntimeException(e);
+//            }
+//        });
+//        previousBtn.setDisable(false);
+//        nextBtn.setDisable(false);
     }
-    /**Sets tableview to show appointments for given week and changes toggles to toggle between weeks*/
+
+    /**Sets tableview using lambda expression to show appointments for given week and changes toggles to toggle between weeks*/
     public void setWeekView(ActionEvent actionEvent) throws SQLException{
         currentWeek = LocalDate.now();
-        viewTitle.setText(String.valueOf(currentWeek.getMonth()));
-        appointmentsTable.setItems(appointmentDAO.getAppointmentWeek(currentWeek));
-        nextBtn.setOnAction(actionEvent1 -> {
-            try {
-                nextWeek(actionEvent1);
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
-        });
-        previousBtn.setOnAction(actionEvent1 -> {
-            try {
-                previousWeek(actionEvent1);
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
-        });
-        previousBtn.setDisable(false);
-        nextBtn.setDisable(false);
+        RetrieveWeek retrieve = (appointmentsTable, currentMonth) -> {
+            viewTitle.setText(String.valueOf(currentWeek.getMonth()));
+            appointmentsTable.setItems(appointmentDAO.getAppointmentWeek(currentWeek));
+            nextBtn.setOnAction(actionEvent1 -> {
+                try {
+                    nextWeek(actionEvent1);
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            });
+            previousBtn.setOnAction(actionEvent1 -> {
+                try {
+                    previousWeek(actionEvent1);
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            });
+            previousBtn.setDisable(false);
+            nextBtn.setDisable(false);
+        };
+        getByWeek(retrieve);
     }
     /**Sets tableview to show all existing appointments and disables toggles*/
     public void setAllItems(ActionEvent actionEvent) throws SQLException {
@@ -249,6 +275,14 @@ public class MainController implements Initializable {
         appointmentsTable.refresh();
         appointmentsTable.setItems(appointmentDAO.getAll());
         allItemsBtn.setSelected(true);
+    }
+
+    public void getByMonth(RetrieveMonth retrieve) throws SQLException{
+        retrieve.setMonthTable(appointmentsTable, currentMonth);
+    }
+
+    public void getByWeek(RetrieveWeek retrieve) throws SQLException{
+        retrieve.setWeekTable(appointmentsTable, currentMonth);
     }
 
 }

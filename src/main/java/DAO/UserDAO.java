@@ -41,6 +41,7 @@ public class UserDAO {
         Files.write(Paths.get("login_activity.txt"), append.getBytes(), StandardOpenOption.APPEND);
             return false;
     }
+
     /**Processes text upon retrieval and converts it to SHA-256. **/
     public static String hashText(String inputText){
         try {
