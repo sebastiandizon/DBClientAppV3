@@ -38,14 +38,15 @@ public class MainController implements Initializable {
     public Button nextBtn, previousBtn;
     public Text viewTitle;
     public RadioButton allItemsBtn;
-
+    /**Initialize method which sets view functionality using methods as well as getting necessary variable values and setting table views*/
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         currentMonth = LocalDate.now();
         currentWeek = LocalDate.now();
         MenuItem appointmentsView = new MenuItem("Appointments View");
         MenuItem contactsView = new MenuItem("Customer View");
-        /**Lambda expression sets view based on user selected item. User can pick between main and customer and the stage is generated with proper scene*/
+        /**Lambda expression sets view based on user selected item. User can pick between main and customer and the stage is generated with proper scene. Lambda is useful in changing the
+         * action of the button on initialize using JavaFX lambda to make sure that functionality is set properly*/
         appointmentsView.setOnAction(e -> {
             try {
                 FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("main-view.fxml"));
@@ -58,7 +59,8 @@ public class MainController implements Initializable {
                 ioException.printStackTrace();
             }
         });
-        /**Lambda expression sets view based on user selected item. User can pick between main and customer and the stage is generated with proper scene*/
+        /**Lambda expression sets view based on user selected item. User can pick between main and customer and the stage is generated with proper scene. Lambda is useful in changing the
+         * action of the button on initialize using JavaFX lambda to make sure that functionality is set properly*/
         contactsView.setOnAction(e -> {
             try {
                 FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("customer-view.fxml"));
@@ -133,7 +135,9 @@ public class MainController implements Initializable {
         appointmentsTable.setItems(appointmentDAO.getAll());
         allItemsBtn.setSelected(true);
     }
-    /**Sets tableview using lambda expression to show appointments for given month and changes toggles to toggle between months*/
+    /**Sets tableview using lambda expression to show appointments for given month and changes toggles to toggle between months. The lambda expression
+     * used improves the code by retrieving the current month and setting a variable which is then passed to the table and the table view is set to that month.
+     * The buttons are then set with appropriate action using the setOnAction JavaFX lambda so that the arrow buttons properly change between months*/
     public void setMonthView(ActionEvent actionEvent) throws SQLException{
         RetrieveMonth retrieve = (appointmentsTable, currentMonth) -> {
             currentMonth = LocalDate.now();
@@ -157,30 +161,10 @@ public class MainController implements Initializable {
                 nextBtn.setDisable(false);
             };
         getByMonth(retrieve);
-
-
-//        RetrieveImpl retrieve = new RetrieveImpl();
-//        currentMonth = LocalDate.now();
-//        appointmentsTable.setItems(appointmentDAO.getAppointmentMonth(currentMonth));
-//        viewTitle.setText(String.valueOf(currentMonth.getMonth()));
-//        nextBtn.setOnAction(actionEvent1 -> {
-//            try {
-//                nextMonth(actionEvent1);
-//            } catch (SQLException e) {
-//                throw new RuntimeException(e);
-//            }
-//        });
-//        previousBtn.setOnAction(actionEvent1 -> {
-//            try {
-//                previousMonth(actionEvent1);
-//            } catch (SQLException e) {
-//                throw new RuntimeException(e);
-//            }
-//        });
-//        previousBtn.setDisable(false);
-//        nextBtn.setDisable(false);
     }
-    /**Sets tableview using lambda expression to show appointments for given week and changes toggles to toggle between weeks*/
+    /**Sets tableview using lambda expression to show appointments for given week and changes toggles to toggle between weeks. The lambda passed improves the code by passing
+     * the week value to the method and setting the table view to the proper week, and then setting the buttons to have appropriate functionality using JavaFX setOnAction lambda
+     * to allow users to change between weeks rather than months*/
     public void setWeekView(ActionEvent actionEvent) throws SQLException{
         currentWeek = LocalDate.now();
         RetrieveWeek retrieve = (appointmentsTable, currentMonth) -> {

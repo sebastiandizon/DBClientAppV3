@@ -30,6 +30,8 @@ public class CustomerViewController implements Initializable {
     public TableColumn customerId, name, address, postal, phone, division;
     public MenuButton viewMenu;
     public AnchorPane customerViewPane;
+
+    /**Initialize method which sets view functionality using methods as well as getting necessary variable values and setting table views*/
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         try {
