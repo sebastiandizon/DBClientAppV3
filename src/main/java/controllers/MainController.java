@@ -36,8 +36,7 @@ public class MainController implements Initializable {
     static LocalDate currentMonth;
     static LocalDate currentWeek;
     public Button nextBtn, previousBtn;
-    public Text typeCountTxt, viewTitle;
-    public TextField typeCountField;
+    public Text viewTitle;
     public RadioButton allItemsBtn;
 
     @Override
@@ -46,6 +45,7 @@ public class MainController implements Initializable {
         currentWeek = LocalDate.now();
         MenuItem appointmentsView = new MenuItem("Appointments View");
         MenuItem contactsView = new MenuItem("Customer View");
+        /**Lambda expression sets view based on user selected item. User can pick between main and customer and the stage is generated with proper scene*/
         appointmentsView.setOnAction(e -> {
             try {
                 FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("main-view.fxml"));
@@ -58,6 +58,7 @@ public class MainController implements Initializable {
                 ioException.printStackTrace();
             }
         });
+        /**Lambda expression sets view based on user selected item. User can pick between main and customer and the stage is generated with proper scene*/
         contactsView.setOnAction(e -> {
             try {
                 FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("customer-view.fxml"));
@@ -179,7 +180,6 @@ public class MainController implements Initializable {
 //        previousBtn.setDisable(false);
 //        nextBtn.setDisable(false);
     }
-
     /**Sets tableview using lambda expression to show appointments for given week and changes toggles to toggle between weeks*/
     public void setWeekView(ActionEvent actionEvent) throws SQLException{
         currentWeek = LocalDate.now();
@@ -276,11 +276,11 @@ public class MainController implements Initializable {
         appointmentsTable.setItems(appointmentDAO.getAll());
         allItemsBtn.setSelected(true);
     }
-
-    public void getByMonth(RetrieveMonth retrieve) throws SQLException{
+    /**Method implementation to store lambda expression*/
+    public void getByMonth(RetrieveMonth retrieve) throws SQLException {
         retrieve.setMonthTable(appointmentsTable, currentMonth);
     }
-
+    /**Method implementation to store lambda expression*/
     public void getByWeek(RetrieveWeek retrieve) throws SQLException{
         retrieve.setWeekTable(appointmentsTable, currentMonth);
     }

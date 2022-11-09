@@ -23,7 +23,6 @@ public class NewCustomerController implements Initializable {
 
     public ComboBox countryBox;
     public ComboBox division;
-    int customerID;
     String errorMsg = "";
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -61,6 +60,7 @@ public class NewCustomerController implements Initializable {
     public void setDivisionFunction(ActionEvent actionEvent) throws SQLException {
         division.setItems(locationDAO.getMatchingDivisions((String)countryBox.getSelectionModel().getSelectedItem()));
     }
+
     /**Checks controls for null values*/
     public int checkValues(ObservableList<Control> controls) {
         int i = 0;
@@ -81,4 +81,5 @@ public class NewCustomerController implements Initializable {
         }
         return i;
     }
+
 }

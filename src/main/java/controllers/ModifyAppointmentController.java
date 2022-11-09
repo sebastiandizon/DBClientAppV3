@@ -171,8 +171,15 @@ public class ModifyAppointmentController implements Initializable {
     }
     /**Checks appointment for collisions with other appointments*/
     public void checkCollision(Appointment appointment) throws SQLException{
-        if (appointmentDAO.getOverlaps(appointment).size() > 0 ) {
-            System.out.println(appointmentDAO.getOverlaps(appointment).size());
+        int equivalentIDSize = 0;
+        System.out.println("Overlap size: "+appointmentDAO.getOverlaps(appointment).size());
+        for(Appointment overlaps : appointmentDAO.getOverlaps(appointment)){
+            if(overlaps.getAppointmentId() == appointment.getAppointmentId()){
+                equivalentIDSize++;
+            }
+        }
+        if (appointmentDAO.getOverlaps(appointment).size() - equivalentIDSize > 0 ) {
+
             errorMsg = errorMsg + "Appointment overlaps with existing appointments\n";
             throw new IllegalArgumentException("Appointments overlap");
         }

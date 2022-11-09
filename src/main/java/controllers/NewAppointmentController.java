@@ -56,7 +56,6 @@ public class NewAppointmentController implements Initializable {
     }
     /**Generates an appointment based on user inputs that is then passed to the database*/
     public void getNewAppointment(ActionEvent actionEvent) throws SQLException {
-        //AppointmentDAOImpl appointmentDAO = new AppointmentDAOImpl();
         errorMsg = "";
         ObservableList<Control> controls = FXCollections.observableArrayList();
         controls.addAll(Title, Description, Location, Type, StartDate, EndDate, StartHour, StartMinute, EndHour, EndMinute, CustomerID,  ContactID);
@@ -124,7 +123,6 @@ public class NewAppointmentController implements Initializable {
     static void saveAppointment(DAOInterface daoInterface, Appointment appointment) throws SQLException{
         daoInterface.save(appointment);
     }
-
     /**Filters controls for error values*/
     public boolean filterInputs(ObservableList<Control> controls) {
         int i = 0;

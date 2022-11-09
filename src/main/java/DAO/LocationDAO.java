@@ -12,7 +12,7 @@ import java.sql.Statement;
 import static helper.JDBC.connection;
 
 public class LocationDAO {
-    /***/
+    /**Retrieves list of countries from Country table*/
     public ObservableList<Country> getCountry() throws SQLException{
         ObservableList<Country> countries = FXCollections.observableArrayList();
         String query = "SELECT * FROM client_schedule.countries";
@@ -31,7 +31,7 @@ public class LocationDAO {
         }
         return countries;
     }
-    /***/
+    /**@return list of names of all countries in country table*/
     public ObservableList getCountryNames() throws SQLException{
         ObservableList<String> names = FXCollections.observableArrayList();
         for(Country country : getCountry()){
@@ -39,7 +39,8 @@ public class LocationDAO {
         }
         return names;
     }
-    /***/
+    /**@param name Name to find equivalent country id
+     * @return corresponding id of given name*/
     public int getCountryId(String name) throws SQLException{
         for(Country country : getCountry()){
             if(country.getCountry().equals(name)){
@@ -48,7 +49,7 @@ public class LocationDAO {
         }
         return 0;
     }
-    /***/
+    /**@return list of all divisions as First Level Divisions from divisions table*/
     public ObservableList<FirstLevelDivision> getDivisions() throws SQLException{
         ObservableList<FirstLevelDivision> divisions = FXCollections.observableArrayList();
         String query = "SELECT * FROM client_schedule.first_level_divisions";
@@ -67,7 +68,8 @@ public class LocationDAO {
         }
         return divisions;
     }
-    /***/
+    /**@param divisionId ID of desired division
+     * @return First level division info based on given id */
     public FirstLevelDivision getDivision(int divisionId) throws SQLException{
         for(FirstLevelDivision division : getDivisions()) {
             if (division.getDivisionId() == divisionId) {
@@ -76,7 +78,8 @@ public class LocationDAO {
         }
         return null;
     }
-    /***/
+    /**@param countryName Name of country to find matching divisions
+     * @return list of division names based on given country*/
     public ObservableList<String> getMatchingDivisions(String countryName) throws SQLException{
         ObservableList<String> matchingDivisions = FXCollections.observableArrayList();
         for(FirstLevelDivision division : getDivisions()){
@@ -86,7 +89,8 @@ public class LocationDAO {
         }
         return matchingDivisions;
     }
-    /***/
+    /**@param divisionName Name of division to get matching ID
+     * @return ID of desired division*/
     public int getDivisionId(String divisionName) throws SQLException{
         int i = 0;
         for(FirstLevelDivision division : getDivisions()){
@@ -96,7 +100,8 @@ public class LocationDAO {
         }
         return i;
     }
-    /***/
+    /**@param divisionId Division ID of desired name
+     * @return Name of corresponding division based on given ID*/
     public String getDivisionName(int divisionId) throws SQLException{
         for(FirstLevelDivision division : getDivisions()){
             if(division.getDivisionId() == divisionId){
@@ -105,7 +110,8 @@ public class LocationDAO {
         }
         return null;
     }
-    /***/
+    /**@param divisionId Division ID to get corresponding country
+     * @return Name of desired country based on given division ID*/
     public String getCountryName(int divisionId) throws SQLException{
         for(Country country : getCountry()){
             if(country.getCountryId() == getDivision(divisionId).getCountryId()){

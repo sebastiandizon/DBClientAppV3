@@ -57,11 +57,6 @@
                               <Insets top="5.0" />
                            </HBox.margin>
                         </Button>
-                        <Button fx:id="clearAppointmentsBtn" mnemonicParsing="false" onAction="#handleClearAppointments" prefHeight="26.0" prefWidth="343.0" text="Clear all appointments associated with selected customer">
-                           <HBox.margin>
-                              <Insets left="5.0" top="5.0" />
-                           </HBox.margin>
-                        </Button>
                      </children>
                   </HBox>
                </children>

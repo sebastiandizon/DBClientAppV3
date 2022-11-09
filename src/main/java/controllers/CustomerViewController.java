@@ -36,6 +36,7 @@ public class CustomerViewController implements Initializable {
             buildTable();
             MenuItem appointmentsView = new MenuItem("Appointments View");
             MenuItem contactsView = new MenuItem("Contacts View");
+            /**Lambda Expression setOnAction method passes a function that generates the scene based on the selected item in the menu button*/
             appointmentsView.setOnAction(e -> {
                 try {
                     FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("main-view.fxml"));
@@ -46,6 +47,7 @@ public class CustomerViewController implements Initializable {
                     stage.show();
                 } catch (IOException ioException) {ioException.printStackTrace();}
             });
+            /**Lambda Expression setOnAction method passes a function that generates the scene based on the selected item in the menu button*/
             contactsView.setOnAction(e -> {
                 try {
                     FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("customer-view.fxml"));
@@ -83,7 +85,7 @@ public class CustomerViewController implements Initializable {
     public void handleRemoveCustomer(ActionEvent actionEvent) throws SQLException {
         Customer customer = (Customer) customerView.getSelectionModel().getSelectedItem();
 
-        if(customer == null){
+        if (customer == null) {
             return;
         }
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
@@ -91,20 +93,29 @@ public class CustomerViewController implements Initializable {
         Optional<ButtonType> result = alert.showAndWait();
         ButtonType button = result.orElse(ButtonType.CANCEL);
         if (button == ButtonType.OK) {
-            if(appointmentDAO.getAssociated(customer.getCustomerId()).size() < 1) {
+            if (appointmentDAO.getAssociated(customer.getCustomerId()).size() < 1) {
                 customerDAO.delete(customer.getCustomerId());
                 System.out.println("Customer removed");
                 buildTable();
             } else {
-                Alert alert1 = new Alert(Alert.AlertType.WARNING);
-                alert1.setTitle("Removal error");
-                alert1.setHeaderText("Error removing customer");
-                alert1.setContentText("Could not remove. Customer has associated appointments");
-                alert1.show();
+                alert.setHeaderText("Customer has associated appointments");
+                alert.setContentText("Would you like to clear " +customer.getCustomerName() +"'s Appointments?");
+                Optional<ButtonType> result1 = alert.showAndWait();
+                if (result1.get() == ButtonType.OK) {
+                    if (appointmentDAO.getAssociated(customer.getCustomerId()).size() >= 1) {
+                        alert.setContentText(appointmentDAO.getAssociated(customer.getCustomerId()).size() + " removed");
+                        alert.show();
+                        appointmentDAO.deleteAll(appointmentDAO.getAssociated(customer.getCustomerId()));
+                        customerDAO.delete(customer.getCustomerId());
+                        System.out.println("Customer removed");
+                        buildTable();
+                    }
+                } else {
+                    System.out.println("User cancelled remove request");
+                }
             }
-        } else {
-            System.out.println("User cancelled remove request");
         }
+
     }
     /**Gets selected customer from table view and generates new scene for modifying selected customer*/
     public void handleModifyCustomer(ActionEvent actionEvent) throws IOException, SQLException{
@@ -122,32 +133,6 @@ public class CustomerViewController implements Initializable {
         stage.setScene(scene);
         stage.showAndWait();
         customerView.setItems((ObservableList) customerDAO.getAll());
-    }
-    /**Gets selected customer and prompts user with confirmation to clear appointments associated with customer*/
-    public void handleClearAppointments(ActionEvent actionEvent) throws SQLException {
-        Customer customer = (Customer) customerView.getSelectionModel().getSelectedItem();
-        if (customer == null) {
-            return;
-        }
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setContentText("Are you sure you would like to remove all appointments associated with " + customer.getCustomerName() + "?");
-        Optional<ButtonType> result = alert.showAndWait();
-        ButtonType button = result.orElse(ButtonType.CANCEL);
-        if (button == ButtonType.OK) {
-            if (appointmentDAO.getAssociated(customer.getCustomerId()).size() >= 1) {
-                alert.setContentText(appointmentDAO.getAssociated(customer.getCustomerId()).size() + " removed");
-                alert.show();
-                appointmentDAO.deleteAll(appointmentDAO.getAssociated(customer.getCustomerId()));
-            } else {
-                Alert alert1 = new Alert(Alert.AlertType.WARNING);
-                alert1.setTitle("Removal error");
-                alert1.setHeaderText("Error removing appointments");
-                alert1.setContentText("Customer already has 0 appointments.");
-                alert1.show();
-            }
-        } else {
-            System.out.println("User cancelled remove request");
-        }
     }
 
 }

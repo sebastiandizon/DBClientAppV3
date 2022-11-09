@@ -1,5 +1,5 @@
 module:com.company.dbclientappv2
-com.company.dbclientappv2
 controllers
+DAO
 helper
-lists
+model

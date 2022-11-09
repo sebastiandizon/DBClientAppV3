@@ -94,7 +94,7 @@ public class AppointmentDAOImpl implements DAOInterface<Appointment> {
      * @param appointment Appointment with desired hours
      * @return list of appointments with hours lying in between appointment Start & End values*/
     public ObservableList<Appointment> getOverlaps(Appointment appointment) throws SQLException {
-        PreparedStatement query = connection.prepareStatement( "SELECT * FROM appointments WHERE Start BETWEEN ? AND ? OR End BETWEEN ? AND ?");
+        PreparedStatement query = connection.prepareStatement( "SELECT * FROM appointments WHERE Start BETWEEN ? AND ? OR End BETWEEN ? AND ? ");
         query.setTimestamp(1, Timestamp.valueOf(appointment.getStartTime()));
         query.setTimestamp(2, Timestamp.valueOf(appointment.getEndTime()));
 
@@ -195,6 +195,7 @@ public class AppointmentDAOImpl implements DAOInterface<Appointment> {
         }
         return rs.getString("Title");
     }
+    /**@return List of appointments that are within the 15 minute alert time window */
     public ObservableList<Appointment> getNextAlert() throws SQLException{
         PreparedStatement ps = connection.prepareStatement("SELECT * FROM client_schedule.appointments WHERE Start <= ? AND START >= ? OR End <= ? AND End >= ?");
         ps.setTimestamp(1, Timestamp.valueOf(LocalDateTime.now().plusMinutes(15)));
