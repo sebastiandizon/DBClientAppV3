@@ -12,3 +12,15 @@ Additional report specified shows the title of the next appointment in the given
 
 Program uses mysql-connector-java-8.0.30)
 
+## Screenshots
+![image](https://github.com/sebastiandizon/DBClientAppV3/assets/116120068/b21f9a72-7877-4108-8341-3a98afffdb92)
+** Login page
+
+![image](https://github.com/sebastiandizon/DBClientAppV3/assets/116120068/200977a1-e095-4b24-bbaa-4ff279e05e4b)
+** Primary schedule view
+
+![image](https://github.com/sebastiandizon/DBClientAppV3/assets/116120068/823d8aad-bd06-4d84-87bf-55023b5131d4)
+** Contact Report View
+
+![image](https://github.com/sebastiandizon/DBClientAppV3/assets/116120068/ebe55769-934d-488b-af09-414b252c4895)
+** New Appointment Page
